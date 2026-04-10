@@ -542,7 +542,6 @@ export default function Home() {
 <span className="font-bold">Chennai, Tamil Nadu, India</span>
 </div>
 </div>
-</div>
 <form className="space-y-4" onSubmit={(e) => {e.preventDefault(); alert('Transmission Sent! Our architects will contact you shortly.');}}>
 <div className="grid grid-cols-2 gap-4">
 <input required className="bg-surface-container-lowest border-0 focus:ring-2 focus:ring-secondary rounded-xl px-6 py-4 placeholder:text-on-surface-variant/40 text-sm" placeholder="Identity" type="text"/>
