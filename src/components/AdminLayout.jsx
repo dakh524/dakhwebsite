@@ -24,43 +24,45 @@ export default function AdminLayout() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-[#0a0e14] text-white">
+    <div className="flex min-h-screen bg-[#0a0e14] text-white font-['Outfit',sans-serif]">
       {/* Sidebar */}
-      <aside className="w-64 bg-[#151a21]/50 backdrop-blur-xl border-r border-white/5 flex flex-col relative z-20">
-        <div className="p-6">
-          <Link to="/" className="text-xl font-black tracking-tighter text-[#00D1FF]">
-            DAKH EDU SOLUTIONS<span className="text-[#b884ff] text-sm ml-2">ADMIN</span>
+      <aside className="w-68 bg-[#0a0e14] border-r border-white/5 flex flex-col relative z-20">
+        <div className="p-8">
+          <Link to="/" className="text-xl font-black tracking-tighter text-white flex items-center gap-2">
+            <div className="w-6 h-6 rounded bg-primary"></div>
+            DAKH<span className="text-primary italic">ADMIN</span>
           </Link>
         </div>
         
-        <nav className="flex-1 px-4 py-6 space-y-2">
+        <nav className="flex-1 px-4 space-y-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
+            
             return (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                className={`flex items-center gap-4 px-6 py-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
                   isActive 
-                    ? 'bg-[#69daff]/10 text-[#69daff] font-bold border border-[#69daff]/20' 
-                    : 'text-slate-400 hover:bg-white/5 hover:text-white'
+                    ? 'bg-primary/10 text-primary border border-primary/20 shadow-[0_0_20px_rgba(105,218,255,0.05)]' 
+                    : 'text-slate-500 hover:text-white hover:bg-white/5'
                 }`}
               >
-                <Icon className="w-5 h-5" />
-                <span className="text-sm">{item.name}</span>
+                <Icon size={18} className={isActive ? 'text-primary' : 'text-slate-500'} />
+                {item.name}
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-4 border-t border-white/5">
+        <div className="p-6">
           <button 
             onClick={logout}
-            className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-slate-400 hover:bg-[#ff716c]/10 hover:text-[#ff716c] transition-all"
+            className="w-full flex items-center gap-4 px-6 py-4 rounded-xl text-xs font-black uppercase tracking-widest text-red-500/70 hover:text-red-500 hover:bg-red-500/5 transition-all"
           >
-            <LogOut className="w-5 h-5" />
-            <span className="text-sm font-bold">Logout</span>
+            <LogOut size={18} />
+            Termination
           </button>
         </div>
       </aside>

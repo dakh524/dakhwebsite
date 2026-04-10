@@ -10,22 +10,27 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-[#0f141a]/80 backdrop-blur-xl shadow-[0_0_40px_rgba(0,209,255,0.1)] border-b border-white/5">
-      <div className="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
-        <Link to="/" className="text-xl font-bold tracking-tighter text-[#00D1FF]">
-          DAKH EDU SOLUTIONS
+    <nav className="fixed top-0 w-full z-50 bg-[#0a0e14]/60 backdrop-blur-2xl border-b border-white/5">
+      <div className="flex justify-between items-center px-8 py-5 max-w-7xl mx-auto">
+        <Link to="/" className="text-2xl font-black tracking-tighter text-white flex items-center gap-2">
+          <div className="w-8 h-8 rounded-lg bg-primary/20 border border-primary/40 flex items-center justify-center">
+             <div className="w-4 h-4 rounded-sm bg-primary shadow-[0_0_15px_rgba(105,218,255,1)]"></div>
+          </div>
+          DAKH<span className="text-primary">EDU</span>
         </Link>
-        <div className="hidden md:flex items-center gap-8">
-          <Link to="/" className={`font-['Inter'] text-sm font-medium tracking-tight transition-colors ${location.pathname === '/' ? 'text-[#00D1FF] border-b-2 border-[#00D1FF] pb-1' : 'text-slate-400 hover:text-white'}`}>Home</Link>
-          <Link to="/courses" className={`font-['Inter'] text-sm font-medium tracking-tight transition-colors ${location.pathname === '/courses' ? 'text-[#00D1FF] border-b-2 border-[#00D1FF] pb-1' : 'text-slate-400 hover:text-white'}`}>Courses</Link>
-          <Link to="/internships" className={`font-['Inter'] text-sm font-medium tracking-tight transition-colors ${location.pathname === '/internships' ? 'text-[#00D1FF] border-b-2 border-[#00D1FF] pb-1' : 'text-slate-400 hover:text-white'}`}>Internships</Link>
-          <Link to="/services" className={`font-['Inter'] text-sm font-medium tracking-tight transition-colors ${location.pathname.startsWith('/services') ? 'text-[#00D1FF] border-b-2 border-[#00D1FF] pb-1' : 'text-slate-400 hover:text-white'}`}>Services</Link>
-          <Link to="/tools" className={`font-['Inter'] text-sm font-medium tracking-tight transition-colors ${location.pathname.startsWith('/tools') ? 'text-[#00D1FF] border-b-2 border-[#00D1FF] pb-1' : 'text-slate-400 hover:text-white'}`}>Tools</Link>
-          <Link to="/about" className={`font-['Inter'] text-sm font-medium tracking-tight transition-colors ${location.pathname === '/about' ? 'text-[#00D1FF] border-b-2 border-[#00D1FF] pb-1' : 'text-slate-400 hover:text-white'}`}>About</Link>
+        <div className="hidden lg:flex items-center gap-10">
+          <Link to="/" className={`text-[13px] font-bold tracking-widest uppercase transition-all ${location.pathname === '/' ? 'text-primary' : 'text-slate-400 hover:text-white'}`}>Home</Link>
+          <Link to="/courses" className={`text-[13px] font-bold tracking-widest uppercase transition-all ${location.pathname === '/courses' ? 'text-primary' : 'text-slate-400 hover:text-white'}`}>Courses</Link>
+          <Link to="/internships" className={`text-[13px] font-bold tracking-widest uppercase transition-all ${location.pathname === '/internships' ? 'text-primary' : 'text-slate-400 hover:text-white'}`}>Internships</Link>
+          <Link to="/services" className={`text-[13px] font-bold tracking-widest uppercase transition-all ${location.pathname.startsWith('/services') ? 'text-primary' : 'text-slate-400 hover:text-white'}`}>Services</Link>
+          <Link to="/about" className={`text-[13px] font-bold tracking-widest uppercase transition-all ${location.pathname === '/about' ? 'text-primary' : 'text-slate-400 hover:text-white'}`}>About Team</Link>
         </div>
-        <button onClick={() => navigate('/internships')} className="bg-gradient-to-r from-[#69daff] to-[#00cffc] text-[#004050] px-6 py-2 rounded-full font-bold text-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,209,255,0.3)]">
-          Get Started
-        </button>
+        <div className="flex items-center gap-4">
+          <button onClick={() => navigate('/admin-login')} className="text-xs font-black text-slate-500 hover:text-white transition-colors uppercase tracking-[0.2em]">Portal</button>
+          <button onClick={() => navigate('/internships')} className="bg-white text-black px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-xl">
+            Get Started
+          </button>
+        </div>
       </div>
     </nav>
   );

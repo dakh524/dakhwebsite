@@ -63,15 +63,15 @@ export default function Home() {
 <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-[120px]"></div>
 </div>
 <div className="relative z-10 max-w-7xl mx-auto px-8 text-center pt-10">
-<div className="mb-6">
-<span className="px-4 py-1.5 rounded-full bg-surface-container-highest/60 border border-outline-variant/30 text-primary text-[0.65rem] font-black tracking-[0.2em] uppercase">Ethereal Laboratory v2.0</span>
+<div className="mb-8 stagger-1">
+<span className="px-5 py-2 rounded-full bg-white/5 border border-white/10 text-primary text-[10px] font-black tracking-[0.3em] uppercase">The Architecture of Learning v2.0</span>
 </div>
-<h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-none">
-                Learn <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">•</span> 
-                Build <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-tertiary">•</span> 
-                Launch
+<h1 className="text-display mb-10 stagger-2">
+                Learn.<br /> 
+                <span className="text-gradient">Build.</span><br />
+                Launch.
             </h1>
-<p className="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
+<p className="text-xl md:text-2xl text-on-surface-variant max-w-3xl mx-auto mb-14 font-medium leading-[1.4] tracking-tight stagger-3 opacity-80">
                 Empowering the next generation of digital architects through precision-engineered education and real-world application.
             </p>
 
@@ -132,15 +132,12 @@ export default function Home() {
 </div>
 )}
 
-<div className="flex flex-wrap items-center justify-center gap-6 mb-16">
-<button onClick={() => navigate('/internships')} className="glass-panel px-10 py-5 rounded-full bg-primary/10 text-primary font-bold transition-all hover:bg-primary hover:text-on-primary hover:scale-105 active:scale-95 neon-glow-primary">
+<div className="flex flex-wrap items-center justify-center gap-6 mb-16 stagger-4">
+<button onClick={() => navigate('/internships')} className="px-12 py-5 rounded-2xl bg-white text-black font-black text-xs uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)]">
                     Join Internship
                 </button>
-<button onClick={() => navigate('/courses')} className="glass-panel px-10 py-5 rounded-full bg-surface-container-highest/40 text-on-surface font-bold border border-outline-variant/20 transition-all hover:bg-white/5 hover:scale-105 active:scale-95">
+<button onClick={() => navigate('/courses')} className="px-12 py-5 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-widest transition-all hover:bg-white/10 hover:scale-105 active:scale-95 backdrop-blur-xl">
                     Explore Courses
-                </button>
-<button onClick={() => navigate('/services')} className="glass-panel px-10 py-5 rounded-full bg-secondary/10 text-secondary font-bold transition-all hover:bg-secondary hover:text-on-secondary hover:scale-105 active:scale-95 neon-glow-secondary">
-                    Our Services
                 </button>
 </div>
 </div>

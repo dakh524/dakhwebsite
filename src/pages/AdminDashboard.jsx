@@ -66,69 +66,99 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-black tracking-tighter">System Overview</h1>
-        <p className="text-slate-400 mt-1">Real-time synchronization with DAKH Control Systems.</p>
+    <div className="max-w-6xl">
+      <div className="mb-12">
+        <h1 className="text-4xl font-black tracking-tight text-white mb-2 stagger-1">Dashboard Analytics</h1>
+        <div className="flex items-center gap-6 stagger-2">
+            <p className="text-slate-500 font-medium">Overview of the DAKH EDU ecosystem.</p>
+            <div className="h-4 w-px bg-white/10"></div>
+            <div className="flex items-center gap-2 text-[10px] font-black tracking-widest text-green-500 uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+              Live Node Connected
+            </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        {stats.map((stat) => {
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        {stats.map((stat, idx) => {
           const Icon = stat.icon;
           return (
-            <div key={stat.name} className="glass-panel p-6 rounded-2xl bg-[#151a21]/80 border border-white/5 backdrop-blur-xl hover:-translate-y-1 transition-transform group">
-              <div className="flex justify-between items-start mb-4">
-                <div className={`p-3 rounded-xl ${stat.bg} group-hover:scale-110 transition-transform`}>
+            <div key={stat.name} className={`saas-card p-8 group stagger-${idx + 1}`}>
+              <div className="flex items-center justify-between mb-8">
+                <div className={`w-12 h-12 rounded-2xl ${stat.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}>
                   <Icon className={`w-6 h-6 ${stat.color}`} />
                 </div>
-                {loading && <div className="w-4 h-4 rounded-full border-2 border-primary border-t-transparent animate-spin"></div>}
+                <div className="text-[10px] font-black text-slate-600 tracking-tighter uppercase">RT Sync</div>
               </div>
               <div>
-                <h3 className="text-4xl font-black mb-1">{loading ? '...' : stat.value}</h3>
-                <p className="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-black">{stat.name}</p>
+                <div className="text-4xl font-black text-white mb-2 tabular-nums">
+                  {loading ? (
+                    <div className="w-12 h-8 bg-white/5 rounded animate-pulse"></div>
+                  ) : stat.value}
+                </div>
+                <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">{stat.name}</p>
               </div>
             </div>
           );
         })}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="glass-panel p-8 rounded-3xl bg-[#151a21]/80 border border-white/5 backdrop-blur-xl flex flex-col justify-center items-center text-center py-16">
-          <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mb-6 animate-pulse">
-            <Users className="w-10 h-10 text-primary" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 saas-card p-10 bg-gradient-to-br from-[#151a21] to-[#0a0e14] stagger-3">
+          <div className="flex items-center justify-between mb-10">
+            <h3 className="text-xl font-black tracking-tight flex items-center gap-3">
+              <span className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                <Settings className="w-4 h-4 text-primary" />
+              </span>
+              Operational Flux
+            </h3>
+            <button className="text-[10px] font-black tracking-widest text-primary uppercase bg-primary/5 px-4 py-2 rounded-lg border border-primary/10 hover:bg-primary/20 transition-all">View Full Logs</button>
           </div>
-          <h2 className="text-2xl font-bold mb-4">Master Controls</h2>
-          <p className="text-slate-400 max-w-xs mb-8">
-            You are currently connected to the Antigravity high-speed data stream. All changes are propagated instantly to the landing page.
-          </p>
-          <div className="flex items-center gap-2 px-4 py-2 border border-green-500/20 bg-green-500/5 rounded-full text-[10px] font-black tracking-widest text-green-500 uppercase">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            System Online
+          
+          <div className="space-y-6">
+            <div className="flex items-center justify-between p-5 rounded-2xl bg-white/2 border border-white/5 hover:bg-white/5 transition-all cursor-pointer group">
+              <div className="flex items-center gap-4">
+                <div className="w-2 h-10 bg-primary/40 rounded-full group-hover:bg-primary transition-all"></div>
+                <div>
+                  <h4 className="text-sm font-bold text-white">Registry Updated</h4>
+                  <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest">Database Sync Success</p>
+                </div>
+              </div>
+              <span className="text-[10px] font-black text-slate-600 uppercase">2m ago</span>
+            </div>
+            
+            <div className="flex items-center justify-between p-5 rounded-2xl bg-white/2 border border-white/5 hover:bg-white/5 transition-all cursor-pointer group">
+              <div className="flex items-center gap-4">
+                <div className="w-2 h-10 bg-[#b884ff]/40 rounded-full group-hover:bg-[#b884ff] transition-all"></div>
+                <div>
+                  <h4 className="text-sm font-bold text-white">New Service Inquiry</h4>
+                  <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest">Lead Captured from SF Node</p>
+                </div>
+              </div>
+              <span className="text-[10px] font-black text-slate-600 uppercase">14m ago</span>
+            </div>
           </div>
         </div>
 
-        <div className="glass-panel p-8 rounded-3xl bg-[#151a21]/80 border border-white/5 backdrop-blur-xl">
-          <h2 className="text-xl font-bold mb-8 flex items-center gap-3">
-            <span className="material-symbols-outlined text-primary">bolt</span>
-            Quick Access Flux
-          </h2>
-          <div className="grid grid-cols-2 gap-6">
-            <button onClick={() => navigate('/admin/courses')} className="p-6 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-center gap-4 hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all group scale-active">
-              <BookOpen className="w-6 h-6 text-slate-400 group-hover:text-primary transition-colors" />
-              <span className="text-xs font-black uppercase tracking-widest">Courses</span>
-            </button>
-            <button onClick={() => navigate('/admin/internships')} className="p-6 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-center gap-4 hover:bg-[#b884ff]/10 hover:text-[#b884ff] hover:border-[#b884ff]/30 transition-all group scale-active">
-              <Briefcase className="w-6 h-6 text-slate-400 group-hover:text-[#b884ff] transition-colors" />
-              <span className="text-xs font-black uppercase tracking-widest">Internships</span>
-            </button>
-            <button onClick={() => navigate('/admin/services')} className="p-6 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-center gap-4 hover:bg-[#ff59e3]/10 hover:text-[#ff59e3] hover:border-[#ff59e3]/30 transition-all group scale-active">
-              <Settings className="w-6 h-6 text-slate-400 group-hover:text-[#ff59e3] transition-colors" />
-              <span className="text-xs font-black uppercase tracking-widest">Services</span>
-            </button>
-            <button onClick={() => navigate('/admin/tools')} className="p-6 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-center gap-4 hover:bg-[#69daff]/10 hover:text-[#69daff] hover:border-[#69daff]/30 transition-all group scale-active">
-              <Wrench className="w-6 h-6 text-slate-400 group-hover:text-[#69daff] transition-colors" />
-              <span className="text-xs font-black uppercase tracking-widest">Tools</span>
-            </button>
+        <div className="saas-card p-10 bg-primary/5 border-primary/10 flex flex-col justify-center text-center stagger-4">
+          <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-8 relative">
+            <Users className="w-10 h-10 text-primary" />
+            <div className="absolute inset-0 rounded-full border border-primary animate-ping opacity-20"></div>
+          </div>
+          <h4 className="text-2xl font-black text-white mb-4">Ethereal Core</h4>
+          <p className="text-xs text-slate-400 leading-relaxed mb-10 px-4 font-medium opacity-80">
+            You are currently authorized at Level 4. All architectural changes propagate in real-time.
+          </p>
+          <div className="mt-auto pt-8 border-t border-white/5 flex items-center justify-center gap-4">
+            <div className="text-center">
+                <div className="text-xl font-black text-white">99.9</div>
+                <div className="text-[8px] text-slate-500 font-black uppercase tracking-widest">Uptime</div>
+            </div>
+            <div className="w-px h-8 bg-white/10"></div>
+            <div className="text-center">
+                <div className="text-xl font-black text-white">12ms</div>
+                <div className="text-[8px] text-slate-500 font-black uppercase tracking-widest">Latency</div>
+            </div>
           </div>
         </div>
       </div>
