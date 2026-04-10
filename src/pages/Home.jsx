@@ -93,34 +93,34 @@ export default function Home() {
           MISSION PROTOCOL: {eventData.title}
         </div>
         
-        <div className="flex gap-6 sm:gap-12 items-center justify-center md:justify-start">
+        <div className="flex gap-4 sm:gap-10 items-center justify-center md:justify-start">
           <div className="text-center">
-            <span className="text-4xl sm:text-5xl md:text-7xl font-black block tracking-tightest leading-none">{String(timeLeft.days).padStart(2, '0')}</span>
-            <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-3 block">Days</span>
+            <span className="text-3xl sm:text-5xl md:text-7xl font-black block tracking-tightest leading-[1.1]">{String(timeLeft.days).padStart(2, '0')}</span>
+            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Days</span>
           </div>
-          <div className="w-px h-12 md:h-16 bg-white/10"></div>
+          <div className="w-px h-10 md:h-16 bg-white/10"></div>
           <div className="text-center">
-            <span className="text-4xl sm:text-5xl md:text-7xl font-black block tracking-tightest leading-none">{String(timeLeft.hours).padStart(2, '0')}</span>
-            <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-3 block">Hours</span>
+            <span className="text-3xl sm:text-5xl md:text-7xl font-black block tracking-tightest leading-[1.1]">{String(timeLeft.hours).padStart(2, '0')}</span>
+            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Hours</span>
           </div>
-          <div className="w-px h-12 md:h-16 bg-white/10"></div>
+          <div className="w-px h-10 md:h-16 bg-white/10"></div>
           <div className="text-center">
-            <span className="text-4xl sm:text-5xl md:text-7xl font-black block tracking-tightest leading-none">{String(timeLeft.minutes).padStart(2, '0')}</span>
-            <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-3 block">Minutes</span>
+            <span className="text-3xl sm:text-5xl md:text-7xl font-black block tracking-tightest leading-[1.1]">{String(timeLeft.minutes).padStart(2, '0')}</span>
+            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Minutes</span>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-5 relative z-10 w-full md:w-auto mt-4 md:mt-0">
+      <div className="flex flex-col gap-4 relative z-10 w-full md:w-auto mt-6 md:mt-0">
         {eventData.link && (
           <a 
             href={eventData.link} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-3 bg-white text-black px-12 py-6 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:scale-105 active:scale-95 transition-all w-full shadow-2xl min-h-[56px]"
+            className="flex items-center justify-center gap-3 bg-white text-black px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:scale-105 active:scale-95 transition-all w-full shadow-2xl min-h-[56px]"
           >
             Access Now
-            <span className="material-symbols-outlined text-xl">rocket_launch</span>
+            <span className="material-symbols-outlined text-lg">rocket_launch</span>
           </a>
         )}
         <div className="text-[9px] text-slate-500 text-center font-black uppercase tracking-widest opacity-80 mt-2">
