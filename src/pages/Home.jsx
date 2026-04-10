@@ -16,22 +16,25 @@ export default function Home() {
         .order('id', { ascending: false })
         .limit(1);
       
-      if (data && data.length > 0) {
+        // Fix for mobile Safari: Ensure ISO format by replacing spaces with 'T'
+        const rawDate = data[0].target_datetime;
+        const formattedDate = rawDate ? rawDate.replace(' ', 'T') : null;
+        
         setEventData({
           title: data[0].title || 'Next Event',
-          targetDate: new Date(data[0].target_datetime),
+          targetDate: formattedDate ? new Date(formattedDate) : null,
           link: data[0].event_link
         });
-      }
     };
     fetchEvent();
   }, []);
 
   useEffect(() => {
-    if (!eventData.targetDate) return;
+    if (!eventData.targetDate || isNaN(eventData.targetDate.getTime())) return;
 
     const calculateTimeLeft = () => {
-      const difference = eventData.targetDate.getTime() - new Date().getTime();
+      const difference = eventData.targetDate.getTime() - Date.now();
+      
       if (difference > 0) {
         setTimeLeft({
           days: Math.floor(difference / (1000 * 60 * 60 * 24)),
@@ -44,8 +47,8 @@ export default function Home() {
       }
     };
 
-    calculateTimeLeft(); // initialize
-    const timer = setInterval(calculateTimeLeft, 1000); // Real-time countdown
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
     return () => clearInterval(timer);
   }, [eventData.targetDate]);
 

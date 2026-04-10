@@ -7,6 +7,15 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+    return () => document.body.classList.remove('overflow-hidden');
+  }, [isMobileMenuOpen]);
+
   // Hidden on admin routes
   if (location.pathname.startsWith('/admin')) {
     return null;
