@@ -65,33 +65,39 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div className={`lg:hidden fixed inset-0 top-[72px] bg-[#0a0e14] z-40 transition-transform duration-500 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="p-8 space-y-8 h-full flex flex-col">
-          {navLinks.map((link) => (
-            <Link 
-              key={link.name}
-              to={link.path} 
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`text-2xl font-black tracking-tighter hover:text-primary transition-colors ${
-                location.pathname === link.path ? 'text-primary' : 'text-white'
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
+      <div className={`lg:hidden fixed inset-0 top-[70px] bg-[#0a0e14] z-[100] transition-transform duration-500 ease-in-out border-t border-white/5 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="p-10 space-y-10 h-full flex flex-col bg-[#0a0e14] relative">
+          {/* Decorative background flare for mobile menu */}
+          <div className="absolute top-20 -right-20 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
           
-          <div className="mt-auto space-y-4 pt-8 border-t border-white/5">
+          <div className="space-y-6 relative z-10">
+            {navLinks.map((link, idx) => (
+              <Link 
+                key={link.name}
+                to={link.path} 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`block text-4xl font-black tracking-tightest transition-all ${
+                  location.pathname === link.path ? 'text-primary' : 'text-white'
+                }`}
+                style={{ transitionDelay: `${idx * 50}ms` }}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+          
+          <div className="mt-auto space-y-4 pt-10 border-t border-white/5 relative z-10">
             <button 
               onClick={() => { navigate('/internships'); setIsMobileMenuOpen(false); }}
-              className="w-full bg-primary text-[#004050] py-4 rounded-xl font-black uppercase tracking-widest text-sm"
+              className="w-full bg-primary text-[#004050] py-5 rounded-2xl font-black uppercase tracking-widest text-xs shadow-[0_10px_30px_rgba(105,218,255,0.2)]"
             >
               Get Started
             </button>
             <button 
               onClick={() => { navigate('/admin-login'); setIsMobileMenuOpen(false); }}
-              className="w-full bg-white/5 text-white py-4 rounded-xl font-black uppercase tracking-widest text-sm border border-white/10"
+              className="w-full bg-white/5 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] border border-white/10"
             >
-              Portal Access
+              Personnel Portal
             </button>
           </div>
         </div>
