@@ -60,18 +60,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3 md:gap-4">
             <button onClick={() => navigate('/admin-login')} className="hidden sm:block text-[10px] font-black text-slate-500 hover:text-white transition-colors uppercase tracking-[0.2em]">Portal</button>
             <button 
-              onClick={() => {
-                if (location.pathname === '/') {
-                  const missionSection = document.getElementById('mission-center');
-                  if (missionSection) missionSection.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                  navigate('/');
-                  setTimeout(() => {
-                    const missionSection = document.getElementById('mission-center');
-                    if (missionSection) missionSection.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
-                }
-              }} 
+              onClick={() => navigate('/opportunities')} 
               className="hidden sm:block bg-white text-black px-6 md:px-8 py-2.5 md:py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-xl btn-vibrate"
             >
               DIVE IN
@@ -120,7 +109,7 @@ export default function Navbar() {
           
           <div className="mt-auto space-y-4 pb-10 relative z-10 border-t border-white/5 pt-10">
             <button 
-              onClick={() => { navigate('/internships'); setIsMobileMenuOpen(false); }}
+              onClick={() => { navigate('/opportunities'); setIsMobileMenuOpen(false); }}
               className="w-full bg-primary text-[#004050] py-5 rounded-2xl font-black uppercase tracking-widest text-xs shadow-[0_20px_40px_rgba(105,218,255,0.2)] btn-vibrate"
             >
               DIVE IN

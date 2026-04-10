@@ -56,10 +56,10 @@ export default function Home() {
   }, [eventData.targetDate]);
 
   const handleDiveIn = () => {
-    const missionSection = document.getElementById('mission-center');
-    if (missionSection) {
-      missionSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    setIsExiting(true);
+    setTimeout(() => {
+      navigate('/opportunities');
+    }, 600);
   };
 
   const handleGetStarted = () => {
@@ -234,6 +234,14 @@ export default function Home() {
 {/*  Mobile Tab Header  */}
 <div className="flex lg:hidden bg-white/5 p-1 rounded-2xl border border-white/10 mb-10 w-full max-w-sm mx-auto">
 <button 
+                onClick={() => setActiveMainTab('opportunities')}
+                className={`flex-1 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                  activeMainTab === 'opportunities' ? 'bg-white text-black shadow-lg translate-y-[1px]' : 'text-slate-500'
+                }`}
+>
+                Growth
+</button>
+<button 
                 onClick={() => setActiveMainTab('courses')}
                 className={`flex-1 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
                   activeMainTab === 'courses' ? 'bg-white text-black shadow-lg translate-y-[1px]' : 'text-slate-500'
@@ -241,14 +249,43 @@ export default function Home() {
 >
                 Knowledge
 </button>
-<button 
-                onClick={() => setActiveMainTab('internships')}
-                className={`flex-1 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                  activeMainTab === 'internships' ? 'bg-white text-black shadow-lg translate-y-[1px]' : 'text-slate-500'
-                }`}
+</div>
+
+{/*  Growth Ecosystem Content (New)  */}
+<div className={`${activeMainTab === 'opportunities' ? 'block' : 'hidden lg:block'} mb-24`}>
+<div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
+<div className="text-center md:text-left w-full md:w-auto">
+<h2 className="text-secondary text-[10px] font-black tracking-[0.4em] uppercase mb-4">Growth Ecosystem</h2>
+<p className="text-3xl md:text-5xl font-black tracking-tightest leading-none">Join & Build With Us</p>
+</div>
+<button onClick={() => navigate('/opportunities')} className="text-primary text-[10px] font-black uppercase tracking-widest hidden md:block hover:underline">Explore All Roles</button>
+</div>
+
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+{[
+                { title: 'Campus Ambassador', desc: 'Lead your college community and build executive skills.', icon: 'campaign', color: 'primary' },
+                { title: 'Core Developer', desc: 'Build production software and scale our technical neural network.', icon: 'terminal', color: 'secondary' },
+                { title: 'Marketing Node', desc: 'Activate WhatsApp networks and earn performance rewards.', icon: 'share', color: 'tertiary', special: true },
+                { title: 'Tactical Freelancer', desc: 'Work remotely on mission-specific tasks and earn dimensional rewards.', icon: 'work_history', color: 'outline' }
+              ].map((role) => (
+<div 
+                  key={role.title}
+                  onClick={role.special ? () => window.open('https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank') : handleApply} 
+                  onMouseMove={handleCardMouseMove}
+                  onMouseLeave={handleCardMouseLeave}
+                  className={`glass-panel hover-tilt glow-border cursor-pointer bg-white/5 rounded-3xl p-8 flex flex-col items-center text-center transition-all hover:bg-white/10 border border-white/5 ${role.special ? 'border-l-4 border-l-green-500' : ''}`}
 >
-                Immersion
-</button>
+<div className={`w-16 h-16 rounded-full bg-${role.color}/10 flex items-center justify-center mb-8 border border-${role.color}/20`}>
+<span className={`material-symbols-outlined text-${role.color} ${role.color === 'outline' ? 'text-white' : ''} text-4xl`}>{role.icon}</span>
+</div>
+<h4 className="text-xl font-black mb-3">{role.title}</h4>
+<p className="text-xs text-slate-500 leading-relaxed mb-8">{role.desc}</p>
+<span className={`mt-auto ${role.special ? 'text-green-500' : 'text-primary'} text-[9px] font-black px-5 py-2.5 bg-white/5 rounded-full border border-white/10 tracking-widest uppercase btn-glow`}>
+  {role.special ? 'Join Network' : 'Apply Now'}
+</span>
+</div>
+              ))}
+</div>
 </div>
 
 {/*  Knowledge Pipeline Content (Courses)  */}

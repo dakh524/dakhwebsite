@@ -27,6 +27,7 @@ import AdminPartners from './pages/AdminPartners';
 import AdminWorks from './pages/AdminWorks';
 import AdminEvents from './pages/AdminEvents';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import Opportunities from './pages/Opportunities';
 
 function App() {
   return (
@@ -42,7 +43,8 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/services-updated" element={<ServicesUpdated />} />
             <Route path="/tools" element={<Tools />} />
-            <Route path="/useful-tools" element={<UsefulTools />} />
+             <Route path="/useful-tools" element={<UsefulTools />} />
+            <Route path="/opportunities" element={<Opportunities />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           </Route>
 
