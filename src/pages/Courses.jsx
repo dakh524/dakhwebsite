@@ -54,7 +54,7 @@ export default function Courses() {
 
   return (
     <>
-      <main className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+      <main className="pt-32 pb-24 px-6 md:px-8 max-w-7xl mx-auto">
         <header className="mb-16 text-center md:text-left">
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-6">
             <span className="text-[0.65rem] font-bold tracking-widest text-primary uppercase">Elite Learning Programs</span>

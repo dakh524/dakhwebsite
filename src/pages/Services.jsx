@@ -71,7 +71,7 @@ export default function Services() {
 
   return (
     <>
-      <main className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+      <main className="pt-32 pb-24 px-6 md:px-8 max-w-7xl mx-auto">
         <header className="mb-20 text-center md:text-left">
           <div className="inline-block px-4 py-1 rounded-full border border-primary/20 bg-primary/5 mb-6">
             <span className="text-xs font-bold tracking-widest text-primary uppercase">Empowering Futures</span>

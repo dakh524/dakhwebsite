@@ -13,7 +13,7 @@ export default function PrivacyPolicy() {
         </nav>
       </header>
 
-      <main className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+      <main className="pt-32 pb-20 px-6 md:px-8 max-w-7xl mx-auto">
         {/* Hero Header */}
         <section className="text-center mb-24">
           <div className="inline-block px-4 py-1.5 mb-6 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-bold tracking-widest uppercase">

@@ -37,7 +37,7 @@ export default function About() {
     <>
       <main className="pt-32 pb-20">
         {/*  Hero Section  */}
-        <section className="max-w-7xl mx-auto px-8 mb-32">
+        <section className="max-w-7xl mx-auto px-6 md:px-8 mb-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <span className="text-primary font-label text-xs tracking-[0.2em] uppercase font-bold mb-4 block">Our Story</span>
@@ -126,7 +126,7 @@ export default function About() {
 
         {/* Our Partners Slider */}
         <section className="mb-32 py-20 border-y border-white/5 bg-white/2">
-          <div className="max-w-7xl mx-auto px-8 mb-16">
+          <div className="max-w-7xl mx-auto px-6 md:px-8 mb-16">
             <h2 className="text-3xl font-black text-white tracking-tighter text-center mb-2">Our Partners</h2>
             <div className="w-12 h-1 bg-primary mx-auto rounded-full"></div>
           </div>
@@ -205,7 +205,7 @@ export default function About() {
       </main>
 
       <footer className="w-full border-t border-white/5 bg-[#0a0e14]">
-        <div className="max-w-7xl mx-auto px-8 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
            <div className="col-span-1 md:col-span-2">
              <div className="text-xl font-black text-white mb-6 tracking-tighter">DAKH EDU SOLUTIONS</div>
              <p className="text-slate-500 text-sm max-w-xs leading-relaxed">

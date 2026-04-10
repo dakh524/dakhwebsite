@@ -6,7 +6,7 @@ export default function UsefulTools() {
 
 {/*  Top Navigation Shell  */}
 
-<main className="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto min-h-screen">
+<main className="pt-32 pb-24 px-6 md:px-8 max-w-7xl mx-auto min-h-screen">
 {/*  Hero Section  */}
 <header className="mb-20 text-center md:text-left max-w-3xl">
 <div className="inline-block px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-[0.7rem] font-bold uppercase tracking-widest mb-6">
