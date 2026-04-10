@@ -62,68 +62,68 @@ export default function Home() {
 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px]"></div>
 <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-[120px]"></div>
 </div>
-<div className="relative z-10 max-w-7xl mx-auto px-8 text-center pt-10">
-<div className="mb-8 stagger-1">
-<span className="px-5 py-2 rounded-full bg-white/5 border border-white/10 text-primary text-[10px] font-black tracking-[0.3em] uppercase">The Architecture of Learning v2.0</span>
+ <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 text-center pt-20 md:pt-10">
+<div className="mb-6 md:mb-8 stagger-1">
+<span className="px-4 md:px-5 py-1.5 md:py-2 rounded-full bg-white/5 border border-white/10 text-primary text-[8px] md:text-[10px] font-black tracking-[0.3em] uppercase">The Architecture of Learning v2.0</span>
 </div>
-<h1 className="text-display mb-10 stagger-2">
+<h1 className="text-[3.5rem] sm:text-[5rem] md:text-display mb-8 md:mb-10 stagger-2 leading-[0.9] font-black tracking-tightest">
                 Learn.<br /> 
                 <span className="text-gradient">Build.</span><br />
                 Launch.
             </h1>
-<p className="text-xl md:text-2xl text-on-surface-variant max-w-3xl mx-auto mb-14 font-medium leading-[1.4] tracking-tight stagger-3 opacity-80">
+<p className="text-base md:text-xl lg:text-2xl text-on-surface-variant max-w-3xl mx-auto mb-10 md:mb-14 font-medium leading-[1.5] tracking-tight stagger-3 opacity-80 px-4">
                 Empowering the next generation of digital architects through precision-engineered education and real-world application.
             </p>
 
 {/*  Master Event Countdown Section  */}
 {eventData.targetDate && (
-<div className="mb-16 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-  <div className="inline-block glass-panel p-1 rounded-3xl bg-white/5 border border-white/10 shadow-2xl overflow-hidden group">
-    <div className="bg-surface-container-low/40 rounded-[22px] px-12 py-10 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
+<div className="mb-12 md:mb-16 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+  <div className="inline-block glass-panel p-0.5 md:p-1 rounded-[2rem] md:rounded-3xl bg-white/5 border border-white/10 shadow-2xl overflow-hidden group max-w-full">
+    <div className="bg-surface-container-low/40 rounded-[1.8rem] md:rounded-[22px] px-6 md:px-12 py-8 md:py-10 flex flex-col md:flex-row items-center gap-8 md:gap-12 relative overflow-hidden">
       {/* Background flare */}
-      <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-all"></div>
+      <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-all pointer-events-none"></div>
       
-      <div className="text-left relative z-10">
-        <div className="flex items-center gap-2 text-[0.7rem] text-primary font-black uppercase tracking-[0.2em] mb-3">
+      <div className="text-center md:text-left relative z-10">
+        <div className="flex items-center justify-center md:justify-start gap-2 text-[0.6rem] md:text-[0.7rem] text-primary font-black uppercase tracking-[0.2em] mb-4 md:mb-3">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
           MASTER EVENT: {eventData.title}
         </div>
-        <div className="flex gap-8 items-center">
+        <div className="flex gap-4 sm:gap-8 items-center justify-center md:justify-start">
           <div className="text-center">
-            <span className="text-5xl font-black block tracking-tighter">{String(timeLeft.days).padStart(2, '0')}</span>
-            <span className="text-[0.6rem] text-on-surface-variant font-bold uppercase tracking-widest mt-1 block">Days</span>
+            <span className="text-3xl md:text-5xl font-black block tracking-tighter">{String(timeLeft.days).padStart(2, '0')}</span>
+            <span className="text-[0.5rem] md:text-[0.6rem] text-on-surface-variant font-bold uppercase tracking-widest mt-1 block">Days</span>
           </div>
-          <div className="w-px h-12 bg-outline-variant/30"></div>
+          <div className="w-px h-8 md:h-12 bg-outline-variant/30"></div>
           <div className="text-center">
-            <span className="text-5xl font-black block tracking-tighter">{String(timeLeft.hours).padStart(2, '0')}</span>
-            <span className="text-[0.6rem] text-on-surface-variant font-bold uppercase tracking-widest mt-1 block">Hours</span>
+            <span className="text-3xl md:text-5xl font-black block tracking-tighter">{String(timeLeft.hours).padStart(2, '0')}</span>
+            <span className="text-[0.5rem] md:text-[0.6rem] text-on-surface-variant font-bold uppercase tracking-widest mt-1 block">Hours</span>
           </div>
-          <div className="w-px h-12 bg-outline-variant/30"></div>
+          <div className="w-px h-8 md:h-12 bg-outline-variant/30"></div>
           <div className="text-center">
-            <span className="text-5xl font-black block tracking-tighter">{String(timeLeft.minutes).padStart(2, '0')}</span>
-            <span className="text-[0.6rem] text-on-surface-variant font-bold uppercase tracking-widest mt-1 block">Mins</span>
+            <span className="text-3xl md:text-5xl font-black block tracking-tighter">{String(timeLeft.minutes).padStart(2, '0')}</span>
+            <span className="text-[0.5rem] md:text-[0.6rem] text-on-surface-variant font-bold uppercase tracking-widest mt-1 block">Mins</span>
           </div>
-           <div className="w-px h-12 bg-outline-variant/30 md:block hidden"></div>
+           <div className="w-px h-8 md:h-12 bg-outline-variant/30 md:block hidden"></div>
           <div className="text-center md:block hidden">
-            <span className="text-5xl font-black block tracking-tighter text-primary">{String(timeLeft.seconds).padStart(2, '0')}</span>
-            <span className="text-[0.6rem] text-on-surface-variant font-bold uppercase tracking-widest mt-1 block">Secs</span>
+            <span className="text-3xl md:text-5xl font-black block tracking-tighter text-primary">{String(timeLeft.seconds).padStart(2, '0')}</span>
+            <span className="text-[0.5rem] md:text-[0.6rem] text-on-surface-variant font-bold uppercase tracking-widest mt-1 block">Secs</span>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 relative z-10 min-w-[200px]">
+      <div className="flex flex-col gap-3 relative z-10 w-full md:min-w-[200px]">
         {eventData.link && (
           <a 
             href={eventData.link} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-3 bg-primary text-[#004050] px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-widest hover:shadow-[0_0_30px_rgba(105,218,255,0.4)] hover:scale-105 active:scale-95 transition-all"
+            className="flex items-center justify-center gap-3 bg-primary text-[#004050] px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl font-black text-xs md:text-sm uppercase tracking-widest hover:shadow-[0_0_30px_rgba(105,218,255,0.4)] hover:scale-105 active:scale-95 transition-all w-full"
           >
             Join Event
-            <span className="material-symbols-outlined text-lg">rocket_launch</span>
+            <span className="material-symbols-outlined text-base md:text-lg">rocket_launch</span>
           </a>
         )}
-        <div className="text-[0.6rem] text-on-surface-variant/60 text-center font-bold">
+        <div className="text-[0.55rem] md:text-[0.6rem] text-on-surface-variant/60 text-center font-bold">
           {new Date(eventData.targetDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
         </div>
       </div>
@@ -132,11 +132,11 @@ export default function Home() {
 </div>
 )}
 
-<div className="flex flex-wrap items-center justify-center gap-6 mb-16 stagger-4">
-<button onClick={() => navigate('/internships')} className="px-12 py-5 rounded-2xl bg-white text-black font-black text-xs uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)]">
+<div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-16 md:mb-20 stagger-4 w-full max-w-xs sm:max-w-none mx-auto">
+<button onClick={() => navigate('/internships')} className="w-full sm:w-auto px-10 md:px-12 py-4 md:py-5 rounded-xl md:rounded-2xl bg-white text-black font-black text-[10px] md:text-xs uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)]">
                     Join Internship
                 </button>
-<button onClick={() => navigate('/courses')} className="px-12 py-5 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-widest transition-all hover:bg-white/10 hover:scale-105 active:scale-95 backdrop-blur-xl">
+<button onClick={() => navigate('/courses')} className="w-full sm:w-auto px-10 md:px-12 py-4 md:py-5 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 text-white font-black text-[10px] md:text-xs uppercase tracking-widest transition-all hover:bg-white/10 hover:scale-105 active:scale-95 backdrop-blur-xl">
                     Explore Courses
                 </button>
 </div>
