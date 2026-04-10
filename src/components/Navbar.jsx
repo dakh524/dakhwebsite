@@ -28,7 +28,7 @@ export default function Navbar() {
     { name: 'Courses', path: '/courses' },
     { name: 'Internships', path: '/internships' },
     { name: 'Services', path: '/services' },
-    { name: 'About Team', path: '/about' },
+    { name: 'About', path: '/about' },
   ];
 
   return (
