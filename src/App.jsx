@@ -16,6 +16,7 @@ import ServicesUpdated from './pages/ServicesUpdated';
 import Tools from './pages/Tools';
 import UsefulTools from './pages/UsefulTools';
 import AdminLogin from './pages/AdminLogin';
+import Admin from './pages/Admin';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminCourses from './pages/AdminCourses';
 import AdminInternships from './pages/AdminInternships';
@@ -50,7 +51,7 @@ function App() {
 
           {/* Admin Protected Routes */}
           <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboard />} />
+            <Route index element={<Admin />} />
             {/* Placeholder routes for the sidebar links */}
             <Route path="courses" element={<AdminCourses />} />
             <Route path="events" element={<AdminEvents />} />
