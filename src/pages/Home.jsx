@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { useNavigate, Link } from 'react-router-dom';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
    const [eventData, setEventData] = useState({ title: '', targetDate: null, link: '' });
@@ -9,6 +13,39 @@ export default function Home() {
     const [isMentorModalOpen, setIsMentorModalOpen] = useState(false);
     const [isExiting, setIsExiting] = useState(false);
     const navigate = useNavigate();
+    const heroRef = useRef(null);
+    const cardsRef = useRef(null);
+
+  useEffect(() => {
+    // Hero Animation
+    const ctx = gsap.context(() => {
+      gsap.from('.stagger-reveal', {
+        y: 60,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.2,
+        ease: 'power4.out',
+        delay: 0.5
+      });
+
+      // Cards Scroll Reveal
+      if (cardsRef.current) {
+        gsap.from('.role-card', {
+          scrollTrigger: {
+            trigger: cardsRef.current,
+            start: 'top 80%',
+          },
+          y: 80,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.15,
+          ease: 'power3.out'
+        });
+      }
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -101,86 +138,72 @@ export default function Home() {
 {/*  TopNavBar  */}
 
 {/*  Hero Section  */}
-<section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+<section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
 {/*  3D Particle Background Simulation  */}
 <div className="absolute inset-0 z-0">
-<div className="absolute inset-0 hero-gradient"></div>
-<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px]"></div>
-<div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-[120px]"></div>
+<div className="absolute inset-0 bg-[#0a0e14]"></div>
+<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle_at_center,rgba(0,209,255,0.08)_0%,transparent_70%)]"></div>
+<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px] animate-pulse"></div>
+<div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-[120px] animate-pulse"></div>
 </div>
- <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center pt-24 md:pt-14 mt-4">
-<div className="mb-8 md:mb-10 stagger-1 flex justify-center">
-<span className="px-6 py-2.5 rounded-full bg-white/5 border border-white/10 text-primary text-[9px] md:text-[11px] font-black tracking-[0.4em] uppercase shadow-[0_0_20px_rgba(105,218,255,0.05)]">ETHEREAL LABORATORY V2.0</span>
+
+<div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
+<div className="mb-8 md:mb-10 flex justify-center stagger-reveal">
+<span className="px-6 py-2.5 rounded-full bg-white/5 border border-white/10 text-primary text-[10px] font-black tracking-[0.4em] uppercase shadow-[0_0_20px_rgba(105,218,255,0.05)]">The Future of Growth</span>
 </div>
-<h1 className="text-[2.6rem] sm:text-[4.5rem] md:text-display mb-10 md:mb-12 stagger-2 leading-[0.95] font-black tracking-tightest">
-                Learn.<br /> 
-                <span className="text-gradient">Build.</span><br />
-                Launch.
-            </h1>
-<p className="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-400 max-w-3xl mx-auto mb-14 md:mb-18 font-medium leading-[1.6] tracking-tight stagger-3 px-6 md:px-0">
-                Empowering the next generation of digital architects through precision-engineered education and real-world application.
-            </p>
+<h1 className="text-5xl md:text-9xl font-black mb-8 leading-[0.9] tracking-tightest stagger-reveal glow">
+                Join &<br /> 
+                <span className="text-gradient">Grow</span><br />
+                With Us.
+</h1>
+<p className="text-lg md:text-2xl text-slate-400 max-w-2xl mx-auto mb-14 font-medium leading-relaxed stagger-reveal">
+                Build skills, earn experience, and grow through real opportunities in our dimensional laboratory.
+</p>
 
-{/*  Master Event Countdown Section  */}
-{eventData.targetDate && (
-<div className="flex justify-center w-full px-5 md:px-0 mb-16 md:mb-20">
-  <div className="w-full max-w-2xl saas-card p-0.5 animate-in fade-in slide-in-from-bottom-10 duration-1000">
-    <div className="bg-[#0a0e14]/50 rounded-[22px] px-6 md:px-12 py-10 md:py-14 flex flex-col md:flex-row items-center gap-10 md:gap-16 relative overflow-hidden">
-      {/* Background flare */}
-      <div className="absolute -top-10 -right-10 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
-      
-      <div className="text-center md:text-left relative z-10 flex-1 w-full">
-        <div className="flex items-center justify-center md:justify-start gap-3 text-[11px] text-primary font-black uppercase tracking-[0.4em] mb-6">
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(105,218,255,1)]"></span>
-          MISSION PROTOCOL: {eventData.title}
-        </div>
-        
-        <div className="flex gap-4 sm:gap-10 items-center justify-center md:justify-start">
-          <div className="text-center">
-            <span className="text-3xl sm:text-5xl md:text-7xl font-black block tracking-tightest leading-[1.1]">{String(timeLeft.days).padStart(2, '0')}</span>
-            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Days</span>
-          </div>
-          <div className="w-px h-10 md:h-16 bg-white/10"></div>
-          <div className="text-center">
-            <span className="text-3xl sm:text-5xl md:text-7xl font-black block tracking-tightest leading-[1.1]">{String(timeLeft.hours).padStart(2, '0')}</span>
-            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Hours</span>
-          </div>
-          <div className="w-px h-10 md:h-16 bg-white/10"></div>
-          <div className="text-center">
-            <span className="text-3xl sm:text-5xl md:text-7xl font-black block tracking-tightest leading-[1.1]">{String(timeLeft.minutes).padStart(2, '0')}</span>
-            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Minutes</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-4 relative z-10 w-full md:w-auto mt-6 md:mt-0">
-        {eventData.link && (
-          <a 
-            href={eventData.link} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-3 bg-white text-black px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:scale-105 active:scale-95 transition-all w-full shadow-2xl min-h-[56px]"
-          >
-            Access Now
-            <span className="material-symbols-outlined text-lg">rocket_launch</span>
-          </a>
-        )}
-        <div className="text-[9px] text-slate-500 text-center font-black uppercase tracking-widest opacity-80 mt-2">
-          Sync Date: {new Date(eventData.targetDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-)}
-
-<div className="flex flex-col md:flex-row items-center justify-center gap-5 md:gap-7 mb-20 md:mb-24 stagger-4 w-full max-w-[280px] sm:max-w-md md:max-w-none mx-auto px-6">
-<button onClick={handleDiveIn} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-white text-black font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)] min-h-[60px] btn-vibrate">
-                    DIVE IN
+<div className="flex flex-col md:flex-row items-center justify-center gap-6 stagger-reveal">
+<button onClick={handleApply} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-white text-black font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate">
+                    Apply Now
                 </button>
-<button onClick={() => navigate('/courses')} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-[0.2em] transition-all hover:bg-white/10 hover:scale-105 active:scale-95 backdrop-blur-xl min-h-[60px] btn-vibrate">
-                    Explore Courses
+<button onClick={() => window.open('https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank')} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-[#25D366] text-white font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate flex items-center justify-center gap-3">
+                    <span className="material-symbols-outlined text-lg">chat</span>
+                    Join Community
                 </button>
+</div>
+</div>
+</section>
+
+{/* Interactive Role Cards Section */}
+<section ref={cardsRef} className="py-32 relative overflow-hidden" id="opportunities">
+<div className="max-w-7xl mx-auto px-6 md:px-8">
+<div className="text-center mb-24">
+<h2 className="text-primary text-xs font-black tracking-[0.5em] uppercase mb-4">Choose Your Path</h2>
+<p className="text-4xl md:text-6xl font-black tracking-tightest">Architect Your Identity</p>
+</div>
+
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+{[
+                { title: 'Campus Ambassador', desc: 'Lead your college community and build executive leadership skills.', icon: 'campaign', color: 'primary' },
+                { title: 'Developer / Creator', desc: 'Build real-world projects and showcase your skills in our portfolio.', icon: 'terminal', color: 'secondary' },
+                { title: 'Marketing Partner', desc: 'Promote our ecosystem via WhatsApp and earn dimensional rewards.', icon: 'share', color: 'tertiary', special: true },
+                { title: 'Freelancer', desc: 'Remote work opportunities in design, writing, and high-end tech.', icon: 'work_history', color: 'outline' }
+              ].map((role) => (
+<div 
+                  key={role.title}
+                  onClick={role.special ? () => window.open('https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank') : handleApply} 
+                  onMouseMove={handleCardMouseMove}
+                  onMouseLeave={handleCardMouseLeave}
+                  className={`role-card glass-panel hover-tilt glow-border cursor-pointer bg-white/5 rounded-[2.5rem] p-10 flex flex-col items-center text-center transition-all hover:bg-white/10 border border-white/5 relative group ${role.special ? 'border-l-4 border-l-green-500' : ''}`}
+>
+<div className={`w-20 h-20 rounded-3xl bg-${role.color}/10 flex items-center justify-center mb-10 border border-${role.color}/20 group-hover:scale-110 transition-transform duration-500 shadow-[0_0_30px_rgba(0,0,0,0.3)]`}>
+<span className={`material-symbols-outlined text-${role.color} ${role.color === 'outline' ? 'text-white' : ''} text-5xl`}>{role.icon}</span>
+</div>
+<h4 className="text-2xl font-black mb-4 tracking-tight">{role.title}</h4>
+<p className="text-sm text-slate-500 leading-relaxed mb-10 flex-grow font-medium">{role.desc}</p>
+<button className={`mt-auto w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest border transition-all ${role.special ? 'bg-green-500 border-green-500 text-black hover:bg-green-600' : 'bg-white/5 border-white/10 text-white hover:bg-white hover:text-black'} btn-vibrate`}>
+                    {role.special ? 'Join Network' : 'Apply Now'}
+</button>
+</div>
+              ))}
 </div>
 </div>
 </section>
@@ -440,9 +463,18 @@ export default function Home() {
 <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-primary/20 rounded-full blur-[100px]"></div>
 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
 <div>
-<h2 className="text-5xl font-black tracking-tighter mb-8">Ready to initiate your sequence?</h2>
-<p className="text-on-surface-variant mb-12 max-w-md text-lg">Send a ping to our control center and let's discuss your architectural journey or project requirements.</p>
-<div className="space-y-6">
+<h2 className="text-5xl md:text-8xl font-black tracking-tightest mb-8 glow leading-[0.9]">Ready to start your journey?</h2>
+<p className="text-slate-400 mb-12 max-w-md text-lg font-medium leading-relaxed">Join the growth ecosystem and ignite your technical trajectory with our dimensional laboratory.</p>
+
+<div className="flex flex-col sm:flex-row gap-6">
+  <button onClick={handleApply} className="bg-white text-black px-12 py-6 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate">
+    Get Started
+  </button>
+  <button onClick={() => window.open('https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank')} className="bg-[#25D366] text-white px-12 py-6 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl flex items-center justify-center gap-3 btn-vibrate">
+    <span className="material-symbols-outlined text-lg">chat</span>
+    Join WhatsApp
+  </button>
+</div>
 <div className="flex items-center gap-4">
 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
 <span className="material-symbols-outlined text-primary">mail</span>

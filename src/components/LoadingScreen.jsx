@@ -1,55 +1,112 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
-export default function LoadingScreen() {
-  const [text, setText] = useState('');
-  const [showSubtext, setShowSubtext] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const [shouldRender, setShouldRender] = useState(true);
-
-  const mainTitle = "DAKH EDU SOLUTIONS";
-  const subTitle = "Loading modules...";
+export default function LoadingScreen({ onComplete }) {
+  const containerRef = useRef(null);
+  const logoRef = useRef(null);
+  const particlesRef = useRef(null);
 
   useEffect(() => {
-    let index = 0;
-    const typingInterval = setInterval(() => {
-      if (index <= mainTitle.length) {
-        setText(mainTitle.slice(0, index));
-        index++;
-      } else {
-        clearInterval(typingInterval);
-        setTimeout(() => setShowSubtext(true), 500);
-        
-        // Auto-fade out after complete
-        setTimeout(() => {
-          setIsVisible(false);
-          setTimeout(() => setShouldRender(false), 800);
-        }, 3000);
+    const ctx = gsap.context(() => {
+      // Create particles
+      const particlesCount = 50;
+      const particles = [];
+      for (let i = 0; i < particlesCount; i++) {
+        const p = document.createElement('div');
+        p.className = 'absolute w-1 h-1 bg-primary rounded-full opacity-0';
+        p.style.left = `${Math.random() * 100}%`;
+        p.style.top = `${Math.random() * 100}%`;
+        particlesRef.current.appendChild(p);
+        particles.push(p);
       }
-    }, 100);
 
-    return () => clearInterval(typingInterval);
-  }, []);
+      // Initial state
+      gsap.set(logoRef.current, { 
+        opacity: 0, 
+        scale: 0.8, 
+        filter: 'blur(20px)',
+        z: -1000 
+      });
 
-  if (!shouldRender) return null;
+      const tl = gsap.timeline({
+        onComplete: () => {
+          gsap.to(containerRef.current, {
+            opacity: 0,
+            duration: 1,
+            ease: 'power2.inOut',
+            onComplete: onComplete
+          });
+        }
+      });
+
+      // Animation sequence
+      tl.to(particles, {
+        opacity: () => Math.random() * 0.5 + 0.2,
+        duration: 2,
+        stagger: 0.02,
+      }, 0)
+      .to(logoRef.current, {
+        opacity: 1,
+        scale: 1,
+        filter: 'blur(0px)',
+        z: 0,
+        duration: 2.5,
+        ease: 'expo.out'
+      }, 0.5)
+      .to(logoRef.current, {
+        scale: 1.1,
+        duration: 4,
+        ease: 'none'
+      }, 0.5)
+      .to(particles, {
+        y: '-=100',
+        x: '+=50',
+        duration: 10,
+        ease: 'none'
+      }, 0);
+
+      // 3D Floating effect
+      gsap.to(logoRef.current, {
+        y: '20px',
+        rotationX: 5,
+        rotationY: 5,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [onComplete]);
 
   return (
-    <div className={`fixed inset-0 z-[1000] flex flex-col items-center justify-center bg-[#0a0e14] transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-      <div className="text-center relative">
-        {/* Main Title with 3D Shadow */}
-        <h1 className="text-4xl md:text-6xl font-black tracking-[0.3em] text-white mb-6 uppercase drop-shadow-3d select-none">
-          {text}
-          <span className="animate-blink border-r-4 border-primary ml-2 h-12 inline-block align-middle"></span>
+    <div 
+      ref={containerRef}
+      className="fixed inset-0 z-[1000] bg-[#0a0e14] flex items-center justify-center overflow-hidden perspective-1000"
+    >
+      {/* Mesh Gradient Background */}
+      <div className="absolute inset-0 opacity-40">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/20 rounded-full blur-[120px]"></div>
+      </div>
+
+      {/* Particles Container */}
+      <div ref={particlesRef} className="absolute inset-0 pointer-events-none"></div>
+
+      {/* 3D Logo Text */}
+      <div 
+        ref={logoRef}
+        className="relative z-10 text-center select-none"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        <h1 className="text-4xl md:text-7xl font-black tracking-tightest uppercase text-white drop-shadow-[0_0_30px_rgba(105,218,255,0.5)]">
+          DAKH EDU SOLUTIONS
         </h1>
-
-        {/* Subtext */}
-        <div className={`h-8 transition-all duration-1000 transform ${showSubtext ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <p className="text-xs font-bold tracking-[0.5em] text-slate-500 uppercase">
-            {subTitle}
-          </p>
+        <div className="mt-4 flex justify-center gap-2">
+          <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+          <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-secondary to-transparent"></div>
         </div>
-
-        {/* Ambient Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
       </div>
     </div>
   );
