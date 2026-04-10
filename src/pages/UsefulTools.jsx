@@ -1,6 +1,27 @@
 import React from 'react';
 
 export default function UsefulTools() {
+  const handleCardMouseMove = (e) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = (centerY - y) / 20;
+    const rotateY = (x - centerX) / 20;
+    
+    card.style.setProperty('--rotate-x', `${rotateX}deg`);
+    card.style.setProperty('--rotate-y', `${rotateY}deg`);
+  };
+
+  const handleCardMouseLeave = (e) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--rotate-x', `0deg`);
+    card.style.setProperty('--rotate-y', `0deg`);
+  };
   return (
     <>
 
@@ -22,7 +43,11 @@ export default function UsefulTools() {
 {/*  Tool Grid (Bento Style)  */}
 <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6">
 {/*  Featured: Resume Builder (Large)  */}
-<div className="kinetic-card md:col-span-6 lg:col-span-8 glass-panel rounded-xl p-8 flex flex-col justify-between overflow-hidden relative group">
+<div 
+  onMouseMove={handleCardMouseMove}
+  onMouseLeave={handleCardMouseLeave}
+  className="kinetic-card md:col-span-6 lg:col-span-8 glass-panel rounded-xl p-8 flex flex-col justify-between overflow-hidden relative group hover-tilt glow-border"
+>
 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[80px] -mr-32 -mt-32"></div>
 <div>
 <div className="w-12 h-12 bg-surface-container-highest rounded-lg flex items-center justify-center mb-6 border border-white/10 text-primary">
@@ -34,14 +59,18 @@ export default function UsefulTools() {
                     </p>
 </div>
 <div className="flex items-center gap-4">
-<button className="bg-primary text-on-primary font-bold px-6 py-3 rounded-lg text-sm hover:bg-primary-dim transition-colors">
+<button className="bg-primary text-on-primary font-bold px-6 py-3 rounded-lg text-sm hover:bg-primary-dim transition-colors btn-vibrate">
                         Open Tool
                     </button>
 <span className="text-on-surface-variant text-xs font-medium">Free for students</span>
 </div>
 </div>
 {/*  Tool: QR Generator (Small)  */}
-<div className="kinetic-card md:col-span-6 lg:col-span-4 glass-panel rounded-xl p-8 flex flex-col justify-between group">
+<div 
+  onMouseMove={handleCardMouseMove}
+  onMouseLeave={handleCardMouseLeave}
+  className="kinetic-card md:col-span-6 lg:col-span-4 glass-panel rounded-xl p-8 flex flex-col justify-between group hover-tilt glow-border"
+>
 <div>
 <div className="w-12 h-12 bg-surface-container-highest rounded-lg flex items-center justify-center mb-6 border border-white/10 text-secondary">
 <span className="material-symbols-outlined">qr_code_2</span>
@@ -51,13 +80,17 @@ export default function UsefulTools() {
                         Instant, high-resolution QR codes for documents, portfolios, and academic links.
                     </p>
 </div>
-<button className="mt-8 border border-outline-variant hover:border-secondary text-on-surface font-semibold px-4 py-3 rounded-lg text-sm transition-all flex items-center justify-center gap-2">
+<button className="mt-8 border border-outline-variant hover:border-secondary text-on-surface font-semibold px-4 py-3 rounded-lg text-sm transition-all flex items-center justify-center gap-2 btn-vibrate">
                     Open Tool
                     <span className="material-symbols-outlined text-sm">arrow_outward</span>
 </button>
 </div>
 {/*  Tool: AI Tools (Medium)  */}
-<div className="kinetic-card md:col-span-6 lg:col-span-4 glass-panel rounded-xl p-8 flex flex-col justify-between group">
+<div 
+  onMouseMove={handleCardMouseMove}
+  onMouseLeave={handleCardMouseLeave}
+  className="kinetic-card md:col-span-6 lg:col-span-4 glass-panel rounded-xl p-8 flex flex-col justify-between group hover-tilt glow-border"
+>
 <div>
 <div className="w-12 h-12 bg-surface-container-highest rounded-lg flex items-center justify-center mb-6 border border-white/10 text-tertiary">
 <span className="material-symbols-outlined">auto_awesome</span>
@@ -67,13 +100,17 @@ export default function UsefulTools() {
                         Summarizers, concept generators, and citation assistants powered by advanced LLMs.
                     </p>
 </div>
-<button className="mt-8 border border-outline-variant hover:border-tertiary text-on-surface font-semibold px-4 py-3 rounded-lg text-sm transition-all flex items-center justify-center gap-2">
+<button className="mt-8 border border-outline-variant hover:border-tertiary text-on-surface font-semibold px-4 py-3 rounded-lg text-sm transition-all flex items-center justify-center gap-2 btn-vibrate">
                     Open Tool
                     <span className="material-symbols-outlined text-sm">arrow_outward</span>
 </button>
 </div>
 {/*  Tool: Student Tools (Large)  */}
-<div className="kinetic-card md:col-span-6 lg:col-span-5 glass-panel rounded-xl p-8 flex flex-col justify-between relative overflow-hidden">
+<div 
+  onMouseMove={handleCardMouseMove}
+  onMouseLeave={handleCardMouseLeave}
+  className="kinetic-card md:col-span-6 lg:col-span-5 glass-panel rounded-xl p-8 flex flex-col justify-between relative overflow-hidden hover-tilt glow-border"
+>
 <div className="absolute bottom-0 right-0 p-4 opacity-5 pointer-events-none">
 <span className="material-symbols-outlined text-[120px]">school</span>
 </div>
@@ -96,12 +133,16 @@ export default function UsefulTools() {
                         </li>
 </ul>
 </div>
-<button className="bg-surface-container-highest text-on-surface font-semibold px-6 py-3 rounded-lg text-sm border border-outline-variant hover:bg-surface-bright transition-all">
+<button className="bg-surface-container-highest text-on-surface font-semibold px-6 py-3 rounded-lg text-sm border border-outline-variant hover:bg-surface-bright transition-all btn-vibrate">
                     Access Library
                 </button>
 </div>
 {/*  Tool: Productivity (Small/Medium)  */}
-<div className="kinetic-card md:col-span-12 lg:col-span-3 glass-panel rounded-xl p-8 flex flex-col justify-between group border-l-4 border-l-secondary">
+<div 
+  onMouseMove={handleCardMouseMove}
+  onMouseLeave={handleCardMouseLeave}
+  className="kinetic-card md:col-span-12 lg:col-span-3 glass-panel rounded-xl p-8 flex flex-col justify-between group border-l-4 border-l-secondary hover-tilt glow-border"
+>
 <div>
 <div className="w-12 h-12 bg-surface-container-highest rounded-lg flex items-center justify-center mb-6 border border-white/10 text-secondary-dim">
 <span className="material-symbols-outlined">speed</span>
@@ -111,7 +152,7 @@ export default function UsefulTools() {
                         Pomodoro timers, ambient noise generators, and distraction blockers.
                     </p>
 </div>
-<button className="mt-8 bg-secondary/10 hover:bg-secondary/20 text-secondary font-bold px-4 py-3 rounded-lg text-sm transition-all">
+<button className="mt-8 bg-secondary/10 hover:bg-secondary/20 text-secondary font-bold px-4 py-3 rounded-lg text-sm transition-all btn-vibrate">
                     Start Session
                 </button>
 </div>

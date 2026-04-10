@@ -70,7 +70,7 @@ export default function AdminDashboard() {
       <div className="mb-12">
         <h1 className="text-4xl font-black tracking-tight text-white mb-2 stagger-1">Dashboard Analytics</h1>
         <div className="flex items-center gap-6 stagger-2">
-            <p className="text-slate-500 font-medium">Overview of the DAKH EDU ecosystem.</p>
+            <p className="text-slate-500 font-medium">Overview of the DAKH EDU SOLUTIONS ecosystem.</p>
             <div className="h-4 w-px bg-white/10"></div>
             <div className="flex items-center gap-2 text-[10px] font-black tracking-widest text-green-500 uppercase">
               <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>

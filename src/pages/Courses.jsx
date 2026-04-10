@@ -42,14 +42,30 @@ export default function Courses() {
     }
   };
 
-  const handleApply = (link) => {
-    if (link) {
-      // Ensure the link is absolute
-      const url = link.startsWith('http') ? link : `https://${link}`;
-      window.open(url, '_blank');
-    } else {
-      alert("Application form is not available for this course yet.");
-    }
+  const handleApply = () => {
+    window.open('https://forms.gle/PFs1Vyx4FuKerRQW8', '_blank');
+  };
+
+  const handleCardMouseMove = (e) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = (centerY - y) / 15;
+    const rotateY = (x - centerX) / 15;
+    
+    card.style.setProperty('--rotate-x', `${rotateX}deg`);
+    card.style.setProperty('--rotate-y', `${rotateY}deg`);
+  };
+
+  const handleCardMouseLeave = (e) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--rotate-x', `0deg`);
+    card.style.setProperty('--rotate-y', `0deg`);
   };
 
   return (
@@ -73,7 +89,12 @@ export default function Courses() {
             <div className="col-span-full py-20 text-center text-primary animate-pulse font-bold tracking-wider">LOADING SECURE DATA...</div>
           ) : courses.length > 0 ? (
             courses.map((course) => (
-              <article key={course.id} className="group flex flex-col glass-card p-0 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(105,218,255,0.15)] overflow-hidden border border-white/5">
+              <article 
+                key={course.id} 
+                onMouseMove={handleCardMouseMove}
+                onMouseLeave={handleCardMouseLeave}
+                className="group flex flex-col glass-card p-0 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(105,218,255,0.15)] overflow-hidden border border-white/5 hover-tilt glow-border"
+              >
                 <div className="relative h-56 overflow-hidden">
                   {/* Robust image handling: checks image_url, image, or fallback */}
                   <img 
@@ -101,8 +122,8 @@ export default function Courses() {
                       <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Enrollment Open</span>
                     </div>
                     <button 
-                      onClick={() => handleApply(course.gform_link || course.price)}
-                      className="px-8 py-3 rounded-xl bg-primary text-[#004050] font-black text-xs uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(105,218,255,0.4)] hover:scale-105 active:scale-95"
+                      onClick={handleApply}
+                      className="px-8 py-3 rounded-xl bg-primary text-[#004050] font-black text-xs uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(105,218,255,0.4)] hover:scale-105 active:scale-95 btn-vibrate btn-glow"
                     >
                       Apply Now
                     </button>

@@ -42,14 +42,30 @@ export default function Internships() {
     }
   };
 
-  const handleApply = (link) => {
-    if (link) {
-      // Ensure the link is absolute
-      const url = link.startsWith('http') ? link : `https://${link}`;
-      window.open(url, '_blank');
-    } else {
-      alert("Application form is not available for this internship yet.");
-    }
+  const handleApply = () => {
+    window.open('https://forms.gle/PFs1Vyx4FuKerRQW8', '_blank');
+  };
+
+  const handleCardMouseMove = (e) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = (centerY - y) / 15;
+    const rotateY = (x - centerX) / 15;
+    
+    card.style.setProperty('--rotate-x', `${rotateX}deg`);
+    card.style.setProperty('--rotate-y', `${rotateY}deg`);
+  };
+
+  const handleCardMouseLeave = (e) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--rotate-x', `0deg`);
+    card.style.setProperty('--rotate-y', `0deg`);
   };
 
   return (
@@ -72,7 +88,12 @@ export default function Internships() {
             <div className="col-span-full py-20 text-center text-primary animate-pulse font-bold tracking-wider">LOADING SECURE DATA...</div>
           ) : internships.length > 0 ? (
             internships.map((internship) => (
-              <article key={internship.id} className="group relative glass-card p-0 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(105,218,255,0.15)] overflow-hidden flex flex-col border border-white/5">
+              <article 
+                key={internship.id} 
+                onMouseMove={handleCardMouseMove}
+                onMouseLeave={handleCardMouseLeave}
+                className="group relative glass-card p-0 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(105,218,255,0.15)] overflow-hidden flex flex-col border border-white/5 hover-tilt glow-border"
+              >
                 <div className="relative h-48 overflow-hidden">
                   <img 
                     src={internship.image_url || internship.image || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop'} 
@@ -99,8 +120,8 @@ export default function Internships() {
                       <span className="font-medium tracking-tight">12 Weeks • Remote Friendly</span>
                     </div>
                     <button 
-                      onClick={() => handleApply(internship.gform_link || internship.price)}
-                      className="w-full bg-surface-container-highest text-white border border-white/10 px-6 py-4 rounded-xl font-bold text-sm transition-all hover:bg-primary hover:text-[#004050] hover:border-primary flex items-center justify-center gap-2 group/btn"
+                      onClick={handleApply}
+                      className="w-full bg-surface-container-highest text-white border border-white/10 px-6 py-4 rounded-xl font-bold text-sm transition-all hover:bg-primary hover:text-[#004050] hover:border-primary flex items-center justify-center gap-2 group/btn btn-vibrate btn-glow"
                     >
                       Apply Now
                       <span className="material-symbols-outlined text-sm transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
@@ -118,7 +139,7 @@ export default function Internships() {
         </div>
 
         <section className="mt-32">
-          <h2 className="text-3xl font-bold mb-12 text-center font-headline tracking-tight uppercase tracking-widest text-white/40">Why Intern at DAKH?</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center font-headline tracking-tight uppercase tracking-widest text-white/40">Why Intern at DAKH EDU SOLUTIONS?</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="md:col-span-2 bg-surface-container-low p-10 rounded-2xl border border-white/5 flex flex-col justify-between min-h-[300px]">
               <h4 className="text-2xl font-bold text-white mb-4">Hyper-Growth Environment</h4>

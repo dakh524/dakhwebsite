@@ -6,7 +6,9 @@ export default function Home() {
    const [eventData, setEventData] = useState({ title: '', targetDate: null, link: '' });
    const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
    const [activeMainTab, setActiveMainTab] = useState('courses');
-   const navigate = useNavigate();
+    const [isMentorModalOpen, setIsMentorModalOpen] = useState(false);
+    const [isExiting, setIsExiting] = useState(false);
+    const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -53,8 +55,48 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [eventData.targetDate]);
 
+  const handleDiveIn = () => {
+    const missionSection = document.getElementById('mission-center');
+    if (missionSection) {
+      missionSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleGetStarted = () => {
+    setIsExiting(true);
+    setTimeout(() => {
+      navigate('/courses');
+    }, 600);
+  };
+
+  const handleApply = () => {
+    window.open('https://forms.gle/PFs1Vyx4FuKerRQW8', '_blank');
+  };
+
+  const handleCardMouseMove = (e) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = (centerY - y) / 10;
+    const rotateY = (x - centerX) / 10;
+    
+    card.style.setProperty('--rotate-x', `${rotateX}deg`);
+    card.style.setProperty('--rotate-y', `${rotateY}deg`);
+  };
+
+  const handleCardMouseLeave = (e) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--rotate-x', `0deg`);
+    card.style.setProperty('--rotate-y', `0deg`);
+  };
+
   return (
-    <>
+    <div className={isExiting ? 'page-exit' : ''}>
 
 {/*  TopNavBar  */}
 
@@ -133,10 +175,10 @@ export default function Home() {
 )}
 
 <div className="flex flex-col md:flex-row items-center justify-center gap-5 md:gap-7 mb-20 md:mb-24 stagger-4 w-full max-w-[280px] sm:max-w-md md:max-w-none mx-auto px-6">
-<button onClick={() => navigate('/internships')} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-white text-black font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)] min-h-[60px]">
-                    Join Internship
+<button onClick={handleDiveIn} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-white text-black font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)] min-h-[60px] btn-vibrate">
+                    DIVE IN
                 </button>
-<button onClick={() => navigate('/courses')} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-[0.2em] transition-all hover:bg-white/10 hover:scale-105 active:scale-95 backdrop-blur-xl min-h-[60px]">
+<button onClick={() => navigate('/courses')} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-[0.2em] transition-all hover:bg-white/10 hover:scale-105 active:scale-95 backdrop-blur-xl min-h-[60px] btn-vibrate">
                     Explore Courses
                 </button>
 </div>
@@ -220,7 +262,7 @@ export default function Home() {
 </div>
 
 {/*  Desktop Grid / Mobile Horizontal Scroll  */}
-<div className="flex lg:grid lg:grid-cols-4 gap-6 overflow-x-auto pb-10 lg:pb-0 hide-scrollbar snap-x snap-mandatory px-2 lg:px-0">
+<div className="flex lg:grid lg:grid-cols-4 gap-6 overflow-x-auto pb-10 lg:pb-0 hide-scrollbar scroll-snap-x px-2 lg:px-0">
 {[
                 { title: 'React Mastery', desc: 'Hook logic & state architecture', icon: 'code_blocks', color: 'primary', label: 'ENROLL' },
                 { title: 'Backend Flux', desc: 'Serverless & distributed systems', icon: 'database', color: 'secondary', label: 'JOIN' },
@@ -229,15 +271,17 @@ export default function Home() {
               ].map((course) => (
 <div 
                   key={course.title}
-                  onClick={() => navigate('/courses')} 
-                  className="min-w-[280px] lg:min-w-0 snap-center glass-panel cursor-pointer bg-white/5 rounded-3xl p-8 flex flex-col items-center text-center transition-all hover:bg-white/10 hover:-translate-y-2 border border-white/5"
+                  onClick={handleApply} 
+                  onMouseMove={handleCardMouseMove}
+                  onMouseLeave={handleCardMouseLeave}
+                  className="min-w-[280px] lg:min-w-0 scroll-snap-child glass-panel hover-tilt glow-border cursor-pointer bg-white/5 rounded-3xl p-8 flex flex-col items-center text-center transition-all hover:bg-white/10 border border-white/5"
 >
 <div className={`w-16 h-16 rounded-full bg-${course.color}/10 flex items-center justify-center mb-8 border border-${course.color}/20`}>
 <span className={`material-symbols-outlined text-${course.color} text-4xl`}>{course.icon}</span>
 </div>
 <h4 className="text-xl font-black mb-3">{course.title}</h4>
 <p className="text-xs text-slate-500 leading-relaxed mb-8">{course.desc}</p>
-<span className={`mt-auto text-${course.color} text-[9px] font-black px-5 py-2.5 bg-${course.color}/5 rounded-full border border-${course.color}/10 tracking-widest uppercase`}>{course.label} NO-WAIT</span>
+<span className={`mt-auto text-${course.color} text-[9px] font-black px-5 py-2.5 bg-${course.color}/5 rounded-full border border-${course.color}/10 tracking-widest uppercase btn-glow`}>{course.label} NO-WAIT</span>
 </div>
               ))}
 </div>
@@ -265,8 +309,8 @@ export default function Home() {
                 ))}
 </ul>
 <button 
-                  onClick={() => navigate('/internships')} 
-                  className="w-full md:w-auto bg-white text-black px-12 py-6 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-2xl"
+                  onClick={handleApply} 
+                  className="w-full md:w-auto bg-white text-black px-12 py-6 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-2xl btn-vibrate"
 >
                   INITIATE SEQUENCE: AUTUMN 2024
 </button>
@@ -394,10 +438,62 @@ export default function Home() {
 <option>Partnership Protocol</option>
 </select>
 <textarea required className="w-full bg-surface-container-lowest border-0 focus:ring-2 focus:ring-secondary rounded-xl px-6 py-4 placeholder:text-on-surface-variant/40 text-sm" placeholder="Transmission Details" rows="4"></textarea>
-<button type="submit" className="w-full bg-gradient-to-r from-secondary to-secondary-container text-white py-5 rounded-xl font-black uppercase tracking-[0.2em] shadow-xl hover:shadow-secondary/20 transition-all">
+<button type="submit" className="w-full bg-gradient-to-r from-secondary to-secondary-container text-white py-5 rounded-xl font-black uppercase tracking-[0.2em] shadow-xl hover:shadow-secondary/20 transition-all btn-vibrate btn-glow">
                              Send Transmission
                         </button>
 </form>
+
+<div className="mt-12 flex justify-center">
+  <button 
+    onClick={() => setIsMentorModalOpen(true)}
+    className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-widest hover:bg-white/10 transition-all btn-vibrate"
+  >
+    <span className="material-symbols-outlined text-primary">psychology</span>
+    Talk to Mentor
+  </button>
+</div>
+
+{/* Talk to Mentor Modal */}
+{isMentorModalOpen && (
+  <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
+    <div className="relative glass-panel bg-surface-container-highest/80 rounded-[32px] p-10 md:p-14 max-w-md w-full shadow-3xl animate-in zoom-in-95 duration-300 border border-white/10">
+      <div className="absolute top-6 right-6">
+        <button onClick={() => setIsMentorModalOpen(false)} className="text-slate-400 hover:text-white transition-colors">
+          <span className="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <div className="text-center">
+        <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_30px_rgba(105,218,255,0.2)]">
+          <span className="material-symbols-outlined text-primary text-4xl">contact_support</span>
+        </div>
+        <h3 className="text-3xl font-black mb-4 tracking-tightest">Talk to Mentor</h3>
+        <p className="text-slate-400 mb-10 font-medium">Connect directly with our lead architects for a personalized consultation.</p>
+        
+        <div className="bg-black/20 rounded-2xl p-6 border border-white/5 mb-10">
+          <p className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-2">Direct Channel</p>
+          <a href="tel:+918667399640" className="text-2xl font-black text-white hover:text-primary transition-colors">+91 8667399640</a>
+        </div>
+        
+        <div className="flex flex-col gap-4">
+          <a 
+            href="tel:+918667399640" 
+            className="w-full bg-primary text-[#004050] py-5 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl btn-vibrate flex items-center justify-center gap-3"
+          >
+            Call Now
+            <span className="material-symbols-outlined text-lg">call</span>
+          </a>
+          <button 
+            onClick={() => setIsMentorModalOpen(false)}
+            className="w-full bg-white/5 text-slate-300 py-5 rounded-2xl font-black uppercase tracking-widest text-xs border border-white/10 hover:bg-white/10 transition-all"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 </div>
 </div>
 </div>
@@ -443,6 +539,6 @@ export default function Home() {
       </div>
     </div>
   </footer>
-  </>
+  </div>
 );
 }

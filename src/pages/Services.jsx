@@ -2,6 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 
 export default function Services() {
+  const handleCardMouseMove = (e) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = (centerY - y) / 15;
+    const rotateY = (x - centerX) / 15;
+    
+    card.style.setProperty('--rotate-x', `${rotateX}deg`);
+    card.style.setProperty('--rotate-y', `${rotateY}deg`);
+  };
+
+  const handleCardMouseLeave = (e) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--rotate-x', `0deg`);
+    card.style.setProperty('--rotate-y', `0deg`);
+  };
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -89,7 +110,13 @@ export default function Services() {
         ) : (
           <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service) => (
-              <div key={service.id} onClick={() => openModal(service.title)} className="glass-card p-10 rounded-xl group cursor-pointer transition-all hover:border-primary/30">
+              <div 
+                key={service.id} 
+                onClick={() => openModal(service.title)} 
+                onMouseMove={handleCardMouseMove}
+                onMouseLeave={handleCardMouseLeave}
+                className="glass-card p-10 rounded-xl group cursor-pointer transition-all hover:border-primary/30 hover-tilt glow-border"
+              >
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary/20 transition-colors">
                   <span className="material-symbols-outlined text-primary text-3xl">{service.icon || 'star'}</span>
                 </div>
@@ -130,7 +157,7 @@ export default function Services() {
                   <p className="text-sm font-bold text-[#00D1FF] tracking-widest uppercase mb-2">Direct Contact</p>
                   <p className="text-2xl font-bold text-white">+91 8667399640</p>
                 </div>
-                <button onClick={closeModal} className="w-full bg-[#0f141a] border border-white/10 hover:border-white/30 py-4 rounded-xl font-bold transition-all">
+                <button onClick={closeModal} className="w-full bg-[#0f141a] border border-white/10 hover:border-white/30 py-4 rounded-xl font-bold transition-all btn-vibrate">
                   Close Dashboard
                 </button>
               </div>
@@ -155,7 +182,7 @@ export default function Services() {
                   <input type="email" placeholder="Email Address" required disabled={status === 'submitting'} value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full bg-[#0f141a] border border-white/5 focus:border-primary/50 rounded-xl px-5 py-4 text-white outline-none transition-all disabled:opacity-50" />
                   <textarea placeholder="Describe your project requirements (Optional)" rows={3} disabled={status === 'submitting'} value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className="w-full bg-[#0f141a] border border-white/5 focus:border-primary/50 rounded-xl px-5 py-4 text-white outline-none resize-none transition-all disabled:opacity-50"></textarea>
                   
-                  <button type="submit" disabled={status === 'submitting'} className="w-full group bg-gradient-to-r from-primary to-primary-container text-[#004050] py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(0,209,255,0.3)] transition-all active:scale-[0.98] mt-4 disabled:opacity-75 disabled:pointer-events-none">
+                  <button type="submit" disabled={status === 'submitting'} className="w-full group bg-gradient-to-r from-primary to-primary-container text-[#004050] py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(0,209,255,0.3)] transition-all active:scale-[0.98] mt-4 disabled:opacity-75 disabled:pointer-events-none btn-vibrate btn-glow">
                     {status === 'submitting' ? 'Transmitting Data...' : 'Submit Inquiry'}
                     {status !== 'submitting' && <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">bolt</span>}
                   </button>

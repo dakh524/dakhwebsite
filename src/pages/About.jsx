@@ -2,6 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
 export default function About() {
+  const handleCardMouseMove = (e) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = (centerY - y) / 15;
+    const rotateY = (x - centerX) / 15;
+    
+    card.style.setProperty('--rotate-x', `${rotateX}deg`);
+    card.style.setProperty('--rotate-y', `${rotateY}deg`);
+  };
+
+  const handleCardMouseLeave = (e) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--rotate-x', `0deg`);
+    card.style.setProperty('--rotate-y', `0deg`);
+  };
   const [team, setTeam] = useState([]);
   const [partners, setPartners] = useState([]);
   const [works, setWorks] = useState([]);
@@ -96,7 +117,7 @@ export default function About() {
         <section className="mb-32 overflow-hidden py-10">
           <div className="max-w-7xl mx-auto px-8 mb-16 text-center lg:text-left">
             <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter text-white">Meet Our Team</h2>
-            <p className="text-on-surface-variant text-lg">The people behind DAKH EDU SOLUTION</p>
+            <p className="text-on-surface-variant text-lg">The people behind DAKH EDU SOLUTIONS</p>
           </div>
 
           <div className="relative">
@@ -163,7 +184,12 @@ export default function About() {
               <div className="col-span-full py-20 text-center text-primary animate-pulse font-black uppercase tracking-widest text-xs">Reconstructing Portfolio Grid...</div>
             ) : works.length > 0 ? (
               works.map((work) => (
-                <article key={work.id} className="group glass-card p-0 rounded-[2.5rem] border border-white/5 overflow-hidden transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_40px_80px_rgba(0,209,255,0.15)] hover:border-primary/20">
+                <article 
+                  key={work.id} 
+                  onMouseMove={handleCardMouseMove}
+                  onMouseLeave={handleCardMouseLeave}
+                  className="group glass-card p-0 rounded-[2.5rem] border border-white/5 overflow-hidden transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_40px_80px_rgba(0,209,255,0.15)] hover:border-primary/20 hover-tilt glow-border"
+                >
                   <div className="h-64 relative overflow-hidden">
                     <img src={work.image_url} alt={work.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e14]/60 to-transparent"></div>
@@ -193,7 +219,7 @@ export default function About() {
             <div className="absolute -top-10 -left-10 w-64 h-64 bg-primary/5 rounded-full blur-[100px]"></div>
             <h2 className="text-4xl md:text-5xl font-black mb-8 tracking-tighter leading-tight text-white">Ready to start your <br /><span className="text-primary">evolution</span>?</h2>
             <p className="text-on-surface-variant max-w-xl mx-auto mb-10 text-lg">Connect with us instantly on WhatsApp and start your journey.</p>
-            <a className="inline-flex items-center gap-4 bg-[#25D366] hover:bg-[#128C7E] px-12 py-6 rounded-full text-xl font-black transition-all hover:scale-105" href="https://wa.me/918667399640">
+            <a className="inline-flex items-center gap-4 bg-[#25D366] hover:bg-[#128C7E] px-12 py-6 rounded-full text-xl font-black transition-all hover:scale-105 btn-vibrate" href="https://wa.me/918667399640">
               <span className="material-symbols-outlined text-2xl">chat</span> Message us
             </a>
             <div className="mt-8 flex items-center justify-center gap-2 text-on-surface-variant text-sm font-bold">
