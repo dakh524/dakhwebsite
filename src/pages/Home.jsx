@@ -80,54 +80,50 @@ export default function Home() {
 
 {/*  Master Event Countdown Section  */}
 {eventData.targetDate && (
-<div className="mb-12 md:mb-16 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-  <div className="inline-block glass-panel p-0.5 md:p-1 rounded-[2rem] md:rounded-3xl bg-white/5 border border-white/10 shadow-2xl overflow-hidden group max-w-full">
-    <div className="bg-surface-container-low/40 rounded-[1.8rem] md:rounded-[22px] px-6 md:px-12 py-8 md:py-10 flex flex-col md:flex-row items-center gap-8 md:gap-12 relative overflow-hidden">
+<div className="flex justify-center w-full px-4 md:px-0 mb-12 md:mb-16">
+  <div className="w-full max-w-2xl saas-card p-0.5 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+    <div className="bg-[#0a0e14]/40 rounded-[22px] px-6 md:px-10 py-8 md:py-12 flex flex-col md:flex-row items-center gap-8 md:gap-14 relative overflow-hidden">
       {/* Background flare */}
-      <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-all pointer-events-none"></div>
+      <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
       
-      <div className="text-center md:text-left relative z-10">
-        <div className="flex items-center justify-center md:justify-start gap-2 text-[0.6rem] md:text-[0.7rem] text-primary font-black uppercase tracking-[0.2em] mb-4 md:mb-3">
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-          MASTER EVENT: {eventData.title}
+      <div className="text-center md:text-left relative z-10 flex-1">
+        <div className="flex items-center justify-center md:justify-start gap-2 text-[10px] text-primary font-black uppercase tracking-[0.3em] mb-4">
+          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+          Master System Update: {eventData.title}
         </div>
-        <div className="flex gap-4 sm:gap-8 items-center justify-center md:justify-start">
+        
+        <div className="flex gap-4 sm:gap-10 items-center justify-center md:justify-start">
           <div className="text-center">
-            <span className="text-3xl md:text-5xl font-black block tracking-tighter">{String(timeLeft.days).padStart(2, '0')}</span>
-            <span className="text-[0.5rem] md:text-[0.6rem] text-on-surface-variant font-bold uppercase tracking-widest mt-1 block">Days</span>
+            <span className="text-4xl md:text-6xl font-black block tracking-tightest leading-none">{String(timeLeft.days).padStart(2, '0')}</span>
+            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Days</span>
           </div>
-          <div className="w-px h-8 md:h-12 bg-outline-variant/30"></div>
+          <div className="w-px h-10 md:h-14 bg-white/10"></div>
           <div className="text-center">
-            <span className="text-3xl md:text-5xl font-black block tracking-tighter">{String(timeLeft.hours).padStart(2, '0')}</span>
-            <span className="text-[0.5rem] md:text-[0.6rem] text-on-surface-variant font-bold uppercase tracking-widest mt-1 block">Hours</span>
+            <span className="text-4xl md:text-6xl font-black block tracking-tightest leading-none">{String(timeLeft.hours).padStart(2, '0')}</span>
+            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Hours</span>
           </div>
-          <div className="w-px h-8 md:h-12 bg-outline-variant/30"></div>
+          <div className="w-px h-10 md:h-14 bg-white/10"></div>
           <div className="text-center">
-            <span className="text-3xl md:text-5xl font-black block tracking-tighter">{String(timeLeft.minutes).padStart(2, '0')}</span>
-            <span className="text-[0.5rem] md:text-[0.6rem] text-on-surface-variant font-bold uppercase tracking-widest mt-1 block">Mins</span>
-          </div>
-           <div className="w-px h-8 md:h-12 bg-outline-variant/30 md:block hidden"></div>
-          <div className="text-center md:block hidden">
-            <span className="text-3xl md:text-5xl font-black block tracking-tighter text-primary">{String(timeLeft.seconds).padStart(2, '0')}</span>
-            <span className="text-[0.5rem] md:text-[0.6rem] text-on-surface-variant font-bold uppercase tracking-widest mt-1 block">Secs</span>
+            <span className="text-4xl md:text-6xl font-black block tracking-tightest leading-none">{String(timeLeft.minutes).padStart(2, '0')}</span>
+            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Minutes</span>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 relative z-10 w-full md:min-w-[200px]">
+      <div className="flex flex-col gap-4 relative z-10 w-full md:w-auto">
         {eventData.link && (
           <a 
             href={eventData.link} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-3 bg-primary text-[#004050] px-8 py-3.5 md:py-4 rounded-xl md:rounded-2xl font-black text-xs md:text-sm uppercase tracking-widest hover:shadow-[0_0_30px_rgba(105,218,255,0.4)] hover:scale-105 active:scale-95 transition-all w-full"
+            className="flex items-center justify-center gap-3 bg-white text-black px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all w-full shadow-2xl"
           >
-            Join Event
-            <span className="material-symbols-outlined text-base md:text-lg">rocket_launch</span>
+            Access Now
+            <span className="material-symbols-outlined text-lg">chevron_right</span>
           </a>
         )}
-        <div className="text-[0.55rem] md:text-[0.6rem] text-on-surface-variant/60 text-center font-bold">
-          {new Date(eventData.targetDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+        <div className="text-[9px] text-slate-500 text-center font-black uppercase tracking-widest opacity-60">
+          Target Date: {new Date(eventData.targetDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
         </div>
       </div>
     </div>
