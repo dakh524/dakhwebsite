@@ -66,7 +66,7 @@ export default function Home() {
 <div className="mb-6 md:mb-8 stagger-1">
 <span className="px-4 md:px-5 py-1.5 md:py-2 rounded-full bg-white/5 border border-white/10 text-primary text-[8px] md:text-[10px] font-black tracking-[0.3em] uppercase">The Architecture of Learning v2.0</span>
 </div>
-<h1 className="text-[3.5rem] sm:text-[5rem] md:text-display mb-8 md:mb-10 stagger-2 leading-[0.9] font-black tracking-tightest">
+<h1 className="text-[2.8rem] xs:text-[3.5rem] sm:text-[5rem] md:text-display mb-8 md:mb-10 stagger-2 leading-[0.9] font-black tracking-tightest">
                 Learn.<br /> 
                 <span className="text-gradient">Build.</span><br />
                 Launch.
