@@ -65,65 +65,65 @@ export default function Home() {
 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px]"></div>
 <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-[120px]"></div>
 </div>
- <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 text-center pt-20 md:pt-10">
-<div className="mb-6 md:mb-8 stagger-1">
-<span className="px-4 md:px-5 py-1.5 md:py-2 rounded-full bg-white/5 border border-white/10 text-primary text-[8px] md:text-[10px] font-black tracking-[0.3em] uppercase">The Architecture of Learning v2.0</span>
+ <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 text-center pt-20 md:pt-14 mt-4">
+<div className="mb-8 md:mb-10 stagger-1 flex justify-center">
+<span className="px-6 py-2.5 rounded-full bg-white/5 border border-white/10 text-primary text-[9px] md:text-[11px] font-black tracking-[0.4em] uppercase shadow-[0_0_20px_rgba(105,218,255,0.05)]">ETHEREAL LABORATORY V2.0</span>
 </div>
-<h1 className="text-[2.8rem] xs:text-[3.5rem] sm:text-[5rem] md:text-display mb-8 md:mb-10 stagger-2 leading-[0.9] font-black tracking-tightest">
+<h1 className="text-[2.6rem] sm:text-[4.5rem] md:text-display mb-10 md:mb-12 stagger-2 leading-[0.95] font-black tracking-tightest">
                 Learn.<br /> 
                 <span className="text-gradient">Build.</span><br />
                 Launch.
             </h1>
-<p className="text-base md:text-xl lg:text-2xl text-on-surface-variant max-w-3xl mx-auto mb-10 md:mb-14 font-medium leading-[1.5] tracking-tight stagger-3 opacity-80 px-4">
+<p className="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-400 max-w-3xl mx-auto mb-14 md:mb-18 font-medium leading-[1.6] tracking-tight stagger-3 px-6 md:px-0">
                 Empowering the next generation of digital architects through precision-engineered education and real-world application.
             </p>
 
 {/*  Master Event Countdown Section  */}
 {eventData.targetDate && (
-<div className="flex justify-center w-full px-4 md:px-0 mb-12 md:mb-16">
-  <div className="w-full max-w-2xl saas-card p-0.5 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-    <div className="bg-[#0a0e14]/40 rounded-[22px] px-6 md:px-10 py-8 md:py-12 flex flex-col md:flex-row items-center gap-8 md:gap-14 relative overflow-hidden">
+<div className="flex justify-center w-full px-5 md:px-0 mb-16 md:mb-20">
+  <div className="w-full max-w-2xl saas-card p-0.5 animate-in fade-in slide-in-from-bottom-10 duration-1000">
+    <div className="bg-[#0a0e14]/50 rounded-[22px] px-6 md:px-12 py-10 md:py-14 flex flex-col md:flex-row items-center gap-10 md:gap-16 relative overflow-hidden">
       {/* Background flare */}
-      <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute -top-10 -right-10 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
       
-      <div className="text-center md:text-left relative z-10 flex-1">
-        <div className="flex items-center justify-center md:justify-start gap-2 text-[10px] text-primary font-black uppercase tracking-[0.3em] mb-4">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-          Master System Update: {eventData.title}
+      <div className="text-center md:text-left relative z-10 flex-1 w-full">
+        <div className="flex items-center justify-center md:justify-start gap-3 text-[11px] text-primary font-black uppercase tracking-[0.4em] mb-6">
+          <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(105,218,255,1)]"></span>
+          MISSION PROTOCOL: {eventData.title}
         </div>
         
-        <div className="flex gap-4 sm:gap-10 items-center justify-center md:justify-start">
+        <div className="flex gap-6 sm:gap-12 items-center justify-center md:justify-start">
           <div className="text-center">
-            <span className="text-4xl md:text-6xl font-black block tracking-tightest leading-none">{String(timeLeft.days).padStart(2, '0')}</span>
-            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Days</span>
+            <span className="text-4xl sm:text-5xl md:text-7xl font-black block tracking-tightest leading-none">{String(timeLeft.days).padStart(2, '0')}</span>
+            <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-3 block">Days</span>
           </div>
-          <div className="w-px h-10 md:h-14 bg-white/10"></div>
+          <div className="w-px h-12 md:h-16 bg-white/10"></div>
           <div className="text-center">
-            <span className="text-4xl md:text-6xl font-black block tracking-tightest leading-none">{String(timeLeft.hours).padStart(2, '0')}</span>
-            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Hours</span>
+            <span className="text-4xl sm:text-5xl md:text-7xl font-black block tracking-tightest leading-none">{String(timeLeft.hours).padStart(2, '0')}</span>
+            <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-3 block">Hours</span>
           </div>
-          <div className="w-px h-10 md:h-14 bg-white/10"></div>
+          <div className="w-px h-12 md:h-16 bg-white/10"></div>
           <div className="text-center">
-            <span className="text-4xl md:text-6xl font-black block tracking-tightest leading-none">{String(timeLeft.minutes).padStart(2, '0')}</span>
-            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Minutes</span>
+            <span className="text-4xl sm:text-5xl md:text-7xl font-black block tracking-tightest leading-none">{String(timeLeft.minutes).padStart(2, '0')}</span>
+            <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-3 block">Minutes</span>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 relative z-10 w-full md:w-auto">
+      <div className="flex flex-col gap-5 relative z-10 w-full md:w-auto mt-4 md:mt-0">
         {eventData.link && (
           <a 
             href={eventData.link} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-3 bg-white text-black px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all w-full shadow-2xl"
+            className="flex items-center justify-center gap-3 bg-white text-black px-12 py-6 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:scale-105 active:scale-95 transition-all w-full shadow-2xl min-h-[56px]"
           >
             Access Now
-            <span className="material-symbols-outlined text-lg">chevron_right</span>
+            <span className="material-symbols-outlined text-xl">rocket_launch</span>
           </a>
         )}
-        <div className="text-[9px] text-slate-500 text-center font-black uppercase tracking-widest opacity-60">
-          Target Date: {new Date(eventData.targetDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+        <div className="text-[9px] text-slate-500 text-center font-black uppercase tracking-widest opacity-80 mt-2">
+          Sync Date: {new Date(eventData.targetDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
         </div>
       </div>
     </div>
@@ -131,11 +131,11 @@ export default function Home() {
 </div>
 )}
 
-<div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-16 md:mb-20 stagger-4 w-full max-w-xs sm:max-w-none mx-auto">
-<button onClick={() => navigate('/internships')} className="w-full sm:w-auto px-10 md:px-12 py-4 md:py-5 rounded-xl md:rounded-2xl bg-white text-black font-black text-[10px] md:text-xs uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)]">
+<div className="flex flex-col md:flex-row items-center justify-center gap-5 md:gap-7 mb-20 md:mb-24 stagger-4 w-full max-w-[280px] sm:max-w-md md:max-w-none mx-auto px-6">
+<button onClick={() => navigate('/internships')} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-white text-black font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)] min-h-[60px]">
                     Join Internship
                 </button>
-<button onClick={() => navigate('/courses')} className="w-full sm:w-auto px-10 md:px-12 py-4 md:py-5 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 text-white font-black text-[10px] md:text-xs uppercase tracking-widest transition-all hover:bg-white/10 hover:scale-105 active:scale-95 backdrop-blur-xl">
+<button onClick={() => navigate('/courses')} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-[0.2em] transition-all hover:bg-white/10 hover:scale-105 active:scale-95 backdrop-blur-xl min-h-[60px]">
                     Explore Courses
                 </button>
 </div>
