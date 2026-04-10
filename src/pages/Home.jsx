@@ -3,9 +3,10 @@ import { supabase } from '../lib/supabase';
 import { useNavigate, Link } from 'react-router-dom';
 
 export default function Home() {
-  const [eventData, setEventData] = useState({ title: '', targetDate: null, link: '' });
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const navigate = useNavigate();
+   const [eventData, setEventData] = useState({ title: '', targetDate: null, link: '' });
+   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+   const [activeMainTab, setActiveMainTab] = useState('courses');
+   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -185,76 +186,99 @@ export default function Home() {
 </div>
 </div>
 </section>
-{/*  Courses Section  */}
-<section className="py-24" id="courses">
+{/*  Opportunities Section (Unified on Mobile)  */}
+<section className="py-24" id="mission-center">
 <div className="max-w-7xl mx-auto px-6 md:px-8">
-<div className="text-center mb-16">
-<h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-4">Knowledge Pipelines</h2>
-<h2 className="text-on-surface-variant">Intensive curricula designed for the modern engineer.</h2>
+{/*  Mobile Tab Header  */}
+<div className="flex lg:hidden bg-white/5 p-1 rounded-2xl border border-white/10 mb-10 w-full max-w-sm mx-auto">
+<button 
+                onClick={() => setActiveMainTab('courses')}
+                className={`flex-1 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                  activeMainTab === 'courses' ? 'bg-white text-black shadow-lg translate-y-[1px]' : 'text-slate-500'
+                }`}
+>
+                Knowledge
+</button>
+<button 
+                onClick={() => setActiveMainTab('internships')}
+                className={`flex-1 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                  activeMainTab === 'internships' ? 'bg-white text-black shadow-lg translate-y-[1px]' : 'text-slate-500'
+                }`}
+>
+                Immersion
+</button>
 </div>
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-<div onClick={() => navigate('/courses')} className="glass-panel cursor-pointer bg-surface-container-highest/20 rounded-2xl p-6 flex flex-col items-center text-center transition-all hover:bg-surface-container-highest/40">
-<div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-6">
-<span className="material-symbols-outlined text-primary text-3xl">code_blocks</span>
+
+{/*  Knowledge Pipeline Content (Courses)  */}
+<div className={`${activeMainTab === 'courses' ? 'block' : 'hidden lg:block'} mb-24`}>
+<div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
+<div className="text-center md:text-left w-full md:w-auto">
+<h2 className="text-primary text-[10px] font-black tracking-[0.4em] uppercase mb-4">Knowledge Pipelines</h2>
+<p className="text-3xl md:text-5xl font-black tracking-tightest leading-none">Architecting Your Stack</p>
 </div>
-<h4 className="font-bold mb-2">React Mastery</h4>
-<p className="text-xs text-on-surface-variant mb-6">Deep dive into hook logic and component state architecture.</p>
-<span className="mt-auto text-primary text-[0.65rem] font-bold px-3 py-1 bg-primary/10 rounded-full">ENROLL NOW</span>
+<p className="text-slate-400 max-w-sm text-sm text-center md:text-right hidden md:block">Deep-dive technical tracks for the modern engineer.</p>
 </div>
-<div onClick={() => navigate('/courses')} className="glass-panel cursor-pointer bg-surface-container-highest/20 rounded-2xl p-6 flex flex-col items-center text-center transition-all hover:bg-surface-container-highest/40">
-<div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mb-6">
-<span className="material-symbols-outlined text-secondary text-3xl">database</span>
+
+{/*  Desktop Grid / Mobile Horizontal Scroll  */}
+<div className="flex lg:grid lg:grid-cols-4 gap-6 overflow-x-auto pb-10 lg:pb-0 hide-scrollbar snap-x snap-mandatory px-2 lg:px-0">
+{[
+                { title: 'React Mastery', desc: 'Hook logic & state architecture', icon: 'code_blocks', color: 'primary', label: 'ENROLL' },
+                { title: 'Backend Flux', desc: 'Serverless & distributed systems', icon: 'database', color: 'secondary', label: 'JOIN' },
+                { title: 'Visual Logic', desc: 'Typography & Interactivity', icon: 'brush', color: 'tertiary', label: 'VIEW' },
+                { title: 'Cloud Native', desc: 'Docker & Kubernetes orchestration', icon: 'cloud_queue', color: 'outline', label: 'PRE-REG' }
+              ].map((course) => (
+<div 
+                  key={course.title}
+                  onClick={() => navigate('/courses')} 
+                  className="min-w-[280px] lg:min-w-0 snap-center glass-panel cursor-pointer bg-white/5 rounded-3xl p-8 flex flex-col items-center text-center transition-all hover:bg-white/10 hover:-translate-y-2 border border-white/5"
+>
+<div className={`w-16 h-16 rounded-full bg-${course.color}/10 flex items-center justify-center mb-8 border border-${course.color}/20`}>
+<span className={`material-symbols-outlined text-${course.color} text-4xl`}>{course.icon}</span>
 </div>
-<h4 className="font-bold mb-2">Backend Flux</h4>
-<p className="text-xs text-on-surface-variant mb-6">Serverless deployments and distributed database systems.</p>
-<span className="mt-auto text-secondary text-[0.65rem] font-bold px-3 py-1 bg-secondary/10 rounded-full">JOIN COHORT</span>
+<h4 className="text-xl font-black mb-3">{course.title}</h4>
+<p className="text-xs text-slate-500 leading-relaxed mb-8">{course.desc}</p>
+<span className={`mt-auto text-${course.color} text-[9px] font-black px-5 py-2.5 bg-${course.color}/5 rounded-full border border-${course.color}/10 tracking-widest uppercase`}>{course.label} NO-WAIT</span>
 </div>
-<div onClick={() => navigate('/courses')} className="glass-panel cursor-pointer bg-surface-container-highest/20 rounded-2xl p-6 flex flex-col items-center text-center transition-all hover:bg-surface-container-highest/40">
-<div className="w-16 h-16 rounded-full bg-tertiary/20 flex items-center justify-center mb-6">
-<span className="material-symbols-outlined text-tertiary text-3xl">brush</span>
-</div>
-<h4 className="font-bold mb-2">Visual Logic</h4>
-<p className="text-xs text-on-surface-variant mb-6">Mastering the intersection of typography and interactivity.</p>
-<span className="mt-auto text-tertiary text-[0.65rem] font-bold px-3 py-1 bg-tertiary/10 rounded-full">VIEW SYLLABUS</span>
-</div>
-<div onClick={() => navigate('/courses')} className="glass-panel cursor-pointer bg-surface-container-highest/20 rounded-2xl p-6 flex flex-col items-center text-center transition-all hover:bg-surface-container-highest/40">
-<div className="w-16 h-16 rounded-full bg-outline/20 flex items-center justify-center mb-6">
-<span className="material-symbols-outlined text-on-surface-variant text-3xl">cloud_queue</span>
-</div>
-<h4 className="font-bold mb-2">Cloud Native</h4>
-<p className="text-xs text-on-surface-variant mb-6">Docker, Kubernetes, and the future of deployment pipelines.</p>
-<span className="mt-auto text-on-surface-variant text-[0.65rem] font-bold px-3 py-1 bg-white/5 rounded-full">PRE-REGISTER</span>
+              ))}
 </div>
 </div>
+
+{/*  Immersion Program Content (Internships)  */}
+<div className={`${activeMainTab === 'internships' ? 'block' : 'hidden lg:block'} relative`}>
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+<div className="space-y-10 text-center lg:text-left">
+<div className="space-y-4">
+<h2 className="text-secondary text-[10px] font-black tracking-[0.4em] uppercase">The Immersion Program</h2>
+<h3 className="text-4xl md:text-6xl font-black tracking-tightest leading-[0.85]">Forge Your Identity.</h3>
 </div>
-</section>
-{/*  Internships Section  */}
-<section className="py-24 bg-surface-container-lowest overflow-hidden relative" id="internships">
-<div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-50"></div>
-<div className="max-w-7xl mx-auto px-8 relative z-10">
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-<div className="space-y-8">
-<h2 className="text-primary text-sm font-black tracking-widest uppercase">The Immersion Program</h2>
-<h3 className="text-5xl font-black tracking-tighter leading-tight">Forge your identity in the heat of real projects.</h3>
-<p className="text-on-surface-variant text-lg">Our internship isn't about coffee runs. It's about contributing to codebase that touches thousands. Work directly with senior mentors in our ethereal laboratory.</p>
-<ul className="space-y-4">
-<li className="flex items-center gap-4 text-sm font-semibold">
-<span className="material-symbols-outlined text-primary">check_circle</span> 3-Month Intensive Mentorship
-                        </li>
-<li className="flex items-center gap-4 text-sm font-semibold">
-<span className="material-symbols-outlined text-primary">check_circle</span> Global Networking with Industry Leaders
-                        </li>
-<li className="flex items-center gap-4 text-sm font-semibold">
-<span className="material-symbols-outlined text-primary">check_circle</span> Direct Placement Track for Top Performers
-                        </li>
+<p className="text-slate-400 text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">Work directly with senior mentors in our ethereal laboratory. Contribute to production code that shapes the digital frontier.</p>
+<ul className="space-y-5 flex flex-col items-center lg:items-start">
+{[
+                  '3-Month Intensive Mentorship',
+                  'Global Industry Networking',
+                  'Direct Placement Track'
+                ].map((item) => (
+<li key={item} className="flex items-center gap-4 text-xs font-black uppercase tracking-widest text-white/80">
+<div className="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+                    {item}
+</li>
+                ))}
 </ul>
-<button onClick={() => navigate('/internships')} className="bg-primary text-on-primary px-8 py-4 rounded-full font-black text-sm uppercase tracking-widest hover:shadow-[0_0_30px_rgba(105,218,255,0.4)] transition-all">
-                        Apply for Autumn 2024
-                    </button>
+<button 
+                  onClick={() => navigate('/internships')} 
+                  className="w-full md:w-auto bg-white text-black px-12 py-6 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-2xl"
+>
+                  INITIATE SEQUENCE: AUTUMN 2024
+</button>
 </div>
-<div className="relative group">
-<div className="absolute -inset-4 bg-gradient-to-r from-primary to-secondary opacity-20 blur-2xl rounded-[40px]"></div>
-<img alt="Team collaborating in a modern neon-lit workspace" className="rounded-[40px] border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Modern collaborative tech workspace with neon ambient lighting and young professionals working on complex high-tech monitors and equipment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf0nhiYOjJzm8ZyX7ARu6ZIhMczKlwcdD6-TVmthJm9eBUth2yfidWDRiB9ZvFubL0C4M6R4MvdbZ74ZDA1rcfV97goA-QGwAbBD-umMSva46oBfyabpdBOL6k4WUPm-t49XwQBGw9vfq7CqQVtjCrdtne6ihTTt3DdkECtauscvByZj-ZS4Yru6xbb-oPLG0Ybpw8_jiqZmo_BKn5jVRMkX0OO0P6K4uEZw3ea4lTDxWJ0Qe8ueDc9fE-umQGgA0s0gmhv-pWDypx"/>
+<div className="relative group lg:block hidden">
+<div className="absolute -inset-4 bg-gradient-to-r from-primary/30 to-secondary/30 opacity-20 blur-3xl rounded-[40px]"></div>
+<img 
+                  alt="Modern workspace" 
+                  className="rounded-[40px] border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-700 shadow-2xl" 
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf0nhiYOjJzm8ZyX7ARu6ZIhMczKlwcdD6-TVmthJm9eBUth2yfidWDRiB9ZvFubL0C4M6R4MvdbZ74ZDA1rcfV97goA-QGwAbBD-umMSva46oBfyabpdBOL6k4WUPm-t49XwQBGw9vfq7CqQVtjCrdtne6ihTTt3DdkECtauscvByZj-ZS4Yru6xbb-oPLG0Ybpw8_jiqZmo_BKn5jVRMkX0OO0P6K4uEZw3ea4lTDxWJ0Qe8ueDc9fE-umQGgA0s0gmhv-pWDypx"
+                />
+</div>
 </div>
 </div>
 </div>
