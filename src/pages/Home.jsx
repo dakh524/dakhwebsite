@@ -156,9 +156,57 @@ export default function Home() {
                 <span className="text-gradient">Grow</span><br />
                 With Us.
 </h1>
-<p className="text-lg md:text-2xl text-slate-400 max-w-2xl mx-auto mb-14 font-medium leading-relaxed stagger-reveal">
+<p className="text-lg md:text-2xl text-slate-400 max-w-2xl mx-auto mb-10 font-medium leading-relaxed stagger-reveal">
                 Build skills, earn experience, and grow through real opportunities in our dimensional laboratory.
 </p>
+
+{/*  Master Event Countdown Section  */}
+{eventData.targetDate && (
+<div className="flex justify-center w-full mb-12 stagger-reveal px-4">
+  <div className="w-full max-w-3xl glass-panel p-6 md:p-10 rounded-3xl border border-white/10 relative overflow-hidden bg-white/5">
+    {/* Background flare */}
+    <div className="absolute -top-10 -right-10 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+    
+    <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10 w-full">
+      <div className="text-center md:text-left flex-1">
+        <div className="flex items-center justify-center md:justify-start gap-3 text-[10px] text-primary font-black uppercase tracking-[0.4em] mb-4">
+          <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+          MISSION PROTOCOL: {eventData.title}
+        </div>
+        
+        <div className="flex gap-4 sm:gap-8 items-center justify-center md:justify-start">
+          <div className="text-center">
+            <span className="text-4xl md:text-6xl font-black block tracking-tightest leading-none">{String(timeLeft.days).padStart(2, '0')}</span>
+            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Days</span>
+          </div>
+          <div className="w-px h-10 bg-white/10"></div>
+          <div className="text-center">
+            <span className="text-4xl md:text-6xl font-black block tracking-tightest leading-none">{String(timeLeft.hours).padStart(2, '0')}</span>
+            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Hours</span>
+          </div>
+          <div className="w-px h-10 bg-white/10"></div>
+          <div className="text-center">
+            <span className="text-4xl md:text-6xl font-black block tracking-tightest leading-none">{String(timeLeft.minutes).padStart(2, '0')}</span>
+            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Minutes</span>
+          </div>
+        </div>
+      </div>
+
+      {eventData.link && (
+        <a 
+          href={eventData.link} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="bg-primary/10 border border-primary/20 text-primary px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-primary hover:text-[#004050] transition-all flex items-center justify-center gap-2 group w-full md:w-auto"
+        >
+          Access Beta
+          <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">rocket_launch</span>
+        </a>
+      )}
+    </div>
+  </div>
+</div>
+)}
 
 <div className="flex flex-col md:flex-row items-center justify-center gap-6 stagger-reveal">
 <button onClick={handleApply} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-white text-black font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate">

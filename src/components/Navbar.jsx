@@ -39,7 +39,7 @@ export default function Navbar() {
             <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-primary/20 border border-primary/40 flex items-center justify-center">
                <div className="w-3.5 h-3.5 md:w-4 md:h-4 rounded-sm bg-primary shadow-[0_0_15px_rgba(105,218,255,1)]"></div>
             </div>
-            DAKH<span className="text-primary uppercase tracking-widest text-sm ml-1">Edu</span>
+            DAKH<span className="text-primary uppercase tracking-widest text-sm ml-1">Edu Solutions</span>
           </Link>
 
           {/* Desktop Links */}
