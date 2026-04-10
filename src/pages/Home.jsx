@@ -65,7 +65,7 @@ export default function Home() {
 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px]"></div>
 <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-[120px]"></div>
 </div>
- <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 text-center pt-20 md:pt-14 mt-4">
+ <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center pt-24 md:pt-14 mt-4">
 <div className="mb-8 md:mb-10 stagger-1 flex justify-center">
 <span className="px-6 py-2.5 rounded-full bg-white/5 border border-white/10 text-primary text-[9px] md:text-[11px] font-black tracking-[0.4em] uppercase shadow-[0_0_20px_rgba(105,218,255,0.05)]">ETHEREAL LABORATORY V2.0</span>
 </div>
@@ -143,7 +143,7 @@ export default function Home() {
 </section>
 {/*  Services Section  */}
 <section className="py-24 relative bg-surface-container-low" id="services">
-<div className="max-w-7xl mx-auto px-8">
+<div className="max-w-7xl mx-auto px-6 md:px-8">
 <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
 <div>
 <h2 className="text-primary text-sm font-black tracking-widest uppercase mb-4">Precision Services</h2>
@@ -187,7 +187,7 @@ export default function Home() {
 </section>
 {/*  Courses Section  */}
 <section className="py-24" id="courses">
-<div className="max-w-7xl mx-auto px-8">
+<div className="max-w-7xl mx-auto px-6 md:px-8">
 <div className="text-center mb-16">
 <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-4">Knowledge Pipelines</h2>
 <h2 className="text-on-surface-variant">Intensive curricula designed for the modern engineer.</h2>
@@ -261,7 +261,7 @@ export default function Home() {
 </section>
 {/*  Tools Preview Section (Bento Style)  */}
 <section className="py-24" id="tools">
-<div className="max-w-7xl mx-auto px-8">
+<div className="max-w-7xl mx-auto px-6 md:px-8">
 <div className="flex items-center justify-between mb-16">
 <h2 className="text-4xl font-black tracking-tighter">Engineering Suite</h2>
 <div className="flex gap-2">
@@ -330,7 +330,7 @@ export default function Home() {
 </section>
 {/*  Contact Section  */}
 <section className="py-24 relative overflow-hidden">
-<div className="max-w-7xl mx-auto px-8">
+<div className="max-w-7xl mx-auto px-6 md:px-8">
 <div className="glass-panel bg-surface-container-highest/30 rounded-[48px] p-12 md:p-20 overflow-hidden relative">
 <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-primary/20 rounded-full blur-[100px]"></div>
 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">

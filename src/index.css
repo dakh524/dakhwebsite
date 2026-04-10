@@ -15,11 +15,13 @@ body {
   background-color: var(--background);
   color: #f1f3fc;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 /* SaaS Typography */
 .text-display {
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: clamp(2.2rem, 10vw, 6rem);
   font-weight: 900;
   line-height: 0.95;
   letter-spacing: -0.05em;
