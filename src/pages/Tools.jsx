@@ -93,11 +93,12 @@ export default function Tools() {
                 Have a tool in mind? Join the Next-Gen Dev program and build your own proprietary software.
               </p>
               <a 
-                className="mt-6 text-primary font-bold text-xs uppercase tracking-widest hover:underline" 
                 href="https://docs.google.com/forms/d/e/1FAIpQLSd1E1BLPYIFq1NCaSZyHTiYW9_EPH7I7fdjfBZIvhgeyyuHlw/viewform?usp=header" 
                 target="_blank" 
                 rel="noopener noreferrer"
+                className="mt-8 w-full py-4 px-6 rounded-xl bg-white text-black font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-xl shadow-white/5"
               >
+                <span className="material-symbols-outlined text-sm">edit_note</span>
                 Apply to Program
               </a>
             </div>
