@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DAKH EDU SOLUTION - Learn • Build • Launch</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#6e06d0",
+                        "outline-variant": "#44484f",
+                        "surface-tint": "#69daff",
+                        "primary-dim": "#00c0ea",
+                        "on-tertiary-fixed-variant": "#6d0061",
+                        "surface-container-lowest": "#000000",
+                        "secondary-dim": "#9547f7",
+                        "surface-variant": "#20262f",
+                        "error": "#ff716c",
+                        "secondary-fixed-dim": "#d6b6ff",
+                        "on-error": "#490006",
+                        "primary-fixed-dim": "#00c0ea",
+                        "on-secondary-fixed": "#4a0090",
+                        "inverse-primary": "#006880",
+                        "inverse-on-surface": "#51555c",
+                        "on-primary": "#004a5d",
+                        "surface-container-highest": "#20262f",
+                        "on-surface-variant": "#a8abb3",
+                        "tertiary-dim": "#ff59e3",
+                        "on-tertiary-container": "#1b0017",
+                        "tertiary-container": "#ff05e5",
+                        "secondary-fixed": "#e1c7ff",
+                        "secondary": "#b884ff",
+                        "on-secondary": "#2f0060",
+                        "outline": "#72757d",
+                        "on-secondary-container": "#ebd8ff",
+                        "primary-container": "#00cffc",
+                        "primary": "#69daff",
+                        "on-secondary-fixed-variant": "#6f08d0",
+                        "on-error-container": "#ffa8a3",
+                        "surface-dim": "#0a0e14",
+                        "error-dim": "#d7383b",
+                        "surface-container-high": "#1b2028",
+                        "on-primary-fixed-variant": "#004a5c",
+                        "on-primary-container": "#004050",
+                        "inverse-surface": "#f8f9ff",
+                        "surface-container": "#151a21",
+                        "background": "#0a0e14",
+                        "on-tertiary-fixed": "#33002d",
+                        "error-container": "#9f0519",
+                        "tertiary-fixed-dim": "#ff68e3",
+                        "on-background": "#f1f3fc",
+                        "on-primary-fixed": "#002a35",
+                        "tertiary-fixed": "#ff85e4",
+                        "tertiary": "#ff59e3",
+                        "surface-container-low": "#0f141a",
+                        "primary-fixed": "#00cffc",
+                        "surface": "#0a0e14",
+                        "on-tertiary": "#42003a",
+                        "surface-bright": "#262c36",
+                        "on-surface": "#f1f3fc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .glass-panel { backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+        .neon-glow-primary { box-shadow: 0 0 40px rgba(0, 209, 255, 0.15); }
+        .neon-glow-secondary { box-shadow: 0 0 40px rgba(184, 132, 255, 0.15); }
+        .hero-gradient { background: radial-gradient(circle at 50% 50%, rgba(0, 209, 255, 0.1) 0%, transparent 70%); }
+    </style>
+  </head>
+  <body class="bg-background text-on-background antialiased selection:bg-primary-container selection:text-on-primary-container">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
