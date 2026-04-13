@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import logo from '../assets/logo.png';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -35,11 +36,9 @@ export default function Navbar() {
     <>
       <nav className="fixed top-0 w-full z-[100] bg-[#0a0e14]/60 backdrop-blur-2xl border-b border-white/5">
         <div className="flex justify-between items-center px-6 md:px-8 py-4 md:py-5 max-w-7xl mx-auto">
-          <Link to="/" className="text-xl md:text-2xl font-black tracking-tighter text-white flex items-center gap-2">
-            <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-primary/20 border border-primary/40 flex items-center justify-center">
-               <div className="w-3.5 h-3.5 md:w-4 md:h-4 rounded-sm bg-primary shadow-[0_0_15px_rgba(105,218,255,1)]"></div>
-            </div>
-            DAKH<span className="text-primary uppercase tracking-widest text-sm ml-1">Edu Solutions</span>
+          <Link to="/" className="text-xl md:text-2xl font-black tracking-tighter text-white flex items-center gap-3">
+            <img src={logo} alt="DAKH Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain shadow-[0_0_20px_rgba(105,218,255,0.3)] rounded-lg" />
+            <span className="hidden sm:inline">DAKH<span className="text-primary uppercase tracking-widest text-sm ml-1">Edu Solutions</span></span>
           </Link>
 
           {/* Desktop Links */}

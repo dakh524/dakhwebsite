@@ -3,6 +3,8 @@ import { supabase } from '../lib/supabase';
 import { useNavigate, Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Footer from '../components/Footer';
+import logo from '../assets/logo.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -106,8 +108,22 @@ export default function Home() {
     }, 600);
   };
 
+  const [siteSettings, setSiteSettings] = useState(null);
+
+  useEffect(() => {
+    const fetchSiteSettings = async () => {
+      const { data } = await supabase.from('site_settings').select('*').single();
+      if (data) setSiteSettings(data);
+    };
+    fetchSiteSettings();
+  }, []);
+
   const handleApply = () => {
-    window.open('https://forms.gle/PFs1Vyx4FuKerRQW8', '_blank');
+    window.open(siteSettings?.default_apply_link || 'https://forms.gle/PFs1Vyx4FuKerRQW8', '_blank');
+  };
+
+  const handleWhatsApp = () => {
+    window.open(siteSettings?.whatsapp_link || 'https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank');
   };
 
   const handleCardMouseMove = (e) => {
@@ -212,7 +228,7 @@ export default function Home() {
 <button onClick={handleApply} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-white text-black font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate">
                     Apply Now
                 </button>
-<button onClick={() => window.open('https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank')} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-[#25D366] text-white font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate flex items-center justify-center gap-3">
+<button onClick={handleWhatsApp} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-[#25D366] text-white font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate flex items-center justify-center gap-3">
                     <span className="material-symbols-outlined text-lg">chat</span>
                     Join Community
                 </button>
@@ -237,7 +253,7 @@ export default function Home() {
               ].map((role) => (
 <div 
                   key={role.title}
-                  onClick={role.special ? () => window.open('https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank') : handleApply} 
+                  onClick={role.special ? handleWhatsApp : handleApply} 
                   onMouseMove={handleCardMouseMove}
                   onMouseLeave={handleCardMouseLeave}
                   className={`role-card glass-panel hover-tilt glow-border cursor-pointer bg-white/5 rounded-[2.5rem] p-10 flex flex-col items-center text-center transition-all hover:bg-white/10 border border-white/5 relative group ${role.special ? 'border-l-4 border-l-green-500' : ''}`}
@@ -518,7 +534,7 @@ export default function Home() {
   <button onClick={handleApply} className="bg-white text-black px-12 py-6 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate">
     Get Started
   </button>
-  <button onClick={() => window.open('https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank')} className="bg-[#25D366] text-white px-12 py-6 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl flex items-center justify-center gap-3 btn-vibrate">
+  <button onClick={handleWhatsApp} className="bg-[#25D366] text-white px-12 py-6 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl flex items-center justify-center gap-3 btn-vibrate">
     <span className="material-symbols-outlined text-lg">chat</span>
     Join WhatsApp
   </button>
@@ -527,19 +543,19 @@ export default function Home() {
 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
 <span className="material-symbols-outlined text-primary">mail</span>
 </div>
-<span className="font-bold">dakhedusolution@gmail.com</span>
+<span className="font-bold">{siteSettings?.contact_email || 'dakhedusolution@gmail.com'}</span>
 </div>
 <div className="flex items-center gap-4">
 <div className="w-12 h-12 rounded-xl bg-tertiary/10 flex items-center justify-center">
 <span className="material-symbols-outlined text-tertiary">call</span>
 </div>
-<span className="font-bold">+91 8667399640</span>
+<span className="font-bold">{siteSettings?.contact_phone || '+91 8667399640'}</span>
 </div>
 <div className="flex items-center gap-4">
 <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center">
 <span className="material-symbols-outlined text-secondary">location_on</span>
 </div>
-<span className="font-bold">Chennai, Tamil Nadu, India</span>
+<span className="font-bold">{siteSettings?.address || 'Chennai, Tamil Nadu, India'}</span>
 </div>
 </div>
 <form className="space-y-4" onSubmit={(e) => {e.preventDefault(); alert('Transmission Sent! Our architects will contact you shortly.');}}>
@@ -588,12 +604,12 @@ export default function Home() {
         
         <div className="bg-black/20 rounded-2xl p-6 border border-white/5 mb-10">
           <p className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-2">Direct Channel</p>
-          <a href="tel:+918667399640" className="text-2xl font-black text-white hover:text-primary transition-colors">+91 8667399640</a>
+          <a href={`tel:${siteSettings?.contact_phone || '+918667399640'}`} className="text-2xl font-black text-white hover:text-primary transition-colors">{siteSettings?.contact_phone || '+91 8667399640'}</a>
         </div>
         
         <div className="flex flex-col gap-4">
           <a 
-            href="tel:+918667399640" 
+            href={`tel:${siteSettings?.contact_phone || '+918667399640'}`} 
             className="w-full bg-primary text-[#004050] py-5 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl btn-vibrate flex items-center justify-center gap-3"
           >
             Call Now
@@ -614,47 +630,7 @@ export default function Home() {
 </div>
 </div>
 </section>
-{/*  Footer  */}
-<footer className="w-full border-t border-white/5 bg-[#0a0e14]">
-<div className="w-full px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
-<div className="col-span-1 md:col-span-1">
-<div className="text-lg font-bold text-white mb-6">DAKH EDU SOLUTIONS</div>
-<p className="font-['Inter'] text-xs text-slate-500 leading-relaxed max-w-xs">Forging the architectural backbone of the next web. We don't just teach code; we craft creators.</p>
-</div>
-<div>
-<h4 className="text-xs font-black text-primary uppercase tracking-widest mb-6">Ecosystem</h4>
-<ul className="space-y-3">
-<li><Link className="font-['Inter'] text-xs text-slate-400 hover:text-[#00D1FF] transition-colors" to="/courses">Courses</Link></li>
-<li><Link className="font-['Inter'] text-xs text-slate-400 hover:text-[#00D1FF] transition-colors" to="/services">Services</Link></li>
-<li><Link className="font-['Inter'] text-xs text-slate-400 hover:text-[#00D1FF] transition-colors" to="/internships">Internships</Link></li>
-</ul>
-</div>
-<div>
-<h4 className="text-xs font-black text-primary uppercase tracking-widest mb-6">Resources</h4>
-<ul className="space-y-3">
-<li><Link className="font-['Inter'] text-xs text-slate-400 hover:text-[#00D1FF] transition-colors" to="/tools">Tools</Link></li>
-<li><Link className="font-['Inter'] text-xs text-slate-400 hover:text-[#00D1FF] transition-colors" to="/useful-tools">Useful Tools</Link></li>
-<li><a className="font-['Inter'] text-xs text-slate-400 hover:text-[#00D1FF] transition-colors" href="#">Documentation</a></li>
-</ul>
-</div>
-<div>
-<h4 className="text-xs font-black text-primary uppercase tracking-widest mb-6">Legal & Meta</h4>
-<ul className="space-y-3">
-<li><Link className="font-['Inter'] text-xs text-slate-400 hover:text-[#00D1FF] transition-colors" to="/privacy-policy">Privacy Policy</Link></li>
-<li><a className="font-['Inter'] text-xs text-slate-400 hover:text-[#00D1FF] transition-colors" href="#">Terms of Service</a></li>
-<li><a className="font-['Inter'] text-xs text-slate-400 hover:text-[#00D1FF] transition-colors" href="https://wa.me/918667399640" target="_blank" rel="noopener noreferrer" onClick={(e) => { alert('Contact: dakhedusolution@gmail.com'); }}>Contact Us</a></li>
-</ul>
-</div>
-</div>
-<div className="max-w-7xl mx-auto px-8 py-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-<span className="font-['Inter'] text-xs text-slate-500">© 2024 DAKH EDU SOLUTIONS. All rights reserved.</span>
-<div className="flex gap-6">
-<a className="text-slate-500 hover:text-white transition-all" href="#"><span className="material-symbols-outlined text-lg">language</span></a>
-<a className="text-slate-500 hover:text-white transition-all" href="mailto:dakhedusolution@gmail.com"><span className="material-symbols-outlined text-lg">alternate_email</span></a>
-<a className="text-slate-500 hover:text-white transition-all" href="https://dakhedusolutions.in"><span className="material-symbols-outlined text-lg">public</span></a>
-      </div>
-    </div>
-  </footer>
+  <Footer />
   </div>
 );
 }

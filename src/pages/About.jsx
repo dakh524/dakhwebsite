@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import logo from '../assets/logo.png';
+import Footer from '../components/Footer';
 
 export default function About() {
   const handleCardMouseMove = (e) => {
@@ -26,6 +28,7 @@ export default function About() {
   const [team, setTeam] = useState([]);
   const [partners, setPartners] = useState([]);
   const [works, setWorks] = useState([]);
+  const [siteSettings, setSiteSettings] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -37,16 +40,19 @@ export default function About() {
       const [
         { data: teamData }, 
         { data: partnerData },
-        { data: worksData }
+        { data: worksData },
+        { data: settingsData }
       ] = await Promise.all([
         supabase.from('team').select('*').eq('is_active', true).order('id', { ascending: true }),
         supabase.from('partners').select('*').eq('is_active', true).order('id', { ascending: true }),
-        supabase.from('works').select('*').eq('is_active', true).order('id', { ascending: true })
+        supabase.from('works').select('*').eq('is_active', true).order('id', { ascending: true }),
+        supabase.from('site_settings').select('*').single()
       ]);
 
       setTeam(teamData || []);
       setPartners(partnerData || []);
       setWorks(worksData || []);
+      if (settingsData) setSiteSettings(settingsData);
     } catch (err) {
       console.error('Error fetching data:', err);
     } finally {
@@ -219,45 +225,23 @@ export default function About() {
             <div className="absolute -top-10 -left-10 w-64 h-64 bg-primary/5 rounded-full blur-[100px]"></div>
             <h2 className="text-4xl md:text-5xl font-black mb-8 tracking-tighter leading-tight text-white">Ready to start your <br /><span className="text-primary">evolution</span>?</h2>
             <p className="text-on-surface-variant max-w-xl mx-auto mb-10 text-lg">Connect with us instantly on WhatsApp and start your journey.</p>
-            <a className="inline-flex items-center gap-4 bg-[#25D366] hover:bg-[#128C7E] px-12 py-6 rounded-full text-xl font-black transition-all hover:scale-105 btn-vibrate" href="https://wa.me/918667399640">
+            <a 
+              className="inline-flex items-center gap-4 bg-[#25D366] hover:bg-[#128C7E] px-12 py-6 rounded-full text-xl font-black transition-all hover:scale-105 btn-vibrate" 
+              href={siteSettings?.whatsapp_link || 'https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA'}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <span className="material-symbols-outlined text-2xl">chat</span> Message us
             </a>
             <div className="mt-8 flex items-center justify-center gap-2 text-on-surface-variant text-sm font-bold">
               <span className="material-symbols-outlined text-primary">location_on</span>
-              Chennai, Tamil Nadu, India
+              {siteSettings?.address || 'Chennai, Tamil Nadu, India'}
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="w-full border-t border-white/5 bg-[#0a0e14]">
-        <div className="max-w-7xl mx-auto px-6 md:px-8 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
-           <div className="col-span-1 md:col-span-2">
-             <div className="text-xl font-black text-white mb-6 tracking-tighter">DAKH EDU SOLUTIONS</div>
-             <p className="text-slate-500 text-sm max-w-xs leading-relaxed">
-               Pioneering the future of digital education through kinetic depth and atmospheric design.
-             </p>
-           </div>
-           <div>
-             <h5 className="text-white text-xs font-black uppercase tracking-widest mb-6 text-white">Discovery</h5>
-             <ul className="space-y-4">
-               <li><a className="text-slate-500 hover:text-primary transition-colors text-xs font-bold" href="/courses">Courses</a></li>
-               <li><a className="text-slate-500 hover:text-primary transition-colors text-xs font-bold" href="/internships">Internships</a></li>
-               <li><a className="text-slate-500 hover:text-primary transition-colors text-xs font-bold" href="/privacy-policy">Privacy Policy</a></li>
-             </ul>
-           </div>
-           <div>
-             <h5 className="text-white text-xs font-black uppercase tracking-widest mb-6">Connect</h5>
-             <div className="flex gap-6">
-                <span className="material-symbols-outlined text-slate-500 hover:text-primary cursor-pointer transition-all">public</span>
-                <span className="material-symbols-outlined text-slate-500 hover:text-primary cursor-pointer transition-all" onClick={() => { alert('Contact: dakhedusolution@gmail.com'); }}>alternate_email</span>
-             </div>
-           </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-8 py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-black uppercase tracking-widest text-slate-600">
-          <p>© 2024 DAKH EDU SOLUTIONS. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

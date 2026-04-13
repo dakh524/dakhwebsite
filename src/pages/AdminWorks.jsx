@@ -156,7 +156,7 @@ export default function AdminWorks() {
         {works.map((work) => (
           <div key={work.id} className={`group bg-[#151a21]/80 backdrop-blur-xl border border-white/10 p-0 rounded-3xl shadow-xl overflow-hidden hover:border-primary/40 transition-all ${!work.is_active ? 'opacity-50' : ''}`}>
             <div className="relative h-48 overflow-hidden">
-               <img src={work.image_url} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" alt={work.title} />
+               <img src={work.image_url || work.image} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" alt={work.title} />
                <div className="absolute inset-0 bg-gradient-to-t from-[#151a21] to-transparent"></div>
             </div>
             <div className="p-6">

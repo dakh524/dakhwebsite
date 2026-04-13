@@ -147,7 +147,7 @@ export default function AdminPartners() {
         {partners.map((partner) => (
           <div key={partner.id} className={`group bg-[#151a21]/80 border border-white/5 p-4 rounded-2xl transition-all relative ${!partner.is_active ? 'opacity-30' : ''}`}>
             <div className="h-16 flex items-center justify-center mb-4">
-              <img src={partner.logo_url} alt={partner.name} className="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500" />
+              <img src={partner.logo_url || partner.logo} alt={partner.name} className="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500" />
             </div>
             <div className="text-center">
               <p className="text-[10px] font-bold text-slate-500 truncate">{partner.name}</p>

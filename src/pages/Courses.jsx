@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import Footer from '../components/Footer';
 
 export default function Courses() {
   const [courses, setCourses] = useState([]);
@@ -42,8 +43,8 @@ export default function Courses() {
     }
   };
 
-  const handleApply = () => {
-    window.open('https://forms.gle/PFs1Vyx4FuKerRQW8', '_blank');
+  const handleApply = (link) => {
+    window.open(link || 'https://forms.gle/PFs1Vyx4FuKerRQW8', '_blank');
   };
 
   const handleCardMouseMove = (e) => {
@@ -122,7 +123,7 @@ export default function Courses() {
                       <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Enrollment Open</span>
                     </div>
                     <button 
-                      onClick={handleApply}
+                      onClick={() => handleApply(course.gform_link || course.apply_link)}
                       className="px-8 py-3 rounded-xl bg-primary text-[#004050] font-black text-xs uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(105,218,255,0.4)] hover:scale-105 active:scale-95 btn-vibrate btn-glow"
                     >
                       Apply Now
@@ -165,6 +166,7 @@ export default function Courses() {
           </div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }

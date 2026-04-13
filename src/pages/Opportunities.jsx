@@ -1,13 +1,36 @@
 import React from 'react';
+import { supabase } from '../lib/supabase';
+import Footer from '../components/Footer';
 
 export default function Opportunities() {
-  const handleApply = () => {
-    window.open('https://forms.gle/PFs1Vyx4FuKerRQW8', '_blank');
+  const [siteSettings, setSiteSettings] = React.useState(null);
+  const [opportunities, setOpportunities] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const { data: settings } = await supabase.from('site_settings').select('*').single();
+      if (settings) setSiteSettings(settings);
+
+      const { data: opps } = await supabase.from('opportunities').select('*').eq('is_active', true).order('id', { ascending: true });
+      if (opps && opps.length > 0) setOpportunities(opps);
+    };
+    fetchData();
+  }, []);
+
+  const handleApply = (link) => {
+    window.open(link || siteSettings?.default_apply_link || 'https://forms.gle/PFs1Vyx4FuKerRQW8', '_blank');
   };
 
   const handleWhatsApp = () => {
-    window.open('https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank');
+    window.open(siteSettings?.whatsapp_link || 'https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank');
   };
+
+  const currentOpportunities = opportunities.length > 0 ? opportunities : [
+    { title: 'Campus Ambassador', desc: 'Lead your college community, organize technical summits, and master executive leadership.', icon: 'campaign', color: 'primary', label: 'Apply Protocol' },
+    { title: 'Core Developer', desc: 'Architect real-world applications and expand your technical neural network with live projects.', icon: 'terminal', color: 'secondary', label: 'Initiate Build' },
+    { title: 'Marketing Node', desc: 'Activate your network via WhatsApp and scale our mission while earning performance rewards.', icon: 'share', color: 'green-500', label: 'Join Network', special: true },
+    { title: 'Tactical Freelancer', desc: 'Deploy your expertise remotely on mission-specific tasks and earn dimensional rewards.', icon: 'work_history', color: 'tertiary', label: 'Secure Task' }
+  ];
 
   const handleCardMouseMove = (e) => {
     const card = e.currentTarget;
@@ -48,89 +71,32 @@ export default function Opportunities() {
 
       {/* Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-32">
-        {/* 1: Campus Ambassador */}
-        <div 
-          onMouseMove={handleCardMouseMove}
-          onMouseLeave={handleCardMouseLeave}
-          className="glass-panel p-10 rounded-[2rem] flex flex-col group hover-tilt glow-border"
-        >
-          <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-8 border border-primary/20">
-            <span className="material-symbols-outlined text-primary text-3xl">campaign</span>
-          </div>
-          <h3 className="text-2xl font-black mb-4 tracking-tight">Campus Ambassador</h3>
-          <p className="text-slate-400 text-sm leading-relaxed mb-10 flex-grow">
-            Lead your college community, organize technical summits, and master executive leadership.
-          </p>
-          <button 
-            onClick={handleApply}
-            className="w-full bg-white/5 border border-white/10 text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all hover:bg-primary hover:text-[#004050] hover:border-primary btn-vibrate"
+        {currentOpportunities.map((opp, index) => (
+          <div 
+            key={opp.id || index}
+            onMouseMove={handleCardMouseMove}
+            onMouseLeave={handleCardMouseLeave}
+            className={`glass-panel p-10 rounded-[2.5rem] flex flex-col group hover-tilt glow-border ${opp.special ? 'border-l-4 border-l-green-500' : ''}`}
           >
-            Apply Protocol
-          </button>
-        </div>
-
-        {/* 2: Developer */}
-        <div 
-          onMouseMove={handleCardMouseMove}
-          onMouseLeave={handleCardMouseLeave}
-          className="glass-panel p-10 rounded-[2rem] flex flex-col group hover-tilt glow-border"
-        >
-          <div className="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center mb-8 border border-secondary/20">
-            <span className="material-symbols-outlined text-secondary text-3xl">terminal</span>
+            <div className={`w-14 h-14 bg-${opp.color === 'green-500' ? 'green-500' : opp.color}/10 rounded-2xl flex items-center justify-center mb-8 border border-${opp.color === 'green-500' ? 'green-500' : opp.color}/20`}>
+              <span className={`material-symbols-outlined text-${opp.color === 'green-500' ? 'green-500' : opp.color} text-3xl`}>{opp.icon}</span>
+            </div>
+            <h3 className="text-2xl font-black mb-4 tracking-tight">{opp.title}</h3>
+            <p className="text-slate-400 text-sm leading-relaxed mb-10 flex-grow">
+              {opp.desc || opp.description}
+            </p>
+            <button 
+              onClick={() => opp.special ? handleWhatsApp() : handleApply(opp.apply_link)}
+              className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all btn-vibrate ${
+                opp.special 
+                  ? 'bg-green-500 text-black shadow-[0_10px_30px_rgba(34,197,94,0.3)] hover:scale-105 active:scale-95' 
+                  : `bg-white/5 border border-white/10 text-white hover:bg-${opp.color === 'green-500' ? 'green-500' : opp.color} hover:text-${opp.color === 'primary' ? '[#004050]' : 'white'} hover:border-${opp.color === 'green-500' ? 'green-500' : opp.color}`
+              }`}
+            >
+              {opp.label || (opp.special ? 'Join Network' : 'Apply Now')}
+            </button>
           </div>
-          <h3 className="text-2xl font-black mb-4 tracking-tight">Core Developer</h3>
-          <p className="text-slate-400 text-sm leading-relaxed mb-10 flex-grow">
-            Architect real-world applications and expand your technical neural network with live projects.
-          </p>
-          <button 
-            onClick={handleApply}
-            className="w-full bg-white/5 border border-white/10 text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all hover:bg-secondary hover:text-white hover:border-secondary btn-vibrate"
-          >
-            Initiate Build
-          </button>
-        </div>
-
-        {/* 3: Marketing Partner */}
-        <div 
-          onMouseMove={handleCardMouseMove}
-          onMouseLeave={handleCardMouseLeave}
-          className="glass-panel p-10 rounded-[2rem] flex flex-col group border-l-4 border-l-green-500 hover-tilt glow-border"
-        >
-          <div className="w-14 h-14 bg-green-500/10 rounded-2xl flex items-center justify-center mb-8 border border-green-500/20">
-            <span className="material-symbols-outlined text-green-500 text-3xl">share</span>
-          </div>
-          <h3 className="text-2xl font-black mb-4 tracking-tight">Marketing Node</h3>
-          <p className="text-slate-400 text-sm leading-relaxed mb-10 flex-grow">
-            Activate your network via WhatsApp and scale our mission while earning performance rewards.
-          </p>
-          <button 
-            onClick={handleWhatsApp}
-            className="w-full bg-green-500 text-black py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-[0_10px_30px_rgba(34,197,94,0.3)] btn-vibrate"
-          >
-            Join Network
-          </button>
-        </div>
-
-        {/* 4: Freelancer */}
-        <div 
-          onMouseMove={handleCardMouseMove}
-          onMouseLeave={handleCardMouseLeave}
-          className="glass-panel p-10 rounded-[2rem] flex flex-col group hover-tilt glow-border"
-        >
-          <div className="w-14 h-14 bg-tertiary/10 rounded-2xl flex items-center justify-center mb-8 border border-tertiary/20">
-            <span className="material-symbols-outlined text-tertiary text-3xl">work_history</span>
-          </div>
-          <h3 className="text-2xl font-black mb-4 tracking-tight">Tactical Freelancer</h3>
-          <p className="text-slate-400 text-sm leading-relaxed mb-10 flex-grow">
-            Deploy your expertise remotely on mission-specific tasks and earn dimensional rewards.
-          </p>
-          <button 
-            onClick={handleApply}
-            className="w-full bg-white/5 border border-white/10 text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all hover:bg-tertiary hover:text-white hover:border-tertiary btn-vibrate"
-          >
-            Secure Task
-          </button>
-        </div>
+        ))}
       </div>
 
       {/* CTA Section */}
@@ -155,5 +121,6 @@ export default function Opportunities() {
         </div>
       </section>
     </main>
+    <Footer />
   );
 }

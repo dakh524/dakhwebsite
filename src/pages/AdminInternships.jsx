@@ -170,7 +170,7 @@ export default function AdminInternships() {
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {internships.map((item) => (
           <div key={item.id} className={`group bg-[#151a21]/80 backdrop-blur-xl border border-white/10 p-0 rounded-3xl shadow-xl overflow-hidden hover:border-primary/40 transition-all ${!item.is_active ? 'opacity-50' : ''}`}>
-            {item.image_url && <img src={item.image_url} className="w-full h-40 object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt={item.title} />}
+            {(item.image_url || item.image) && <img src={item.image_url || item.image} className="w-full h-40 object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt={item.title} />}
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">{item.category}</span>

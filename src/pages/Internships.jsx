@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import Footer from '../components/Footer';
 
 export default function Internships() {
   const [internships, setInternships] = useState([]);
@@ -42,8 +43,8 @@ export default function Internships() {
     }
   };
 
-  const handleApply = () => {
-    window.open('https://forms.gle/PFs1Vyx4FuKerRQW8', '_blank');
+  const handleApply = (link) => {
+    window.open(link || 'https://forms.gle/PFs1Vyx4FuKerRQW8', '_blank');
   };
 
   const handleCardMouseMove = (e) => {
@@ -120,7 +121,7 @@ export default function Internships() {
                       <span className="font-medium tracking-tight">12 Weeks • Remote Friendly</span>
                     </div>
                     <button 
-                      onClick={handleApply}
+                      onClick={() => handleApply(internship.gform_link || internship.apply_link)}
                       className="w-full bg-surface-container-highest text-white border border-white/10 px-6 py-4 rounded-xl font-bold text-sm transition-all hover:bg-primary hover:text-[#004050] hover:border-primary flex items-center justify-center gap-2 group/btn btn-vibrate btn-glow"
                     >
                       Apply Now
@@ -166,6 +167,7 @@ export default function Internships() {
           </div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }

@@ -169,6 +169,16 @@ export default function AdminServices() {
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => (
           <div key={service.id} className={`group bg-[#151a21]/80 backdrop-blur-xl border border-white/10 p-0 rounded-3xl shadow-xl overflow-hidden hover:border-secondary/40 transition-all ${!service.is_active ? 'opacity-50' : ''}`}>
+            {(service.image_url || service.image) && (
+              <div className="relative h-40 overflow-hidden">
+                <img 
+                  src={service.image_url || service.image} 
+                  className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-700 group-hover:scale-110" 
+                  alt={service.title} 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#151a21]/80 to-transparent"></div>
+              </div>
+            )}
             <div className="p-8">
               <div className="flex justify-between items-start mb-6">
                 <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center">

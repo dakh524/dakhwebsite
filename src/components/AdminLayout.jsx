@@ -5,6 +5,7 @@ import {
   LayoutDashboard, BookOpen, Briefcase, Settings, Wrench, 
   LogOut, Calendar, Users, Share2, Eye, Menu, X 
 } from 'lucide-react';
+import logo from '../assets/logo.png';
 
 export default function AdminLayout() {
   const { isAuthenticated, logout } = useAuth();
@@ -25,6 +26,8 @@ export default function AdminLayout() {
     { name: 'Manage Team', path: '/admin/team', icon: Users },
     { name: 'Manage Partners', path: '/admin/partners', icon: Share2 },
     { name: 'Manage Works', path: '/admin/works', icon: Eye },
+    { name: 'Manage Growth', path: '/admin/opportunities', icon: Share2 },
+    { name: 'Site Constants', path: '/admin/settings', icon: Settings },
   ];
 
   return (
@@ -53,8 +56,8 @@ export default function AdminLayout() {
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         <div className="p-8">
-          <Link to="/" className="text-xl font-black tracking-tighter text-white flex items-center gap-2">
-            <div className="w-6 h-6 rounded bg-primary"></div>
+          <Link to="/" className="text-xl font-black tracking-tighter text-white flex items-center gap-3">
+            <img src={logo} alt="DAKH Logo" className="w-5 h-5 object-contain" />
             DAKH<span className="text-primary italic">ADMIN</span>
           </Link>
         </div>

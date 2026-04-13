@@ -160,7 +160,7 @@ export default function AdminTeam() {
         {members.map((member) => (
           <div key={member.id} className={`group bg-[#151a21]/80 backdrop-blur-xl border border-white/10 p-0 rounded-3xl shadow-xl overflow-hidden hover:border-[#b884ff]/40 transition-all ${!member.is_active ? 'opacity-50' : ''}`}>
             <div className="relative h-64">
-              {member.image_url && <img src={member.image_url} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt={member.name} />}
+              {(member.image_url || member.image) && <img src={member.image_url || member.image} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt={member.name} />}
               <div className="absolute inset-0 bg-gradient-to-t from-[#151a21] to-transparent"></div>
               <div className="absolute bottom-4 left-6">
                 <h3 className="text-xl font-bold text-white">{member.name}</h3>

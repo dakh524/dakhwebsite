@@ -170,7 +170,7 @@ export default function AdminTools() {
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => (
           <div key={tool.id} className={`group bg-[#151a21]/80 backdrop-blur-xl border border-white/10 p-0 rounded-3xl shadow-xl overflow-hidden hover:border-primary/40 transition-all ${!tool.is_active ? 'opacity-50' : ''}`}>
-            {tool.image_url && <img src={tool.image_url} className="w-full h-40 object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt={tool.title} />}
+            {(tool.image_url || tool.image) && <img src={tool.image_url || tool.image} className="w-full h-40 object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt={tool.title} />}
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">{tool.category}</span>

@@ -26,6 +26,8 @@ import AdminTeam from './pages/AdminTeam';
 import AdminPartners from './pages/AdminPartners';
 import AdminWorks from './pages/AdminWorks';
 import AdminEvents from './pages/AdminEvents';
+import AdminSiteSettings from './pages/AdminSiteSettings';
+import AdminOpportunities from './pages/AdminOpportunities';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Opportunities from './pages/Opportunities';
 
@@ -63,6 +65,8 @@ function App() {
             <Route path="team" element={<AdminTeam />} />
             <Route path="partners" element={<AdminPartners />} />
             <Route path="works" element={<AdminWorks />} />
+            <Route path="settings" element={<AdminSiteSettings />} />
+            <Route path="opportunities" element={<AdminOpportunities />} />
           </Route>
 
           {/* Fallback */}
