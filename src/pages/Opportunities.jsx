@@ -55,72 +55,74 @@ export default function Opportunities() {
   };
 
   return (
-    <main className="pt-32 pb-24 px-6 md:px-8 max-w-7xl mx-auto min-h-screen">
-      {/* Hero Section */}
-      <header className="mb-20 text-center max-w-4xl mx-auto">
-        <div className="inline-block px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-[10px] font-black tracking-[0.3em] uppercase mb-8">
-          Growth Ecosystem
-        </div>
-        <h1 className="text-5xl md:text-8xl font-black tracking-tightest mb-8 leading-[0.9] glow">
-          Join & <span className="text-gradient">Grow</span> With Us
-        </h1>
-        <p className="text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
-          DAKH EDU SOLUTIONS is a high-performance growth incubator for students, creators, developers, and marketers. Choose your path.
-        </p>
-      </header>
+    <>
+      <main className="pt-32 pb-24 px-6 md:px-8 max-w-7xl mx-auto min-h-screen">
+        {/* Hero Section */}
+        <header className="mb-20 text-center max-w-4xl mx-auto">
+          <div className="inline-block px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-[10px] font-black tracking-[0.3em] uppercase mb-8">
+            Growth Ecosystem
+          </div>
+          <h1 className="text-5xl md:text-8xl font-black tracking-tightest mb-8 leading-[0.9] glow">
+            Join & <span className="text-gradient">Grow</span> With Us
+          </h1>
+          <p className="text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
+            DAKH EDU SOLUTIONS is a high-performance growth incubator for students, creators, developers, and marketers. Choose your path.
+          </p>
+        </header>
 
-      {/* Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-32">
-        {currentOpportunities.map((opp, index) => (
-          <div 
-            key={opp.id || index}
-            onMouseMove={handleCardMouseMove}
-            onMouseLeave={handleCardMouseLeave}
-            className={`glass-panel p-10 rounded-[2.5rem] flex flex-col group hover-tilt glow-border ${opp.special ? 'border-l-4 border-l-green-500' : ''}`}
-          >
-            <div className={`w-14 h-14 bg-${opp.color === 'green-500' ? 'green-500' : opp.color}/10 rounded-2xl flex items-center justify-center mb-8 border border-${opp.color === 'green-500' ? 'green-500' : opp.color}/20`}>
-              <span className={`material-symbols-outlined text-${opp.color === 'green-500' ? 'green-500' : opp.color} text-3xl`}>{opp.icon}</span>
-            </div>
-            <h3 className="text-2xl font-black mb-4 tracking-tight">{opp.title}</h3>
-            <p className="text-slate-400 text-sm leading-relaxed mb-10 flex-grow">
-              {opp.desc || opp.description}
-            </p>
-            <button 
-              onClick={() => opp.special ? handleWhatsApp() : handleApply(opp.apply_link)}
-              className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all btn-vibrate ${
-                opp.special 
-                  ? 'bg-green-500 text-black shadow-[0_10px_30px_rgba(34,197,94,0.3)] hover:scale-105 active:scale-95' 
-                  : `bg-white/5 border border-white/10 text-white hover:bg-${opp.color === 'green-500' ? 'green-500' : opp.color} hover:text-${opp.color === 'primary' ? '[#004050]' : 'white'} hover:border-${opp.color === 'green-500' ? 'green-500' : opp.color}`
-              }`}
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-32">
+          {currentOpportunities.map((opp, index) => (
+            <div 
+              key={opp.id || index}
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
+              className={`glass-panel p-10 rounded-[2.5rem] flex flex-col group hover-tilt glow-border ${opp.special ? 'border-l-4 border-l-green-500' : ''}`}
             >
-              {opp.label || (opp.special ? 'Join Network' : 'Apply Now')}
+              <div className={`w-14 h-14 bg-${opp.color === 'green-500' ? 'green-500' : opp.color}/10 rounded-2xl flex items-center justify-center mb-8 border border-${opp.color === 'green-500' ? 'green-500' : opp.color}/20`}>
+                <span className={`material-symbols-outlined text-${opp.color === 'green-500' ? 'green-500' : opp.color} text-3xl`}>{opp.icon}</span>
+              </div>
+              <h3 className="text-2xl font-black mb-4 tracking-tight">{opp.title}</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-10 flex-grow">
+                {opp.desc || opp.description}
+              </p>
+              <button 
+                onClick={() => opp.special ? handleWhatsApp() : handleApply(opp.apply_link)}
+                className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all btn-vibrate ${
+                  opp.special 
+                    ? 'bg-green-500 text-black shadow-[0_10px_30px_rgba(34,197,94,0.3)] hover:scale-105 active:scale-95' 
+                    : `bg-white/5 border border-white/10 text-white hover:bg-${opp.color === 'green-500' ? 'green-500' : opp.color} hover:text-${opp.color === 'primary' ? '[#004050]' : 'white'} hover:border-${opp.color === 'green-500' ? 'green-500' : opp.color}`
+                }`}
+              >
+                {opp.label || (opp.special ? 'Join Network' : 'Apply Now')}
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA Section */}
+        <section className="text-center py-20 border-t border-white/5 relative overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] pointer-events-none"></div>
+          <h2 className="text-4xl md:text-6xl font-black mb-12 tracking-tightest leading-tight">
+            Start Your Dimensional <br /> <span className="text-gradient">Journey Today.</span>
+          </h2>
+          <div className="flex flex-col md:flex-row justify-center gap-6 relative z-10">
+            <button 
+              onClick={handleApply}
+              className="px-12 py-6 rounded-2xl bg-white text-black font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate"
+            >
+              Get Started
+            </button>
+            <button 
+              onClick={handleWhatsApp}
+              className="px-12 py-6 rounded-2xl bg-green-500 text-black font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate"
+            >
+              Sync via WhatsApp
             </button>
           </div>
-        ))}
-      </div>
-
-      {/* CTA Section */}
-      <section className="text-center py-20 border-t border-white/5 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] pointer-events-none"></div>
-        <h2 className="text-4xl md:text-6xl font-black mb-12 tracking-tightest leading-tight">
-          Start Your Dimensional <br /> <span className="text-gradient">Journey Today.</span>
-        </h2>
-        <div className="flex flex-col md:flex-row justify-center gap-6 relative z-10">
-          <button 
-            onClick={handleApply}
-            className="px-12 py-6 rounded-2xl bg-white text-black font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate"
-          >
-            Get Started
-          </button>
-          <button 
-            onClick={handleWhatsApp}
-            className="px-12 py-6 rounded-2xl bg-green-500 text-black font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate"
-          >
-            Sync via WhatsApp
-          </button>
-        </div>
-      </section>
-    </main>
-    <Footer />
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 }
