@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from '../components/Footer';
+import SkillRunnerGame from '../components/SkillRunnerGame';
 import { getSupabaseUrl, handleImageError, FALLBACK_IMAGE } from '../utils/imageUrl';
 import logo from '../assets/logo.png';
 
@@ -245,6 +246,9 @@ export default function Home() {
 </div>
 </div>
 </section>
+
+{/* Interactive Skill Runner Section */}
+<SkillRunnerGame />
 
 {/* Interactive Role Cards Section */}
 <section ref={cardsRef} className="py-32 relative overflow-hidden" id="opportunities">
