@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import logo from '../assets/logo.png';
 import Footer from '../components/Footer';
+import { getSupabaseUrl, handleImageError, FALLBACK_IMAGE } from '../utils/imageUrl';
 
 export default function About() {
   const handleCardMouseMove = (e) => {
@@ -134,7 +135,12 @@ export default function About() {
                 {[...team, ...team].map((member, index) => (
                   <div key={`${member.id}-${index}`} className="flex-shrink-0 w-80 glass-card p-0 rounded-[2rem] border border-white/5 overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(184,132,255,0.1)] group">
                     <div className="h-72 relative">
-                      <img src={member.image_url} alt={member.name} className="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" />
+                      <img 
+                        src={getSupabaseUrl(member.image_url) || FALLBACK_IMAGE} 
+                        alt={member.name} 
+                        className="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" 
+                        onError={handleImageError}
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e14] via-transparent to-transparent"></div>
                       <div className="absolute bottom-6 left-8">
                         <h4 className="text-2xl font-black text-white">{member.name}</h4>
@@ -164,10 +170,11 @@ export default function About() {
                 {[...partners, ...partners, ...partners].map((partner, index) => (
                   <div key={`${partner.id}-${index}`} className="flex-shrink-0 group">
                     <img 
-                      src={partner.logo_url} 
+                      src={getSupabaseUrl(partner.logo_url) || FALLBACK_IMAGE} 
                       alt={partner.name} 
                       title={partner.name}
                       className="h-10 md:h-12 w-auto object-contain filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 cursor-pointer" 
+                      onError={handleImageError}
                     />
                   </div>
                 ))}
@@ -197,7 +204,12 @@ export default function About() {
                   className="group glass-card p-0 rounded-[2.5rem] border border-white/5 overflow-hidden transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_40px_80px_rgba(0,209,255,0.15)] hover:border-primary/20 hover-tilt glow-border"
                 >
                   <div className="h-64 relative overflow-hidden">
-                    <img src={work.image_url} alt={work.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                    <img 
+                      src={getSupabaseUrl(work.image_url) || FALLBACK_IMAGE} 
+                      alt={work.title} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100" 
+                      onError={handleImageError}
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e14]/60 to-transparent"></div>
                   </div>
                   <div className="p-10">

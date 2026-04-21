@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import Footer from '../components/Footer';
+import { getSupabaseUrl, handleImageError, FALLBACK_IMAGE } from '../utils/imageUrl';
 
 export default function Internships() {
   const [internships, setInternships] = useState([]);
@@ -97,9 +98,10 @@ export default function Internships() {
               >
                 <div className="relative h-48 overflow-hidden">
                   <img 
-                    src={internship.image_url || internship.image || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop'} 
+                    src={getSupabaseUrl(internship.image_url || internship.image) || FALLBACK_IMAGE} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                     alt={internship.title} 
+                    onError={handleImageError}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent"></div>
                   <div className="absolute bottom-4 left-6">

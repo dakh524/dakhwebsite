@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import Footer from '../components/Footer';
 
+import { getSupabaseUrl, handleImageError, FALLBACK_IMAGE } from '../utils/imageUrl';
+
 export default function Courses() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -99,9 +101,10 @@ export default function Courses() {
                 <div className="relative h-56 overflow-hidden">
                   {/* Robust image handling: checks image_url, image, or fallback */}
                   <img 
-                    src={course.image_url || course.image || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop'} 
+                    src={getSupabaseUrl(course.image_url || course.image) || FALLBACK_IMAGE} 
                     alt={course.title} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                    onError={handleImageError}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
                   <div className="absolute top-4 left-4">

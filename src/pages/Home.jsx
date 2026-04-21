@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from '../components/Footer';
+import { getSupabaseUrl, handleImageError, FALLBACK_IMAGE } from '../utils/imageUrl';
 import logo from '../assets/logo.png';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -450,11 +451,12 @@ export default function Home() {
 </div>
 <div className="relative group lg:block hidden">
 <div className="absolute -inset-4 bg-gradient-to-r from-primary/30 to-secondary/30 opacity-20 blur-3xl rounded-[40px]"></div>
-<img 
-                  alt="Modern workspace" 
-                  className="rounded-[40px] border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-700 shadow-2xl" 
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf0nhiYOjJzm8ZyX7ARu6ZIhMczKlwcdD6-TVmthJm9eBUth2yfidWDRiB9ZvFubL0C4M6R4MvdbZ74ZDA1rcfV97goA-QGwAbBD-umMSva46oBfyabpdBOL6k4WUPm-t49XwQBGw9vfq7CqQVtjCrdtne6ihTTt3DdkECtauscvByZj-ZS4Yru6xbb-oPLG0Ybpw8_jiqZmo_BKn5jVRMkX0OO0P6K4uEZw3ea4lTDxWJ0Qe8ueDc9fE-umQGgA0s0gmhv-pWDypx"
-                />
+                  <img 
+                    alt="Modern workspace" 
+                    className="rounded-[40px] border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-700 shadow-2xl" 
+                    src={getSupabaseUrl('https://lh3.googleusercontent.com/aida-public/AB6AXuDf0nhiYOjJzm8ZyX7ARu6ZIhMczKlwcdD6-TVmthJm9eBUth2yfidWDRiB9ZvFubL0C4M6R4MvdbZ74ZDA1rcfV97goA-QGwAbBD-umMSva46oBfyabpdBOL6k4WUPm-t49XwQBGw9vfq7CqQVtjCrdtne6ihTTt3DdkECtauscvByZj-ZS4Yru6xbb-oPLG0Ybpw8_jiqZmo_BKn5jVRMkX0OO0P6K4uEZw3ea4lTDxWJ0Qe8ueDc9fE-umQGgA0s0gmhv-pWDypx') || FALLBACK_IMAGE} 
+                    onError={handleImageError}
+                  />
 </div>
 </div>
 </div>

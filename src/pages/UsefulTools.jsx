@@ -1,4 +1,5 @@
 import React from 'react';
+import { getSupabaseUrl, handleImageError, FALLBACK_IMAGE } from '../utils/imageUrl';
 
 export default function UsefulTools() {
   const handleCardMouseMove = (e) => {
@@ -174,7 +175,12 @@ export default function UsefulTools() {
 </div>
 <div className="md:w-1/2 relative">
 <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-surface-container-lowest">
-<img alt="Dashboard interface" className="w-full h-full object-cover opacity-60" data-alt="Modern clean dark mode software dashboard with minimalist graphs, glowing blue accents, and glass cards layout" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrVDM7knhhI3JbHWi74cgeoJ9MExKZnt_Ex1t49cMyNll9ja5yOr-ujWAigCF3qUqFCndguWHupwJTzH4tHAJFYBKJ7zkThVXIFNjAuuLv24f3-kpjnIY-ZFr0k5RIm6dDtke7jYE0tMf7uqWY1HqhIQPdXcRwYEtSxZPjQGcFiq6K1ypykjPjwrSW8HzAJ4OGyey_mVxGAGON6BxW5TTyEwJL7VKzNJjdi4wj1Jh0p-Nb69Cf4o5iIkgT1CS878VMQcHxupu-9veM"/>
+<img 
+  alt="Dashboard interface" 
+  className="w-full h-full object-cover opacity-60" 
+  src={getSupabaseUrl('https://lh3.googleusercontent.com/aida-public/AB6AXuCrVDM7knhhI3JbHWi74cgeoJ9MExKZnt_Ex1t49cMyNll9ja5yOr-ujWAigCF3qUqFCndguWHupwJTzH4tHAJFYBKJ7zkThVXIFNjAuuLv24f3-kpjnIY-ZFr0k5RIm6dDtke7jYE0tMf7uqWY1HqhIQPdXcRwYEtSxZPjQGcFiq6K1ypykjPjwrSW8HzAJ4OGyey_mVxGAGON6BxW5TTyEwJL7VKzNJjdi4wj1Jh0p-Nb69Cf4o5iIkgT1CS878VMQcHxupu-9veM') || FALLBACK_IMAGE}
+  onError={handleImageError}
+/>
 </div>
 {/*  Floating Accent  */}
 <div className="absolute -bottom-6 -right-6 w-32 h-32 glass-panel rounded-2xl border border-primary/30 flex items-center justify-center p-4">
