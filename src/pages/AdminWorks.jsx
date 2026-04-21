@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from "../lib/supabase";
+import ImageUpload from "../components/ImageUpload";
 
 export default function AdminWorks() {
   const [works, setWorks] = useState([]);
@@ -108,13 +109,11 @@ export default function AdminWorks() {
           className="w-full bg-[#0f141a] border border-white/5 focus:border-primary/50 rounded-xl px-5 py-3 text-white outline-none transition-all resize-none placeholder:text-slate-600"
         />
 
-        <input 
-          type="url" 
-          placeholder="Featured Image URL" 
-          required 
-          value={formData.image_url} 
-          onChange={(e) => setFormData({...formData, image_url: e.target.value})}
-          className="w-full bg-[#0f141a] border border-white/5 focus:border-primary/50 rounded-xl px-5 py-3 text-white outline-none transition-all placeholder:text-slate-600"
+        <ImageUpload
+          value={formData.image_url}
+          onChange={(url) => setFormData({...formData, image_url: url})}
+          placeholder="Featured Image URL"
+          required
         />
 
         <div className="flex items-center gap-3">

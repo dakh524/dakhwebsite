@@ -30,6 +30,7 @@ body {
 .text-gradient {
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -141,35 +142,7 @@ body {
 .stagger-3 { animation: fade-in-up 0.4s ease-out 0.15s both; }
 .stagger-4 { animation: fade-in-up 0.4s ease-out 0.2s both; }
 
-/* 🌟 PAGE ENTRY ANIMATION */
-@keyframes page-entry {
-  0% {
-    opacity: 0;
-    transform: scale(0.98) rotateX(5deg);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) rotateX(0deg);
-  }
-}
 
-.page-entry {
-  animation: page-entry 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-  perspective: 1000px;
-}
-
-@keyframes page-exit {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.page-exit {
-  animation: page-exit 0.6s ease-in forwards;
-}
 
 /* 3D UI REQUIREMENTS */
 .hover-tilt {

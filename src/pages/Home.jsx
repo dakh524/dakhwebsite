@@ -13,7 +13,6 @@ export default function Home() {
    const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
    const [activeMainTab, setActiveMainTab] = useState('courses');
     const [isMentorModalOpen, setIsMentorModalOpen] = useState(false);
-    const [isExiting, setIsExiting] = useState(false);
     const navigate = useNavigate();
     const heroRef = useRef(null);
     const cardsRef = useRef(null);
@@ -21,29 +20,7 @@ export default function Home() {
   useEffect(() => {
     // Hero Animation
     const ctx = gsap.context(() => {
-      gsap.from('.stagger-reveal', {
-        y: 60,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.2,
-        ease: 'power4.out',
-        delay: 0.5
-      });
-
-      // Cards Scroll Reveal
-      if (cardsRef.current) {
-        gsap.from('.role-card', {
-          scrollTrigger: {
-            trigger: cardsRef.current,
-            start: 'top 80%',
-          },
-          y: 80,
-          opacity: 0,
-          duration: 1,
-          stagger: 0.15,
-          ease: 'power3.out'
-        });
-      }
+      // Entry animations removed as per user request to make it "normal"
     }, heroRef);
 
     return () => ctx.revert();
@@ -51,22 +28,29 @@ export default function Home() {
 
   useEffect(() => {
     const fetchEvent = async () => {
-      const { data } = await supabase
-        .from('events')
-        .select('*')
-        .eq('is_active', true)
-        .order('id', { ascending: false })
-        .limit(1);
-      
-        // Fix for mobile Safari: Ensure ISO format by replacing spaces with 'T'
-        const rawDate = data[0].target_datetime;
-        const formattedDate = rawDate ? rawDate.replace(' ', 'T') : null;
+      try {
+        const { data, error } = await supabase
+          .from('events')
+          .select('*')
+          .eq('is_active', true)
+          .order('id', { ascending: false })
+          .limit(1);
         
-        setEventData({
-          title: data[0].title || 'Next Event',
-          targetDate: formattedDate ? new Date(formattedDate) : null,
-          link: data[0].event_link
-        });
+        if (error) throw error;
+        if (data && data.length > 0) {
+          const rawDate = data[0].target_datetime;
+          // Fix for mobile Safari and generic parsing
+          const formattedDate = rawDate ? rawDate.replace(' ', 'T') : null;
+          
+          setEventData({
+            title: data[0].title || 'Next Event',
+            targetDate: formattedDate ? new Date(formattedDate) : null,
+            link: data[0].event_link
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching event:', err);
+      }
     };
     fetchEvent();
   }, []);
@@ -95,25 +79,24 @@ export default function Home() {
   }, [eventData.targetDate]);
 
   const handleDiveIn = () => {
-    setIsExiting(true);
-    setTimeout(() => {
-      navigate('/opportunities');
-    }, 600);
+    navigate('/opportunities');
   };
 
   const handleGetStarted = () => {
-    setIsExiting(true);
-    setTimeout(() => {
-      navigate('/courses');
-    }, 600);
+    navigate('/courses');
   };
 
   const [siteSettings, setSiteSettings] = useState(null);
 
   useEffect(() => {
     const fetchSiteSettings = async () => {
-      const { data } = await supabase.from('site_settings').select('*').single();
-      if (data) setSiteSettings(data);
+      try {
+        const { data, error } = await supabase.from('site_settings').select('*').limit(1);
+        if (error) throw error;
+        if (data && data.length > 0) setSiteSettings(data[0]);
+      } catch (err) {
+        console.error('Error fetching site settings:', err);
+      }
     };
     fetchSiteSettings();
   }, []);
@@ -149,7 +132,7 @@ export default function Home() {
   };
 
   return (
-    <div className={isExiting ? 'page-exit' : ''}>
+    <div>
 
 {/*  TopNavBar  */}
 
@@ -164,21 +147,21 @@ export default function Home() {
 </div>
 
 <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 text-center">
-<div className="mb-8 md:mb-10 flex justify-center stagger-reveal">
+<div className="mb-8 md:mb-10 flex justify-center">
 <span className="px-6 py-2.5 rounded-full bg-white/5 border border-white/10 text-primary text-[10px] font-black tracking-[0.4em] uppercase shadow-[0_0_20px_rgba(105,218,255,0.05)]">The Future of Growth</span>
 </div>
-<h1 className="text-5xl md:text-9xl font-black mb-8 leading-[0.9] tracking-tightest stagger-reveal glow">
+<h1 className="text-5xl md:text-9xl font-black mb-8 leading-[0.9] tracking-tightest glow">
                 Join &<br /> 
                 <span className="text-gradient">Grow</span><br />
                 With Us.
 </h1>
-<p className="text-lg md:text-2xl text-slate-400 max-w-2xl mx-auto mb-10 font-medium leading-relaxed stagger-reveal">
+<p className="text-lg md:text-2xl text-slate-400 max-w-2xl mx-auto mb-10 font-medium leading-relaxed">
                 Build skills, earn experience, and grow through real opportunities in our dimensional laboratory.
 </p>
 
 {/*  Master Event Countdown Section  */}
 {eventData.targetDate && (
-<div className="flex justify-center w-full mb-12 stagger-reveal px-4">
+<div className="flex justify-center w-full mb-12 px-4">
   <div className="w-full max-w-3xl glass-panel p-6 md:p-10 rounded-3xl border border-white/10 relative overflow-hidden bg-white/5">
     {/* Background flare */}
     <div className="absolute -top-10 -right-10 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -190,20 +173,25 @@ export default function Home() {
           MISSION PROTOCOL: {eventData.title}
         </div>
         
-        <div className="flex gap-4 sm:gap-8 items-center justify-center md:justify-start">
+        <div className="flex gap-4 sm:gap-6 items-center justify-center md:justify-start">
           <div className="text-center">
-            <span className="text-4xl md:text-6xl font-black block tracking-tightest leading-none">{String(timeLeft.days).padStart(2, '0')}</span>
-            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Days</span>
+            <span className="text-4xl md:text-5xl font-black block tracking-tightest leading-none">{String(timeLeft.days).padStart(2, '0')}</span>
+            <span className="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Days</span>
           </div>
-          <div className="w-px h-10 bg-white/10"></div>
+          <div className="w-px h-8 bg-white/10"></div>
           <div className="text-center">
-            <span className="text-4xl md:text-6xl font-black block tracking-tightest leading-none">{String(timeLeft.hours).padStart(2, '0')}</span>
-            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Hours</span>
+            <span className="text-4xl md:text-5xl font-black block tracking-tightest leading-none">{String(timeLeft.hours).padStart(2, '0')}</span>
+            <span className="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Hours</span>
           </div>
-          <div className="w-px h-10 bg-white/10"></div>
+          <div className="w-px h-8 bg-white/10"></div>
           <div className="text-center">
-            <span className="text-4xl md:text-6xl font-black block tracking-tightest leading-none">{String(timeLeft.minutes).padStart(2, '0')}</span>
-            <span className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Minutes</span>
+            <span className="text-4xl md:text-5xl font-black block tracking-tightest leading-none">{String(timeLeft.minutes).padStart(2, '0')}</span>
+            <span className="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-2 block">Mins</span>
+          </div>
+          <div className="w-px h-8 bg-white/10"></div>
+          <div className="text-center">
+            <span className="text-4xl md:text-5xl font-black block tracking-tightest leading-none text-primary">{String(timeLeft.seconds).padStart(2, '0')}</span>
+            <span className="text-[8px] text-primary/60 font-black uppercase tracking-widest mt-2 block">Secs</span>
           </div>
         </div>
       </div>
@@ -224,7 +212,7 @@ export default function Home() {
 </div>
 )}
 
-<div className="flex flex-col md:flex-row items-center justify-center gap-6 stagger-reveal">
+<div className="flex flex-col md:flex-row items-center justify-center gap-6">
 <button onClick={handleApply} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-white text-black font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate">
                     Apply Now
                 </button>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from "../lib/supabase";
+import ImageUpload from "../components/ImageUpload";
 
 export default function AdminTools() {
   const [tools, setTools] = useState([]);
@@ -114,13 +115,11 @@ export default function AdminTools() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <input 
-            type="url" 
-            placeholder="Preview Image URL" 
+          <ImageUpload
+            value={formData.image_url}
+            onChange={(url) => setFormData({...formData, image_url: url})}
+            placeholder="Preview Image URL"
             required
-            value={formData.image_url} 
-            onChange={(e) => setFormData({...formData, image_url: e.target.value})}
-            className="w-full bg-[#0f141a] border border-white/5 focus:border-primary/50 rounded-xl px-5 py-3 text-white outline-none transition-all"
           />
           <input 
             type="url" 

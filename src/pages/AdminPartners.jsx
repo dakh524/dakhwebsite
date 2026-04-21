@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from "../lib/supabase";
+import ImageUpload from "../components/ImageUpload";
 
 export default function AdminPartners() {
   const [partners, setPartners] = useState([]);
@@ -98,13 +99,11 @@ export default function AdminPartners() {
             onChange={(e) => setFormData({...formData, name: e.target.value})}
             className="w-full bg-[#0f141a] border border-white/5 focus:border-primary/50 rounded-xl px-5 py-3 text-white outline-none transition-all placeholder:text-slate-600"
           />
-          <input 
-            type="url" 
-            placeholder="Logo Image URL" 
-            required 
-            value={formData.logo_url} 
-            onChange={(e) => setFormData({...formData, logo_url: e.target.value})}
-            className="w-full bg-[#0f141a] border border-white/5 focus:border-primary/50 rounded-xl px-5 py-3 text-white outline-none transition-all placeholder:text-slate-600"
+          <ImageUpload
+            value={formData.logo_url}
+            onChange={(url) => setFormData({...formData, logo_url: url})}
+            placeholder="Logo Image URL"
+            required
           />
         </div>
 
