@@ -16,6 +16,9 @@ export default function Home() {
     const navigate = useNavigate();
     const heroRef = useRef(null);
     const cardsRef = useRef(null);
+    const wordRef = useRef(null);
+    const [currentWordIndex, setCurrentWordIndex] = useState(0);
+    const words = ['Grow', 'Learn', 'Build', 'Innovate'];
 
   useEffect(() => {
     // Hero Animation
@@ -25,6 +28,22 @@ export default function Home() {
 
     return () => ctx.revert();
   }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentWordIndex((prev) => (prev + 1) % words.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (wordRef.current) {
+      gsap.fromTo(wordRef.current, 
+        { opacity: 0, filter: 'blur(8px)', y: 5 },
+        { opacity: 1, filter: 'blur(0px)', y: 0, duration: 0.8, ease: 'power2.out' }
+      );
+    }
+  }, [currentWordIndex]);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -137,7 +156,7 @@ export default function Home() {
 {/*  TopNavBar  */}
 
 {/*  Hero Section  */}
-<section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+<section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32">
 {/*  3D Particle Background Simulation  */}
 <div className="absolute inset-0 z-0">
 <div className="absolute inset-0 bg-[#0a0e14]"></div>
@@ -152,7 +171,9 @@ export default function Home() {
 </div>
 <h1 className="text-5xl md:text-9xl font-black mb-8 leading-[0.9] tracking-tightest glow">
                 Join &<br /> 
-                <span className="text-gradient">Grow</span><br />
+                <span ref={wordRef} className="text-gradient inline-block min-w-[320px] md:min-w-[700px]">
+                  {words[currentWordIndex]}
+                </span><br />
                 With Us.
 </h1>
 <p className="text-lg md:text-2xl text-slate-400 max-w-2xl mx-auto mb-10 font-medium leading-relaxed">
