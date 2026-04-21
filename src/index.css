@@ -208,3 +208,16 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.page-transition {
+  animation: pageFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes pageFadeIn {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.tab-transition {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}

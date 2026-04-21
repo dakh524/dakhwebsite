@@ -7,7 +7,7 @@ export default function Layout() {
   return (
     <div className="min-h-screen bg-[#0a0e14] text-[#f1f3fc] font-['Inter']">
       <Navbar />
-      <main>
+      <main className="page-transition">
         <Outlet />
       </main>
     </div>

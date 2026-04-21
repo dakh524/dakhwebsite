@@ -50,11 +50,14 @@ export default function Navbar() {
               <Link 
                 key={link.name}
                 to={link.path} 
-                className={`text-[11px] font-black tracking-widest uppercase transition-all ${
+                className={`text-[11px] font-black tracking-widest uppercase transition-all relative py-1 ${
                   location.pathname === link.path ? 'text-primary' : 'text-slate-400 hover:text-white'
                 }`}
               >
                 {link.name}
+                {location.pathname === link.path && (
+                  <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-primary animate-in fade-in slide-in-from-left-2 duration-300 shadow-[0_0_8px_var(--primary)]"></span>
+                )}
               </Link>
             ))}
           </div>

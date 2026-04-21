@@ -348,7 +348,7 @@ export default function Home() {
 </div>
 
 {/*  Growth Ecosystem Content (New)  */}
-<div className={`${activeMainTab === 'opportunities' ? 'block' : 'hidden lg:block'} mb-24`}>
+<div className={`transition-all duration-300 ${activeMainTab === 'opportunities' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none hidden lg:block'} mb-24`}>
 <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
 <div className="text-center md:text-left w-full md:w-auto">
 <h2 className="text-secondary text-[10px] font-black tracking-[0.4em] uppercase mb-4">Growth Ecosystem</h2>
@@ -385,7 +385,7 @@ export default function Home() {
 </div>
 
 {/*  Knowledge Pipeline Content (Courses)  */}
-<div className={`${activeMainTab === 'courses' ? 'block' : 'hidden lg:block'} mb-24`}>
+<div className={`transition-all duration-300 ${activeMainTab === 'courses' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none hidden lg:block'} mb-24`}>
 <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
 <div className="text-center md:text-left w-full md:w-auto">
 <h2 className="text-primary text-[10px] font-black tracking-[0.4em] uppercase mb-4">Knowledge Pipelines</h2>
