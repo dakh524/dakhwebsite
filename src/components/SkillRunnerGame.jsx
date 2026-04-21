@@ -35,17 +35,17 @@ const SkillRunnerGame = () => {
         const createItem = () => {
             const isReward = Math.random() > 0.4;
             const labels = isReward 
-                ? ["Skills", "Projects", "Internships"] 
-                : ["No Skills", "No Experience", "No Guidance"];
+                ? ["Skills", "Projects", "Internships", "Money", "Success", "Promotion"] 
+                : ["No Skills", "No Experience", "No Guidance", "Burnout"];
             
             return {
                 x: canvas.width,
-                y: isReward && Math.random() > 0.5 ? canvas.height - 120 : canvas.height - 50,
-                width: 100,
-                height: 30,
+                y: isReward && Math.random() > 0.5 ? canvas.height - 150 : canvas.height - 50,
+                width: 110,
+                height: 35,
                 label: labels[Math.floor(Math.random() * labels.length)],
                 isReward,
-                speed: obstacleBaseSpeed + (score / 100)
+                speed: obstacleBaseSpeed + (score / 50) // Increased difficulty scaling
             };
         };
 
