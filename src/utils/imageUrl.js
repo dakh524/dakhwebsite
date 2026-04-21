@@ -22,9 +22,16 @@ export const getSupabaseUrl = (pathOrUrl) => {
   return `https://${PROJECT_ID}.supabase.co/storage/v1/object/public/${DEFAULT_BUCKET}/${pathOrUrl}`;
 };
 
-export const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop';
+export const getKeywordImage = (keyword, width = 800, height = 600) => {
+  // Using Unsplash's source API for reliable keyword-based images
+  return `https://source.unsplash.com/${width}x${height}/?${encodeURIComponent(keyword)}`;
+};
+
+export const FALLBACK_IMAGE = getKeywordImage('technology,dark,modern');
 
 export const handleImageError = (e) => {
-  e.target.src = FALLBACK_IMAGE;
-  e.target.onerror = null; // Prevent infinite loop
+  // If a specific keyword was stored in a data attribute, use it
+  const keyword = e.target.getAttribute('data-keyword');
+  e.target.src = keyword ? getKeywordImage(keyword) : FALLBACK_IMAGE;
+  e.target.onerror = null; 
 };

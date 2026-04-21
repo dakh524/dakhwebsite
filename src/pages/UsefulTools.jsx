@@ -178,7 +178,8 @@ export default function UsefulTools() {
 <img 
   alt="Dashboard interface" 
   className="w-full h-full object-cover opacity-60" 
-  src={getSupabaseUrl('https://lh3.googleusercontent.com/aida-public/AB6AXuCrVDM7knhhI3JbHWi74cgeoJ9MExKZnt_Ex1t49cMyNll9ja5yOr-ujWAigCF3qUqFCndguWHupwJTzH4tHAJFYBKJ7zkThVXIFNjAuuLv24f3-kpjnIY-ZFr0k5RIm6dDtke7jYE0tMf7uqWY1HqhIQPdXcRwYEtSxZPjQGcFiq6K1ypykjPjwrSW8HzAJ4OGyey_mVxGAGON6BxW5TTyEwJL7VKzNJjdi4wj1Jh0p-Nb69Cf4o5iIkgT1CS878VMQcHxupu-9veM') || FALLBACK_IMAGE}
+  src={getKeywordImage('software,dashboard,ui')} 
+  data-keyword="software,ui"
   onError={handleImageError}
 />
 </div>

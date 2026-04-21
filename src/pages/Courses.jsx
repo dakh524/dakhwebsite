@@ -101,9 +101,10 @@ export default function Courses() {
                 <div className="relative h-56 overflow-hidden">
                   {/* Robust image handling: checks image_url, image, or fallback */}
                   <img 
-                    src={getSupabaseUrl(course.image_url || course.image) || FALLBACK_IMAGE} 
+                    src={getSupabaseUrl(course.image_url || course.image) || getKeywordImage(course.title || 'education,coding')} 
                     alt={course.title} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                    data-keyword={course.title || 'education,coding'}
                     onError={handleImageError}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
@@ -155,7 +156,13 @@ export default function Courses() {
         <section className="mt-32 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2 glass-card p-10 rounded-2xl relative overflow-hidden flex flex-col justify-end min-h-[300px]">
             <div className="absolute inset-0 z-0 opacity-20">
-              <img className="w-full h-full object-cover grayscale brightness-50" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop" alt="Architecture" />
+              <img 
+                className="w-full h-full object-cover grayscale brightness-50" 
+                src={getKeywordImage('university,campus,architecture')} 
+                data-keyword="university,architecture"
+                onError={handleImageError}
+                alt="Architecture" 
+              />
             </div>
             <div className="relative z-10">
               <h4 className="text-3xl font-bold mb-4 tracking-tight">The Academic Edge</h4>

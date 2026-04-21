@@ -454,7 +454,8 @@ export default function Home() {
                   <img 
                     alt="Modern workspace" 
                     className="rounded-[40px] border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-700 shadow-2xl" 
-                    src={getSupabaseUrl('https://lh3.googleusercontent.com/aida-public/AB6AXuDf0nhiYOjJzm8ZyX7ARu6ZIhMczKlwcdD6-TVmthJm9eBUth2yfidWDRiB9ZvFubL0C4M6R4MvdbZ74ZDA1rcfV97goA-QGwAbBD-umMSva46oBfyabpdBOL6k4WUPm-t49XwQBGw9vfq7CqQVtjCrdtne6ihTTt3DdkECtauscvByZj-ZS4Yru6xbb-oPLG0Ybpw8_jiqZmo_BKn5jVRMkX0OO0P6K4uEZw3ea4lTDxWJ0Qe8ueDc9fE-umQGgA0s0gmhv-pWDypx') || FALLBACK_IMAGE} 
+                    src={getKeywordImage('workspace,minimalist,modern')} 
+                    data-keyword="workspace,modern"
                     onError={handleImageError}
                   />
 </div>

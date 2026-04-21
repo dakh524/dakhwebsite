@@ -90,7 +90,13 @@ export default function About() {
             <div className="relative">
               <div className="absolute -top-10 -right-10 w-64 h-64 bg-primary/10 rounded-full blur-[100px]"></div>
               <div className="glass-card p-4 rounded-3xl rotate-3 hover:rotate-0 transition-all duration-700 shadow-2xl border border-white/5">
-                <img alt="Team" className="rounded-2xl w-full h-[450px] object-cover opacity-80" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop" />
+                <img 
+                  alt="Team" 
+                  className="rounded-2xl w-full h-[450px] object-cover opacity-80" 
+                  src={getKeywordImage('startup,team,collaboration')} 
+                  data-keyword="startup,team" 
+                  onError={handleImageError} 
+                />
               </div>
             </div>
           </div>
@@ -136,9 +142,10 @@ export default function About() {
                   <div key={`${member.id}-${index}`} className="flex-shrink-0 w-80 glass-card p-0 rounded-[2rem] border border-white/5 overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(184,132,255,0.1)] group">
                     <div className="h-72 relative">
                       <img 
-                        src={getSupabaseUrl(member.image_url) || FALLBACK_IMAGE} 
+                        src={getSupabaseUrl(member.image_url) || getKeywordImage('person,headshot')} 
                         alt={member.name} 
                         className="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" 
+                        data-keyword="person,headshot"
                         onError={handleImageError}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e14] via-transparent to-transparent"></div>
@@ -170,10 +177,11 @@ export default function About() {
                 {[...partners, ...partners, ...partners].map((partner, index) => (
                   <div key={`${partner.id}-${index}`} className="flex-shrink-0 group">
                     <img 
-                      src={getSupabaseUrl(partner.logo_url) || FALLBACK_IMAGE} 
+                      src={getSupabaseUrl(partner.logo_url) || getKeywordImage('company,logo,monochrome')} 
                       alt={partner.name} 
                       title={partner.name}
                       className="h-10 md:h-12 w-auto object-contain filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 cursor-pointer" 
+                      data-keyword="company,logo"
                       onError={handleImageError}
                     />
                   </div>
@@ -205,9 +213,10 @@ export default function About() {
                 >
                   <div className="h-64 relative overflow-hidden">
                     <img 
-                      src={getSupabaseUrl(work.image_url) || FALLBACK_IMAGE} 
+                      src={getSupabaseUrl(work.image_url) || getKeywordImage('technology,software,app')} 
                       alt={work.title} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100" 
+                      data-keyword="technology,software"
                       onError={handleImageError}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e14]/60 to-transparent"></div>

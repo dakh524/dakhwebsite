@@ -98,9 +98,10 @@ export default function Internships() {
               >
                 <div className="relative h-48 overflow-hidden">
                   <img 
-                    src={getSupabaseUrl(internship.image_url || internship.image) || FALLBACK_IMAGE} 
+                    src={getSupabaseUrl(internship.image_url || internship.image) || getKeywordImage(internship.title || 'internship,business')} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                     alt={internship.title} 
+                    data-keyword={internship.title || 'internship'}
                     onError={handleImageError}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent"></div>
