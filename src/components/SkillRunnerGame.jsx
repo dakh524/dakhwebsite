@@ -108,12 +108,7 @@ const SkillRunnerGame = () => {
             ctx.stroke();
 
             // Player
-            ctx.fillStyle = player.color;
-            ctx.shadowBlur = 15;
-            ctx.shadowColor = player.color;
-            ctx.beginPath();
-            ctx.roundRect(player.x, player.y, playerSize, playerSize, 8);
-            ctx.fill();
+            drawPlayer(ctx, player.x, player.y, playerSize);
             ctx.shadowBlur = 0;
 
             // Items
@@ -141,19 +136,67 @@ const SkillRunnerGame = () => {
             }
         };
 
-        window.addEventListener('keydown', (e) => e.code === 'Space' && handleInput());
+        const handleKeyDown = (e) => {
+            if (e.code === 'Space' || e.code === 'ArrowUp') {
+                e.preventDefault();
+                handleInput();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
             handleInput();
-        });
+        }, { passive: false });
+        
+        // Add click to jump during play
+        canvas.addEventListener('mousedown', handleInput);
 
         update();
 
         return () => {
             cancelAnimationFrame(animationId);
-            window.removeEventListener('keydown', handleInput);
+            window.removeEventListener('keydown', handleKeyDown);
+            canvas.removeEventListener('mousedown', handleInput);
         };
     }, [gameState]);
+
+    const drawPlayer = (ctx, x, y, size) => {
+        ctx.fillStyle = '#69daff';
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#69daff';
+        
+        // Simple "Man" character (Stick figure style)
+        // Head
+        ctx.beginPath();
+        ctx.arc(x + size/2, y + size/4, size/4, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Body
+        ctx.beginPath();
+        ctx.moveTo(x + size/2, y + size/2);
+        ctx.lineTo(x + size/2, y + size*0.8);
+        ctx.strokeStyle = '#69daff';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        
+        // Arms
+        ctx.beginPath();
+        ctx.moveTo(x + size/4, y + size*0.6);
+        ctx.lineTo(x + size*0.75, y + size*0.6);
+        ctx.stroke();
+        
+        // Legs (animated effect)
+        const walkCycle = Math.sin(Date.now() / 100) * 5;
+        ctx.beginPath();
+        ctx.moveTo(x + size/2, y + size*0.8);
+        ctx.lineTo(x + size/4 - walkCycle, y + size);
+        ctx.moveTo(x + size/2, y + size*0.8);
+        ctx.lineTo(x + size*0.75 + walkCycle, y + size);
+        ctx.stroke();
+        
+        ctx.shadowBlur = 0;
+    };
 
     const startGame = () => {
         setScore(0);
@@ -161,25 +204,30 @@ const SkillRunnerGame = () => {
     };
 
     return (
-        <section className="max-w-7xl mx-auto px-6 md:px-8 py-20">
+        <section className="max-w-7xl mx-auto px-6 md:px-8 py-20" id="skill-game">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 
                 {/* Game Container */}
-                <div className="relative glass-panel rounded-[2.5rem] p-4 aspect-[16/9] overflow-hidden group border border-white/5 shadow-2xl">
+                <div className="relative glass-panel rounded-[2.5rem] p-4 aspect-[16/9] overflow-hidden group border border-white/10 shadow-[0_0_50px_rgba(105,218,255,0.1)] bg-[#05070a]">
                     <canvas 
                         ref={canvasRef} 
                         width={600} 
                         height={337} 
-                        className="w-full h-full block rounded-2xl cursor-pointer"
-                        onClick={() => gameState === 'playing' ? null : startGame()}
+                        className="w-full h-full block rounded-2xl"
                     />
                     
                     {gameState === 'idle' && (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm transition-all">
-                            <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-6 animate-pulse cursor-pointer shadow-[0_0_30px_rgba(105,218,255,0.4)]" onClick={startGame}>
-                                <span className="material-symbols-outlined text-black text-4xl">play_arrow</span>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0a0e14]/80 backdrop-blur-md transition-all group-hover:bg-[#0a0e14]/60">
+                            <div 
+                                onClick={startGame}
+                                className="relative group/play cursor-pointer text-center"
+                            >
+                                <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mb-6 transition-all group-hover/play:scale-110 group-hover/play:bg-primary/30 shadow-[0_0_40px_rgba(105,218,255,0.2)]">
+                                    <span className="material-symbols-outlined text-primary text-6xl">directions_run</span>
+                                </div>
+                                <h3 className="text-2xl font-black text-white tracking-widest uppercase mb-2">Initialize Path</h3>
+                                <p className="text-primary/60 text-[10px] font-black uppercase tracking-[0.3em]">Click to Start Running</p>
                             </div>
-                            <p className="text-white font-black text-xs uppercase tracking-widest">Click to Start Journey</p>
                         </div>
                     )}
 
