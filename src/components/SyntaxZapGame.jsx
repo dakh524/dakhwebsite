@@ -143,13 +143,13 @@ const SyntaxZapGame = ({ onGameOver }) => {
                             {/* Code Editor Area */}
                             <div className="flex-1 bg-black/40 rounded-2xl border border-white/5 p-6 font-mono text-sm relative group overflow-hidden">
                                 {CHALLENGES[currentIndex].code.split('\n').map((line, i) => (
-                                    <div 
+                                     <div 
                                         key={i}
                                         onClick={() => handleZapper(i + 1)}
-                                        className="relative group/line flex items-center gap-4 py-1 hover:bg-white/5 cursor-crosshair transition-colors rounded px-2"
+                                        className="relative group/line flex items-center gap-4 py-2 md:py-1 hover:bg-white/5 cursor-crosshair transition-colors rounded px-2"
                                     >
                                         <span className="text-white/20 w-4 text-[10px]">{i + 1}</span>
-                                        <span className="text-slate-300 group-hover/line:text-white transition-colors">{line}</span>
+                                        <span className="text-slate-300 group-hover/line:text-white transition-colors text-xs md:text-sm">{line}</span>
                                         {feedback === 'wrong' && i + 1 === CHALLENGES[currentIndex].errorLine && (
                                             <div className="absolute right-4 animate-pulse text-error text-[10px] font-black uppercase tracking-widest">Error Here</div>
                                         )}

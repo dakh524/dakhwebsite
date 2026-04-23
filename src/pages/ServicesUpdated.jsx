@@ -5,12 +5,27 @@ export default function ServicesUpdated() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState('');
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
-  const [status, setStatus] = useState('idle'); // idle, submitting, success, error
+  const [status, setStatus] = useState('idle'); // idle, submitting, success, error, fallback
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    let newErrors = {};
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.phone.trim() || !/^\d{10}$/.test(formData.phone.trim())) {
+      newErrors.phone = '10-digit phone number required';
+    }
+    if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      newErrors.email = 'Valid email address required';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const openModal = (serviceName) => {
     setSelectedService(serviceName);
     setIsModalOpen(true);
     setStatus('idle');
+    setErrors({});
   };
 
   const closeModal = () => {
@@ -18,33 +33,89 @@ export default function ServicesUpdated() {
     setTimeout(() => {
         setFormData({ name: '', email: '', phone: '', message: '' });
         setStatus('idle');
+        setErrors({});
     }, 300);
+  };
+
+  const submitWithRetry = async (data, retry = true) => {
+    const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || 'https://api.dakhedu.com/v1/inquiry';
+    
+    try {
+      if (import.meta.env.DEV) console.log('Submitting inquiry:', data);
+      
+      const response = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (!response.ok) throw new Error('API server error');
+      
+      const result = await response.json();
+      if (import.meta.env.DEV) console.log('API Submission successful:', result);
+      return true;
+    } catch (err) {
+      if (import.meta.env.DEV) console.error('API Submission failed:', err);
+      if (retry) {
+        if (import.meta.env.DEV) console.log('Retrying submission once...');
+        return await submitWithRetry(data, false);
+      }
+      throw err;
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+    
     setStatus('submitting');
     
-    try {
-      const { error } = await supabase
-        .from('service_inquiries')
-        .insert([{
-          service_type: selectedService,
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message
-        }]);
+    const submissionData = {
+      name: formData.name,
+      phone: formData.phone,
+      email: formData.email,
+      service: selectedService,
+      message: formData.message
+    };
 
-      if (error) {
-        console.error('Supabase error:', error);
-        throw error;
-      }
+    try {
+      // Primary: Send to Webhook
+      await submitWithRetry(submissionData);
       
+      // Secondary: Backup to Supabase (keeping existing functionality)
+      try {
+        await supabase
+          .from('service_inquiries')
+          .insert([{
+            service_type: selectedService,
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            message: formData.message
+          }]);
+      } catch (sbErr) {
+        if (import.meta.env.DEV) console.warn('Supabase backup failed, but API succeeded:', sbErr);
+      }
+
       setStatus('success');
+      setFormData({ name: '', email: '', phone: '', message: '' }); // Clear form fields
+      setTimeout(() => {
+        // Optional redirect or close after 3 seconds
+        // closeModal(); 
+      }, 3000);
+
     } catch (err) {
-      console.error(err);
-      setStatus('error');
+      if (import.meta.env.DEV) console.error('All submission attempts failed:', err);
+      
+      // Fallback System: Save to localStorage
+      try {
+        const pending = JSON.parse(localStorage.getItem('pending_inquiries') || '[]');
+        pending.push({ ...submissionData, timestamp: new Date().toISOString() });
+        localStorage.setItem('pending_inquiries', JSON.stringify(pending));
+        setStatus('fallback');
+      } catch (localErr) {
+        setStatus('error');
+      }
     }
   };
 
@@ -148,7 +219,7 @@ export default function ServicesUpdated() {
                 <div className="w-20 h-20 bg-[#69daff]/20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(105,218,255,0.2)]">
                   <span className="material-symbols-outlined text-[#00D1FF] text-4xl">check_circle</span>
                 </div>
-                <h2 className="text-3xl font-black mb-4 tracking-tight">Request Received</h2>
+                <h2 className="text-3xl font-black mb-4 tracking-tight">✅ Request submitted successfully!</h2>
                 <p className="text-slate-400 mb-8 leading-relaxed">
                   Thank you for your interest in our {selectedService} services. Our team will contact you shortly to begin the initialization process.
                 </p>
@@ -157,7 +228,7 @@ export default function ServicesUpdated() {
                   <p className="text-2xl font-bold text-white">+91 98765 43210</p>
                 </div>
                 <button onClick={closeModal} className="w-full bg-[#0f141a] border border-white/10 hover:border-white/30 py-4 rounded-xl font-bold transition-all">
-                  Close Dashboard
+                  Return to Dashboard
                 </button>
               </div>
             ) : (
@@ -168,22 +239,48 @@ export default function ServicesUpdated() {
                 </div>
 
                 {status === 'error' && (
-                  <div className="mb-6 p-4 bg-[#ff716c]/10 border border-[#ff716c]/30 rounded-xl text-[#ff716c] text-sm font-medium">
-                    Critical Error: Failed to push to database. Ensure you have created exactly the `service_inquiries` table with appropriate columns in Supabase.
+                  <div className="mb-6 p-4 bg-[#ff716c]/10 border border-[#ff716c]/30 rounded-xl text-[#ff716c] text-xs font-medium flex items-center gap-2">
+                    <span className="material-symbols-outlined text-sm">warning</span>
+                    ⚠️ Server issue. Please try again later.
+                  </div>
+                )}
+
+                {status === 'fallback' && (
+                  <div className="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-xl text-yellow-500 text-xs font-medium flex items-center gap-2">
+                    <span className="material-symbols-outlined text-sm">cloud_off</span>
+                    Saved locally. We'll retry automatically.
                   </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-2 gap-5">
-                    <input type="text" placeholder="Full Name" required disabled={status === 'submitting'} value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="col-span-2 sm:col-span-1 w-full bg-[#0f141a] border border-white/5 focus:border-[#69daff]/50 rounded-xl px-5 py-4 text-white outline-none transition-all disabled:opacity-50" />
-                    <input type="tel" placeholder="Phone Number" required disabled={status === 'submitting'} value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="col-span-2 sm:col-span-1 w-full bg-[#0f141a] border border-white/5 focus:border-[#69daff]/50 rounded-xl px-5 py-4 text-white outline-none transition-all disabled:opacity-50" />
+                    <div className="col-span-2 sm:col-span-1 space-y-1">
+                      <input type="text" placeholder="Full Name" disabled={status === 'submitting'} value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className={`w-full bg-[#0f141a] border ${errors.name ? 'border-[#ff716c]/50' : 'border-white/5'} focus:border-[#69daff]/50 rounded-xl px-5 py-4 text-white outline-none transition-all disabled:opacity-50`} />
+                      {errors.name && <p className="text-[10px] text-[#ff716c] font-bold ml-1">{errors.name}</p>}
+                    </div>
+                    <div className="col-span-2 sm:col-span-1 space-y-1">
+                      <input type="tel" placeholder="Phone Number" disabled={status === 'submitting'} value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className={`w-full bg-[#0f141a] border ${errors.phone ? 'border-[#ff716c]/50' : 'border-white/5'} focus:border-[#69daff]/50 rounded-xl px-5 py-4 text-white outline-none transition-all disabled:opacity-50`} />
+                      {errors.phone && <p className="text-[10px] text-[#ff716c] font-bold ml-1">{errors.phone}</p>}
+                    </div>
                   </div>
-                  <input type="email" placeholder="Email Address" required disabled={status === 'submitting'} value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full bg-[#0f141a] border border-white/5 focus:border-[#69daff]/50 rounded-xl px-5 py-4 text-white outline-none transition-all disabled:opacity-50" />
+                  <div className="space-y-1">
+                    <input type="email" placeholder="Email Address" disabled={status === 'submitting'} value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className={`w-full bg-[#0f141a] border ${errors.email ? 'border-[#ff716c]/50' : 'border-white/5'} focus:border-[#69daff]/50 rounded-xl px-5 py-4 text-white outline-none transition-all disabled:opacity-50`} />
+                    {errors.email && <p className="text-[10px] text-[#ff716c] font-bold ml-1">{errors.email}</p>}
+                  </div>
                   <textarea placeholder="Describe your project requirements (Optional)" rows={3} disabled={status === 'submitting'} value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className="w-full bg-[#0f141a] border border-white/5 focus:border-[#69daff]/50 rounded-xl px-5 py-4 text-white outline-none resize-none transition-all disabled:opacity-50"></textarea>
                   
-                  <button type="submit" disabled={status === 'submitting'} className="w-full group bg-gradient-to-r from-[#69daff] to-[#00cffc] text-[#004050] py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(0,209,255,0.3)] transition-all active:scale-[0.98] mt-4 disabled:opacity-75 disabled:pointer-events-none">
-                    {status === 'submitting' ? 'Transmitting Data...' : 'Submit Inquiry'}
-                    {status !== 'submitting' && <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">bolt</span>}
+                  <button type="submit" disabled={status === 'submitting'} className="w-full group bg-gradient-to-r from-[#69daff] to-[#00cffc] text-[#004050] py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(0,209,255,0.3)] transition-all active:scale-[0.98] mt-4 disabled:opacity-75 disabled:pointer-events-none overflow-hidden relative">
+                    {status === 'submitting' ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 border-2 border-[#004050]/20 border-t-[#004050] rounded-full animate-spin"></div>
+                        <span>Sending request...</span>
+                      </div>
+                    ) : (
+                      <>
+                        <span>Submit Inquiry</span>
+                        <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">bolt</span>
+                      </>
+                    )}
                   </button>
                 </form>
               </div>

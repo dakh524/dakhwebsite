@@ -221,3 +221,55 @@ body {
 .tab-transition {
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
+
+/* MOBILE RESPONSIVENESS FIXES FOR GAMES */
+@media (max-width: 768px) {
+  #skill-game, #logic-vault, #syntax-zap, #typed-flow {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Force 100% width on mobile */
+  .max-w-7xl {
+    max-width: 100% !important;
+  }
+
+  /* Scaling game containers */
+  .glass-panel.aspect-\[16\/9\] {
+    aspect-ratio: auto !important;
+    min-height: 420px !important;
+    padding: 1rem !important;
+    width: 100% !important;
+    margin-bottom: 2rem !important;
+  }
+
+  /* Responsive Headings */
+  h1 { font-size: 3rem !important; }
+  h2 { font-size: 2.2rem !important; }
+  h3 { font-size: 1.8rem !important; }
+
+  /* Grid layouts */
+  .grid-cols-2, .lg\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  /* Order switching if needed */
+  .order-2 { order: 2 !important; }
+  .order-1 { order: 1 !important; }
+
+  /* No horizontal scroll */
+  body, html {
+    overflow-x: hidden !important;
+    position: relative;
+    width: 100%;
+  }
+
+  /* Increase touch targets for buttons */
+  button {
+    min-height: 48px;
+  }
+}

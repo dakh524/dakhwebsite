@@ -263,9 +263,18 @@ const SkillRunnerGame = ({ onGameOver }) => {
                     )}
 
                     {gameState === 'playing' && (
-                        <div className="absolute top-8 right-8">
-                            <span className="text-primary font-black text-2xl tracking-tighter shadow-lg">{score}</span>
-                        </div>
+                        <>
+                            <div className="absolute top-8 right-8">
+                                <span className="text-primary font-black text-2xl tracking-tighter shadow-lg">{score}</span>
+                            </div>
+                            {/* Mobile Jump Button */}
+                            <button 
+                                onTouchStart={(e) => { e.preventDefault(); canvasRef.current.dispatchEvent(new Event('touchstart')); }}
+                                className="md:hidden absolute bottom-6 right-6 w-20 h-20 bg-primary/20 border-2 border-primary/40 rounded-full flex items-center justify-center backdrop-blur-md active:scale-90 active:bg-primary/40 transition-all z-50 touch-none"
+                            >
+                                <span className="material-symbols-outlined text-primary text-4xl">north</span>
+                            </button>
+                        </>
                     )}
                 </div>
 
@@ -289,7 +298,7 @@ const SkillRunnerGame = ({ onGameOver }) => {
                         >
                             Start Learning
                         </button>
-                        <div className="flex items-center gap-2 text-[10px] text-slate-500 font-black uppercase tracking-widest px-4">
+                        <div className="hidden md:flex items-center gap-2 text-[10px] text-slate-500 font-black uppercase tracking-widest px-4">
                             <span className="material-symbols-outlined text-sm">keyboard_capslock</span>
                             Use Space to Jump
                         </div>

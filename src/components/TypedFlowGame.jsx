@@ -174,10 +174,21 @@ const TypedFlowGame = ({ onGameOver }) => {
                                 value={userInput}
                                 onChange={handleInputChange}
                                 className="opacity-0 absolute"
-                                autoFocus
+                                autoCapitalize="none"
+                                autoComplete="off"
+                                autoCorrect="off"
+                                spellCheck="false"
                             />
                             
-                            <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.5em] animate-pulse">Start Typing Now</p>
+                            <button 
+                                onClick={() => inputRef.current?.focus()}
+                                className="md:hidden mt-4 w-full h-14 bg-secondary/10 border border-secondary/30 rounded-xl font-bold text-secondary flex items-center justify-center gap-2 active:bg-secondary/20 transition-all"
+                            >
+                                <span className="material-symbols-outlined">keyboard</span>
+                                TAB TO FOCUS KEYBOARD
+                            </button>
+
+                            <p className="hidden md:block text-[10px] font-black text-white/30 uppercase tracking-[0.5em] animate-pulse">Start Typing Now</p>
                         </div>
                     )}
 
