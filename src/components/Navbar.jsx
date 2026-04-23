@@ -30,6 +30,7 @@ export default function Navbar() {
     { name: 'Internships', path: '/internships' },
     { name: 'Services', path: '/services' },
     { name: 'About', path: '/about' },
+    { name: 'Fun Zone', path: '/funzone' },
   ];
 
   return (

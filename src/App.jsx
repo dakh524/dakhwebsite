@@ -30,6 +30,8 @@ import AdminSiteSettings from './pages/AdminSiteSettings';
 import AdminOpportunities from './pages/AdminOpportunities';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Opportunities from './pages/Opportunities';
+import FunZone from './pages/FunZone';
+
 
 function App() {
   return (
@@ -47,6 +49,7 @@ function App() {
             <Route path="/tools" element={<Tools />} />
              <Route path="/useful-tools" element={<UsefulTools />} />
             <Route path="/opportunities" element={<Opportunities />} />
+            <Route path="/funzone" element={<FunZone />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           </Route>
 

@@ -1,11 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const SkillRunnerGame = () => {
+const SkillRunnerGame = ({ onGameOver }) => {
     const canvasRef = useRef(null);
     const [gameState, setGameState] = useState('idle'); // idle, playing, gameover
     const [score, setScore] = useState(0);
+    const [hasReportedScore, setHasReportedScore] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (gameState === 'gameover' && onGameOver && !hasReportedScore) {
+            console.log(`[SkillRunner] Reporting score: ${score}`);
+            onGameOver(score);
+            setHasReportedScore(true);
+        }
+    }, [gameState, onGameOver, score, hasReportedScore]);
 
     useEffect(() => {
         if (gameState !== 'playing') return;
@@ -200,6 +209,7 @@ const SkillRunnerGame = () => {
 
     const startGame = () => {
         setScore(0);
+        setHasReportedScore(false);
         setGameState('playing');
     };
 
@@ -232,15 +242,23 @@ const SkillRunnerGame = () => {
                     )}
 
                     {gameState === 'gameover' && (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md animate-in fade-in duration-500">
-                            <h3 className="text-4xl font-black text-white mb-2">PATH BLOCKED</h3>
-                            <p className="text-primary font-black text-xl mb-8">Score: {score}</p>
-                            <button 
-                                onClick={startGame}
-                                className="bg-white text-black px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all"
-                            >
-                                Retry Sequence
-                            </button>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/90 backdrop-blur-md animate-in fade-in duration-500 text-center px-6">
+                            <h3 className="text-6xl font-black text-error mb-4 italic tracking-tighter">❌ YOU LOSE</h3>
+                            <p className="text-white font-black text-xs uppercase tracking-[0.3em] mb-8">Improve your skills with DAKH EDU SOLUTION</p>
+                            <div className="flex gap-4">
+                                <button 
+                                    onClick={startGame}
+                                    className="bg-white text-black px-12 py-4 rounded-xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-xl font-black"
+                                >
+                                    Retry Sequence
+                                </button>
+                                <button 
+                                    onClick={() => window.open('/internships', '_blank')}
+                                    className="bg-primary text-black px-12 py-4 rounded-xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-xl font-black"
+                                >
+                                    Internships
+                                </button>
+                            </div>
                         </div>
                     )}
 

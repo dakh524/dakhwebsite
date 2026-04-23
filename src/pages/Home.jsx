@@ -4,7 +4,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from '../components/Footer';
-import SkillRunnerGame from '../components/SkillRunnerGame';
 import { getSupabaseUrl, handleImageError, FALLBACK_IMAGE } from '../utils/imageUrl';
 import logo from '../assets/logo.png';
 
@@ -243,12 +242,13 @@ export default function Home() {
                     <span className="material-symbols-outlined text-lg">chat</span>
                     Join Community
                 </button>
+<button onClick={() => navigate('/funzone')} className="w-full md:w-auto px-12 py-6 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-xs uppercase tracking-[0.2em] transition-all hover:bg-white/10 active:scale-95 shadow-2xl btn-vibrate flex items-center justify-center gap-3">
+                    <span className="material-symbols-outlined text-lg text-primary">sports_esports</span>
+                    Go to Fun Zone
+                </button>
 </div>
 </div>
 </section>
-
-{/* Interactive Skill Runner Section */}
-<SkillRunnerGame />
 
 {/* Interactive Role Cards Section */}
 <section ref={cardsRef} className="py-32 relative overflow-hidden" id="opportunities">
