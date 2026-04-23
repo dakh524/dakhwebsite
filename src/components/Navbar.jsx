@@ -72,38 +72,39 @@ export default function Navbar() {
               DIVE IN
             </button>
             
-            {/* Mobile Toggle */}
+            {/* Mobile Toggle - Improved touch target */}
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-white hover:bg-white/5 rounded-lg transition-colors relative z-[110]"
+              className="lg:hidden p-4 -mr-2 text-white hover:bg-white/5 rounded-lg transition-colors relative z-[110]"
+              aria-label="Toggle Menu"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
       </nav>
-
+ 
       {/* Full Screen Mobile Menu Overlay */}
       <div 
         className={`lg:hidden fixed inset-0 z-[105] bg-[#0a0e14] transition-all duration-500 ease-in-out ${
           isMobileMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-10'
         }`}
       >
-        <div className="pt-32 p-10 space-y-10 h-full flex flex-col relative">
+        <div className="pt-28 p-8 space-y-8 h-full flex flex-col relative overflow-y-auto">
           {/* Decorative background flare */}
           <div className="absolute top-1/4 -right-20 w-80 h-80 bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
           
-          <div className="space-y-6 relative z-10">
+          <div className="space-y-4 relative z-10">
             {navLinks.map((link, idx) => (
               <Link 
                 key={link.name}
                 to={link.path} 
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`block text-5xl font-black tracking-tightest transition-all duration-300 ${
+                className={`block text-4xl md:text-5xl font-black tracking-tightest transition-all duration-300 ${
                   location.pathname === link.path ? 'text-primary' : 'text-white'
                 }`}
                 style={{ 
-                  transitionDelay: isMobileMenuOpen ? `${idx * 100}ms` : '0ms',
+                  transitionDelay: isMobileMenuOpen ? `${idx * 70}ms` : '0ms',
                   opacity: isMobileMenuOpen ? 1 : 0,
                   transform: isMobileMenuOpen ? 'translateX(0)' : 'translateX(-20px)'
                 }}
@@ -113,16 +114,16 @@ export default function Navbar() {
             ))}
           </div>
           
-          <div className="mt-auto space-y-4 pb-10 relative z-10 border-t border-white/5 pt-10">
+          <div className="mt-auto space-y-3 pb-8 relative z-10 border-t border-white/5 pt-8">
             <button 
               onClick={() => { navigate('/opportunities'); setIsMobileMenuOpen(false); }}
-              className="w-full bg-primary text-[#004050] py-5 rounded-2xl font-black uppercase tracking-widest text-xs shadow-[0_20px_40px_rgba(105,218,255,0.2)] btn-vibrate"
+              className="w-full bg-primary text-[#004050] py-4 rounded-xl font-black uppercase tracking-widest text-xs shadow-[0_20px_40px_rgba(105,218,255,0.2)] btn-vibrate"
             >
               DIVE IN
             </button>
             <button 
               onClick={() => { navigate('/admin-login'); setIsMobileMenuOpen(false); }}
-              className="w-full bg-white/5 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] border border-white/10 backdrop-blur-xl"
+              className="w-full bg-white/5 text-white py-4 rounded-xl font-black uppercase tracking-widest text-[10px] border border-white/10 backdrop-blur-xl"
             >
               Authorized Personnel Only
             </button>
