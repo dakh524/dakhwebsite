@@ -60,6 +60,7 @@ export default function Navbar() {
       dropdown: [
         { name: 'All Services', path: '/services' },
         { name: 'Assets Library', path: '/assets-library' },
+        { name: 'Useful Tools', path: '/useful-tools' },
       ],
     },
     { name: 'About', path: '/about' },
