@@ -32,6 +32,13 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import Opportunities from './pages/Opportunities';
 import FunZone from './pages/FunZone';
 
+// Tool Pages
+import ResumePage from './pages/ResumePage';
+import QRPage from './pages/QRPage';
+import GPAPage from './pages/GPAPage';
+import SummarizerPage from './pages/SummarizerPage';
+import TimerPage from './pages/TimerPage';
+
 
 function App() {
   return (
@@ -51,6 +58,13 @@ function App() {
             <Route path="/opportunities" element={<Opportunities />} />
             <Route path="/funzone" element={<FunZone />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            
+            {/* Embedded Tools */}
+            <Route path="/tools/resume" element={<ResumePage />} />
+            <Route path="/tools/qr" element={<QRPage />} />
+            <Route path="/tools/gpa" element={<GPAPage />} />
+            <Route path="/tools/summarizer" element={<SummarizerPage />} />
+            <Route path="/tools/timer" element={<TimerPage />} />
           </Route>
 
           {/* Admin Auth */}

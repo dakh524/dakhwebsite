@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
+import { useNavigate } from 'react-router-dom';
 
 export default function Tools() {
+  const navigate = useNavigate();
+
   const handleCardMouseMove = (e) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -50,7 +53,11 @@ export default function Tools() {
 
   const handleUseTool = (link) => {
     if (link) {
-      window.open(link, '_blank');
+      if (link.startsWith('/')) {
+        navigate(link);
+      } else {
+        window.open(link, '_blank');
+      }
     } else {
       alert("This tool is currently in early access. Contact admin for activation.");
     }

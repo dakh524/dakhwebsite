@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { getSupabaseUrl, handleImageError, FALLBACK_IMAGE } from '../utils/imageUrl';
 
 export default function UsefulTools() {
@@ -60,9 +61,9 @@ export default function UsefulTools() {
                     </p>
 </div>
 <div className="flex items-center gap-4">
-<button className="bg-primary text-on-primary font-bold px-6 py-3 rounded-lg text-sm hover:bg-primary-dim transition-colors btn-vibrate">
+<Link to="/tools/resume" className="bg-primary text-black font-bold px-6 py-3 rounded-lg text-sm hover:bg-[#00D1FF] transition-colors btn-vibrate inline-block">
                         Open Tool
-                    </button>
+                    </Link>
 <span className="text-on-surface-variant text-xs font-medium">Free for students</span>
 </div>
 </div>
@@ -81,10 +82,10 @@ export default function UsefulTools() {
                         Instant, high-resolution QR codes for documents, portfolios, and academic links.
                     </p>
 </div>
-<button className="mt-8 border border-outline-variant hover:border-secondary text-on-surface font-semibold px-4 py-3 rounded-lg text-sm transition-all flex items-center justify-center gap-2 btn-vibrate">
+<Link to="/tools/qr" className="mt-8 border border-outline-variant hover:border-secondary text-on-surface font-semibold px-4 py-3 rounded-lg text-sm transition-all flex items-center justify-center gap-2 btn-vibrate">
                     Open Tool
                     <span className="material-symbols-outlined text-sm">arrow_outward</span>
-</button>
+</Link>
 </div>
 {/*  Tool: AI Tools (Medium)  */}
 <div 
@@ -101,10 +102,10 @@ export default function UsefulTools() {
                         Summarizers, concept generators, and citation assistants powered by advanced LLMs.
                     </p>
 </div>
-<button className="mt-8 border border-outline-variant hover:border-tertiary text-on-surface font-semibold px-4 py-3 rounded-lg text-sm transition-all flex items-center justify-center gap-2 btn-vibrate">
+<Link to="/tools/summarizer" className="mt-8 border border-outline-variant hover:border-tertiary text-on-surface font-semibold px-4 py-3 rounded-lg text-sm transition-all flex items-center justify-center gap-2 btn-vibrate">
                     Open Tool
                     <span className="material-symbols-outlined text-sm">arrow_outward</span>
-</button>
+</Link>
 </div>
 {/*  Tool: Student Tools (Large)  */}
 <div 
