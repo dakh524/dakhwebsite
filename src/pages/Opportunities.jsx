@@ -17,19 +17,45 @@ export default function Opportunities() {
     fetchData();
   }, []);
 
-  const handleApply = (link) => {
-    window.open(link || siteSettings?.default_apply_link || 'https://forms.gle/PFs1Vyx4FuKerRQW8', '_blank');
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [selectedRole, setSelectedRole] = React.useState(null);
+  const [formData, setFormData] = React.useState({
+    name: '',
+    email: '',
+    details: '',
+    other: ''
+  });
+
+  const handleApply = (role) => {
+    setSelectedRole(role);
+    setIsModalOpen(true);
   };
 
   const handleWhatsApp = () => {
     window.open(siteSettings?.whatsapp_link || 'https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank');
   };
 
+  const submitApplication = (e) => {
+    e.preventDefault();
+    const message = `Application for ${selectedRole}\n\n` +
+                    `Name: ${formData.name}\n` +
+                    `Email: ${formData.email}\n` +
+                    `College/Working Details: ${formData.details}\n` +
+                    `Other Details: ${formData.other}\n\n` +
+                    `He is applied for this and his details are above. Kindly contact me asap.`;
+    
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/918667399640?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
+    setIsModalOpen(false);
+    setFormData({ name: '', email: '', details: '', other: '' });
+  };
+
   const currentOpportunities = opportunities.length > 0 ? opportunities : [
     { title: 'Campus Ambassador', desc: 'Lead your college community, organize technical summits, and master executive leadership.', icon: 'campaign', color: 'primary', label: 'Apply Protocol' },
-    { title: 'Core Developer', desc: 'Architect real-world applications and expand your technical neural network with live projects.', icon: 'terminal', color: 'secondary', label: 'Initiate Build' },
-    { title: 'Marketing Node', desc: 'Activate your network via WhatsApp and scale our mission while earning performance rewards.', icon: 'share', color: 'green-500', label: 'Join Network', special: true },
-    { title: 'Tactical Freelancer', desc: 'Deploy your expertise remotely on mission-specific tasks and earn dimensional rewards.', icon: 'work_history', color: 'tertiary', label: 'Secure Task' }
+    { title: 'Developer / Creator', desc: 'Architect real-world applications and expand your technical neural network with live projects.', icon: 'terminal', color: 'secondary', label: 'Initiate Build' },
+    { title: 'Marketing Partner', desc: 'Promote our ecosystem via WhatsApp and scale our mission while earning performance rewards.', icon: 'share', color: 'green-500', label: 'Join Network', special: true },
+    { title: 'Freelancer', desc: 'Deploy your expertise remotely on mission-specific tasks and earn dimensional rewards.', icon: 'work_history', color: 'tertiary', label: 'Secure Task' }
   ];
 
   const handleCardMouseMove = (e) => {
@@ -87,7 +113,7 @@ export default function Opportunities() {
                 {opp.desc || opp.description}
               </p>
               <button 
-                onClick={() => opp.special ? handleWhatsApp() : handleApply(opp.apply_link)}
+                onClick={() => opp.special ? handleWhatsApp() : handleApply(opp.title)}
                 className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all btn-vibrate ${
                   opp.special 
                     ? 'bg-green-500 text-black shadow-[0_10px_30px_rgba(34,197,94,0.3)] hover:scale-105 active:scale-95' 
@@ -100,6 +126,55 @@ export default function Opportunities() {
           ))}
         </div>
 
+        {/* Application Modal */}
+        {isModalOpen && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center px-4">
+            <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsModalOpen(false)}></div>
+            <div className="relative glass-panel w-full max-w-lg p-10 rounded-[3rem] border-white/10 animate-in fade-in zoom-in duration-300">
+              <div className="mb-8 text-center">
+                <h3 className="text-3xl font-black mb-2 tracking-tight">Apply for {selectedRole}</h3>
+                <p className="text-slate-400 text-sm font-medium">Please provide your coordinates below.</p>
+              </div>
+              <form onSubmit={submitApplication} className="space-y-4">
+                <input 
+                  required type="text" placeholder="Full Name" 
+                  value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-primary transition-colors"
+                />
+                <input 
+                  required type="email" placeholder="Email Address" 
+                  value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})}
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-primary transition-colors"
+                />
+                <input 
+                  required type="text" placeholder="College / Working Details" 
+                  value={formData.details} onChange={e => setFormData({...formData, details: e.target.value})}
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-primary transition-colors"
+                />
+                <textarea 
+                  placeholder="Other Details (Experience, Skills, Portfolio...)" 
+                  value={formData.other} onChange={e => setFormData({...formData, other: e.target.value})}
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-primary transition-colors h-32 resize-none"
+                />
+                <div className="flex gap-4 pt-4">
+                  <button 
+                    type="button" onClick={() => setIsModalOpen(false)}
+                    className="flex-1 py-4 rounded-xl border border-white/10 text-slate-400 font-black uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all"
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    type="submit"
+                    className="flex-[2] py-4 rounded-xl bg-primary text-[#004050] font-black uppercase tracking-widest text-[10px] shadow-[0_10px_30px_rgba(105,218,255,0.3)] hover:scale-105 active:scale-95 transition-all btn-vibrate"
+                  >
+                    Confirm & Contact
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
         {/* CTA Section */}
         <section className="text-center py-20 border-t border-white/5 relative overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] pointer-events-none"></div>
@@ -108,7 +183,7 @@ export default function Opportunities() {
           </h2>
           <div className="flex flex-col md:flex-row justify-center gap-6 relative z-10">
             <button 
-              onClick={handleApply}
+              onClick={() => handleApply('Dimensional Journey')}
               className="px-12 py-6 rounded-2xl bg-white text-black font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl btn-vibrate"
             >
               Get Started
