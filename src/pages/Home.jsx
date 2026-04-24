@@ -15,6 +15,14 @@ export default function Home() {
    const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
    const [activeMainTab, setActiveMainTab] = useState('courses');
     const [isMentorModalOpen, setIsMentorModalOpen] = useState(false);
+    const [isOpportunityModalOpen, setIsOpportunityModalOpen] = useState(false);
+    const [selectedRole, setSelectedRole] = useState(null);
+    const [formData, setFormData] = useState({
+      name: '',
+      email: '',
+      details: '',
+      other: ''
+    });
     const navigate = useNavigate();
     const heroRef = useRef(null);
     const cardsRef = useRef(null);
@@ -128,6 +136,27 @@ export default function Home() {
 
   const handleWhatsApp = () => {
     window.open(siteSettings?.whatsapp_link || 'https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank');
+  };
+
+  const handleApplyModal = (role) => {
+    setSelectedRole(role);
+    setIsOpportunityModalOpen(true);
+  };
+
+  const submitApplication = (e) => {
+    e.preventDefault();
+    const message = `Application for ${selectedRole}\n\n` +
+                    `Name: ${formData.name}\n` +
+                    `Email: ${formData.email}\n` +
+                    `College/Working Details: ${formData.details}\n` +
+                    `Other Details: ${formData.other}\n\n` +
+                    `He is applied for this and his details are above. Kindly contact me asap.`;
+    
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/918667399640?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
+    setIsOpportunityModalOpen(false);
+    setFormData({ name: '', email: '', details: '', other: '' });
   };
 
   const handleCardMouseMove = (e) => {
@@ -271,7 +300,7 @@ export default function Home() {
               ].map((role) => (
 <div 
                   key={role.title}
-                  onClick={role.special ? handleWhatsApp : handleApply} 
+                  onClick={role.special ? handleWhatsApp : () => handleApplyModal(role.title)} 
                   onMouseMove={handleCardMouseMove}
                   onMouseLeave={handleCardMouseLeave}
                   className={`role-card glass-panel hover-tilt glow-border cursor-pointer bg-white/5 rounded-[2.5rem] p-10 flex flex-col items-center text-center transition-all hover:bg-white/10 border border-white/5 relative group ${role.special ? 'border-l-4 border-l-green-500' : ''}`}
@@ -375,7 +404,7 @@ export default function Home() {
               ].map((role) => (
 <div 
                   key={role.title}
-                  onClick={role.special ? () => window.open('https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank') : handleApply} 
+                  onClick={role.special ? () => window.open('https://chat.whatsapp.com/LkKyo7np9oVJXo8LhtrzQA', '_blank') : () => handleApplyModal(role.title)} 
                   onMouseMove={handleCardMouseMove}
                   onMouseLeave={handleCardMouseLeave}
                   className={`glass-panel hover-tilt glow-border cursor-pointer bg-white/5 rounded-3xl p-8 flex flex-col items-center text-center transition-all hover:bg-white/10 border border-white/5 ${role.special ? 'border-l-4 border-l-green-500' : ''}`}
@@ -645,6 +674,56 @@ export default function Home() {
     </div>
   </div>
 )}
+
+{/* Application Modal */}
+{isOpportunityModalOpen && (
+  <div className="fixed inset-0 z-[200] flex items-center justify-center px-4">
+    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsOpportunityModalOpen(false)}></div>
+    <div className="relative glass-panel w-full max-w-lg p-10 rounded-[3rem] border-white/10 animate-in fade-in zoom-in duration-300">
+      <div className="mb-8 text-center">
+        <h3 className="text-3xl font-black mb-2 tracking-tight">Apply for {selectedRole}</h3>
+        <p className="text-slate-400 text-sm font-medium">Please provide your coordinates below.</p>
+      </div>
+      <form onSubmit={submitApplication} className="space-y-4">
+        <input 
+          required type="text" placeholder="Full Name" 
+          value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
+          className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-primary transition-colors"
+        />
+        <input 
+          required type="email" placeholder="Email Address" 
+          value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})}
+          className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-primary transition-colors"
+        />
+        <input 
+          required type="text" placeholder="College / Working Details" 
+          value={formData.details} onChange={e => setFormData({...formData, details: e.target.value})}
+          className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-primary transition-colors"
+        />
+        <textarea 
+          placeholder="Other Details (Experience, Skills, Portfolio...)" 
+          value={formData.other} onChange={e => setFormData({...formData, other: e.target.value})}
+          className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-primary transition-colors h-32 resize-none"
+        />
+        <div className="flex gap-4 pt-4">
+          <button 
+            type="button" onClick={() => setIsOpportunityModalOpen(false)}
+            className="flex-1 py-4 rounded-xl border border-white/10 text-slate-400 font-black uppercase tracking-widest text-[10px] hover:bg-white/5 transition-all"
+          >
+            Cancel
+          </button>
+          <button 
+            type="submit"
+            className="flex-[2] py-4 rounded-xl bg-primary text-[#004050] font-black uppercase tracking-widest text-[10px] shadow-[0_10px_30px_rgba(105,218,255,0.3)] hover:scale-105 active:scale-95 transition-all btn-vibrate"
+          >
+            Confirm & Contact
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+
 </div>
 </div>
 </div>
