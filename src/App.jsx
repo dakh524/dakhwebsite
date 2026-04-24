@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { ToastProvider } from './components/ToastProvider';
+import MobileBanner from './components/MobileBanner';
 
 // Layouts
 import Layout from './components/Layout';
@@ -44,6 +46,7 @@ import TimerPage from './pages/TimerPage';
 function App() {
   return (
     <AuthProvider>
+      <ToastProvider>
       <Router>
         <Routes>
           {/* Public Routes */}
@@ -91,7 +94,9 @@ function App() {
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <MobileBanner />
       </Router>
+      </ToastProvider>
     </AuthProvider>
   );
 }
