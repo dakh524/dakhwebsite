@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, ChevronDown, Monitor } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import logo from '../assets/brand_logo.png';
 import { useToast } from './ToastProvider';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState('');
-  const [showLibraryModal, setShowLibraryModal] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { showToast } = useToast();
@@ -23,9 +22,9 @@ export default function Navbar() {
     };
   }, [isMobileMenuOpen]);
 
-  // Close library modal on route change
+  // Close on route change
   useEffect(() => {
-    setShowLibraryModal(false);
+    setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
   // Hidden on admin routes
@@ -38,12 +37,6 @@ export default function Navbar() {
       type: 'warning',
       duration: 3500,
     });
-  };
-
-  const handleAccessLibrary = () => {
-    setShowLibraryModal(true);
-    setIsMobileMenuOpen(false);
-    setMobileDropdownOpen('');
   };
 
   const navLinks = [
@@ -66,7 +59,7 @@ export default function Navbar() {
       name: 'Services',
       dropdown: [
         { name: 'All Services', path: '/services' },
-        { name: 'Assets Library', action: handleAccessLibrary },
+        { name: 'Assets Library', path: '/assets-library' },
       ],
     },
     { name: 'About', path: '/about' },
@@ -281,51 +274,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ── Access Library Modal ─────────────────────────────── */}
-      {showLibraryModal && (
-        <div
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4"
-          onClick={() => setShowLibraryModal(false)}
-        >
-          <div
-            className="relative bg-[#0d1117] border border-[#69daff]/20 rounded-3xl shadow-[0_30px_80px_rgba(0,0,0,0.8)] p-10 max-w-sm w-full text-center
-              animate-in fade-in zoom-in-95 duration-300"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close button */}
-            <button
-              onClick={() => setShowLibraryModal(false)}
-              className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors text-2xl leading-none"
-              aria-label="Close"
-            >
-              ×
-            </button>
-
-            {/* Icon */}
-            <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-[#69daff]/10 flex items-center justify-center">
-              <Monitor size={32} className="text-[#69daff]" />
-            </div>
-
-            <h2 className="text-white text-xl font-black tracking-tight mb-2">Assets Library</h2>
-            <div className="w-10 h-0.5 bg-[#69daff]/40 mx-auto mb-4 rounded-full"></div>
-            <p className="text-slate-300 text-sm leading-relaxed">
-              📱 For the best experience, please use our website in{' '}
-              <span className="text-[#69daff] font-bold">Desktop mode</span>.
-            </p>
-            <p className="text-slate-500 text-xs mt-3 leading-relaxed">
-              Open this page on a desktop or switch your browser to Desktop mode for full access to the library.
-            </p>
-
-            <button
-              onClick={() => setShowLibraryModal(false)}
-              className="mt-7 w-full bg-[#69daff] text-[#020617] py-3 rounded-xl font-black uppercase tracking-widest text-xs
-                hover:brightness-110 active:scale-95 transition-all shadow-[0_0_30px_rgba(105,218,255,0.25)]"
-            >
-              Got it
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 }
+
