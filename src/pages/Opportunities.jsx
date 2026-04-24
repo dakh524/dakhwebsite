@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { supabase } from '../lib/supabase';
 import Footer from '../components/Footer';
 
@@ -127,8 +128,8 @@ export default function Opportunities() {
         </div>
 
         {/* Application Modal */}
-        {isModalOpen && (
-          <div className="fixed inset-0 z-[200] flex items-center justify-center px-4">
+        {isModalOpen && createPortal(
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center px-4" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh' }}>
             <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsModalOpen(false)}></div>
             <div className="relative glass-panel w-full max-w-lg p-10 rounded-[3rem] border-white/10 animate-in fade-in zoom-in duration-300">
               <div className="mb-8 text-center">
@@ -172,7 +173,8 @@ export default function Opportunities() {
                 </div>
               </form>
             </div>
-          </div>
+          </div>,
+          document.body
         )}
 
         {/* CTA Section */}
