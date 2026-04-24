@@ -293,8 +293,8 @@ body {
   .grid-cols-2, .grid-cols-3, .grid-cols-4, 
   .md\:grid-cols-2, .md\:grid-cols-3, .md\:grid-cols-4,
   .lg\:grid-cols-2, .lg\:grid-cols-3, .lg\:grid-cols-4 {
-    grid-template-columns: 1fr !important;
-    gap: 1.5rem !important;
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   /* Buttons & Interactive Elements */
@@ -304,20 +304,16 @@ body {
   button.px-10, 
   button.px-8,
   a.btn-vibrate {
-    width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding: 14px 20px !important;
-    min-height: 52px !important;
-    justify-content: center !important;
-    display: flex !important;
+    width: auto;
+    padding: 12px 24px;
+    min-height: 48px;
+    justify-content: center;
   }
 
-  /* Prevent stacking row elements incorrectly */
+  /* Prevent stacking row elements incorrectly only if they are flex */
   .flex.gap-4:not(.items-center), 
   .flex.gap-6:not(.items-center) {
-    flex-direction: column !important;
-    width: 100% !important;
+    flex-direction: column;
   }
 
   /* Cards & Containers */
@@ -405,6 +401,12 @@ body {
 
   /* Hide excessive decorative elements on mobile if they cause scroll */
   .absolute.blur-\[160px\], .absolute.blur-\[120px\], .absolute.blur-\[100px\] {
+    display: none !important;
+  }
+}
+/* PRINT UTILITIES */
+@media print {
+  .no-print {
     display: none !important;
   }
 }

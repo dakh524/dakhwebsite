@@ -42,7 +42,7 @@ export default function SummarizerPage() {
     <ToolLayout title="AI Text Summarizer">
        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-6xl mx-auto px-4">
           {/* Input Side */}
-          <div className="glass-panel p-8 rounded-[2.5rem] flex flex-col h-[600px] border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-2xl transition-all hover:border-primary/20">
+          <div className="glass-panel p-5 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col h-auto lg:h-[600px] min-h-[350px] border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-2xl transition-all hover:border-primary/20">
              <div className="flex items-center justify-between mb-6">
                 <div className="flex flex-col">
                    <h3 className="font-black tracking-[0.2em] uppercase text-xs text-slate-400 mb-1">Source Analysis</h3>
@@ -58,7 +58,7 @@ export default function SummarizerPage() {
                    if (error) setError(null);
                 }}
                 placeholder="Paste long articles, research papers, or any text here for deep analysis..."
-                className="flex-1 bg-black/40 border border-white/5 focus:border-primary/50 focus:bg-black/60 rounded-2xl p-8 text-white placeholder-slate-600 outline-none resize-none mb-6 text-[15px] leading-relaxed w-full transition-all custom-scrollbar"
+                className="flex-1 bg-black/40 border border-white/5 focus:border-primary/50 focus:bg-black/60 rounded-2xl p-4 sm:p-8 text-white placeholder-slate-600 outline-none resize-none mb-6 text-sm sm:text-[15px] leading-relaxed w-full transition-all custom-scrollbar min-h-[200px]"
              ></textarea>
              
              <button 
@@ -76,7 +76,7 @@ export default function SummarizerPage() {
           </div>
 
           {/* Output Side */}
-          <div className="glass-panel p-8 rounded-[2.5rem] flex flex-col h-[600px] border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-2xl relative">
+          <div className="glass-panel p-5 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col h-auto lg:h-[600px] min-h-[350px] border border-white/5 bg-white/[0.02] backdrop-blur-xl shadow-2xl relative">
              <div className="flex items-center justify-between mb-6">
                 <div className="flex flex-col">
                    <h3 className="font-black tracking-[0.2em] uppercase text-xs text-secondary mb-1">AI Intelligence</h3>
@@ -93,7 +93,7 @@ export default function SummarizerPage() {
                 )}
              </div>
 
-             <div className={`flex-1 rounded-2xl p-8 overflow-y-auto transition-all ${summary ? 'bg-black/40 border border-white/5' : 'bg-transparent border border-dashed border-white/10 flex items-center justify-center'}`}>
+             <div className={`flex-1 rounded-2xl p-4 sm:p-8 overflow-y-auto transition-all ${summary ? 'bg-black/40 border border-white/5' : 'bg-transparent border border-dashed border-white/10 flex items-center justify-center min-h-[150px]'}`}>
                 {loading ? (
                    <div className="flex flex-col items-center justify-center h-full text-slate-500">
                       <div className="relative w-16 h-16 mb-6">

@@ -92,7 +92,7 @@ export default function FunZone() {
               Modular Laboratory
             </span>
           </div>
-          <h1 className="text-5xl md:text-8xl font-black mb-6 leading-[0.9] tracking-tightest glow">
+          <h1 className="text-4xl sm:text-5xl md:text-8xl font-black mb-6 leading-[0.9] tracking-tightest glow">
             FUN ZONE
           </h1>
           <p className="text-lg md:text-xl text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">
@@ -152,10 +152,10 @@ export default function FunZone() {
                 ))
               ) : (
                 <div className="max-w-7xl mx-auto px-6 md:px-8">
-                  <div className="glass-panel bg-white/5 border border-white/5 rounded-[2.5rem] p-20 flex flex-col items-center justify-center text-center opacity-40">
-                    <span className="material-symbols-outlined text-6xl mb-6 text-slate-600">construction</span>
-                    <h3 className="text-xl font-black uppercase tracking-widest text-slate-400">Expansion in Progress</h3>
-                    <p className="text-[10px] uppercase font-black tracking-widest text-slate-600 mt-2">New challenges coming soon to this module</p>
+                  <div className="glass-panel bg-white/5 border border-white/5 rounded-[2rem] md:rounded-[2.5rem] p-10 md:p-20 flex flex-col items-center justify-center text-center opacity-40">
+                    <span className="material-symbols-outlined text-4xl md:text-6xl mb-6 text-slate-600">construction</span>
+                    <h3 className="text-lg md:text-xl font-black uppercase tracking-widest text-slate-400">Expansion in Progress</h3>
+                    <p className="text-[8px] md:text-[10px] uppercase font-black tracking-widest text-slate-600 mt-2">New challenges coming soon to this module</p>
                   </div>
                 </div>
               )}

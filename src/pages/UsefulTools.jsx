@@ -31,14 +31,14 @@ export default function UsefulTools() {
 
 <main className="pt-32 pb-24 px-6 md:px-8 max-w-7xl mx-auto min-h-screen">
 {/*  Hero Section  */}
-<header className="mb-20 text-center md:text-left max-w-3xl">
-<div className="inline-block px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-[0.7rem] font-bold uppercase tracking-widest mb-6">
+<header className="mb-12 md:mb-20 text-center md:text-left max-w-3xl">
+<div className="inline-block px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-[0.6rem] md:text-[0.7rem] font-bold uppercase tracking-widest mb-4 md:mb-6">
                 Resource Ecosystem
             </div>
-<h1 className="text-5xl md:text-7xl font-black text-on-surface tracking-tighter mb-6 leading-tight">
+<h1 className="text-4xl md:text-7xl font-black text-on-surface tracking-tighter mb-4 md:mb-6 leading-[1.1]">
                 Dimensional <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Intelligence.</span>
 </h1>
-<p className="text-on-surface-variant text-lg md:text-xl leading-relaxed font-light">
+<p className="text-on-surface-variant text-base md:text-xl leading-relaxed font-light">
                 Unlock your potential with our curated suite of precision educational tools. Engineered for clarity, efficiency, and high-performance learning.
             </p>
 </header>
@@ -135,9 +135,9 @@ export default function UsefulTools() {
                         </li>
 </ul>
 </div>
-<button className="bg-surface-container-highest text-on-surface font-semibold px-6 py-3 rounded-lg text-sm border border-outline-variant hover:bg-surface-bright transition-all btn-vibrate">
-                    Access Library
-                </button>
+<Link to="/tools/gpa" className="mt-8 bg-surface-container-highest text-on-surface font-semibold px-6 py-3 rounded-lg text-sm border border-outline-variant hover:bg-surface-bright transition-all btn-vibrate flex items-center justify-center">
+                    Open Calculator
+                </Link>
 </div>
 {/*  Tool: Productivity (Small/Medium)  */}
 <div 
@@ -154,13 +154,13 @@ export default function UsefulTools() {
                         Pomodoro timers, ambient noise generators, and distraction blockers.
                     </p>
 </div>
-<button className="mt-8 bg-secondary/10 hover:bg-secondary/20 text-secondary font-bold px-4 py-3 rounded-lg text-sm transition-all btn-vibrate">
+<Link to="/tools/timer" className="mt-8 bg-secondary/10 hover:bg-secondary/20 text-secondary font-bold px-4 py-3 rounded-lg text-sm transition-all btn-vibrate flex items-center justify-center">
                     Start Session
-                </button>
+                </Link>
 </div>
 </div>
 {/*  Secondary Section: Featured Integration  */}
-<section className="mt-32 glass-panel rounded-[2rem] p-12 relative overflow-hidden">
+<section className="mt-20 md:mt-32 glass-panel rounded-2xl md:rounded-[2rem] p-6 md:p-12 relative overflow-hidden">
 <div className="absolute -top-24 -left-24 w-96 h-96 bg-secondary/10 blur-[120px]"></div>
 <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
 <div className="md:w-1/2">

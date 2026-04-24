@@ -35,13 +35,14 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 w-full z-[100] bg-[#020617] backdrop-blur-md shadow-2xl shadow-black/80 border-b border-white/[0.02]">
+      <nav className="fixed top-0 w-full z-[100] bg-[#020617] backdrop-blur-md shadow-2xl shadow-black/80 border-b border-white/[0.02] no-print">
         <div className="flex justify-between items-center px-6 md:px-8 py-3.5 md:py-4 max-w-7xl mx-auto">
-          <Link to="/" className="flex items-center gap-2 transition-transform active:scale-95">
-            <img src={logo} alt="DAKH" className="w-14 h-14 md:w-16 md:h-16 object-cover mix-blend-screen -ml-3" />
-            <div className="flex items-center whitespace-nowrap -ml-2">
-              <span className="text-lg md:text-xl font-bold text-white uppercase tracking-tighter">DAKH</span>
-              <span className="text-lg md:text-xl font-medium text-[#69daff] uppercase tracking-tighter ml-2">EDU SOLUTIONS</span>
+          <Link to="/" className="flex items-center gap-1 md:gap-2 transition-transform active:scale-95 shrink-0">
+            <img src={logo} alt="DAKH" className="w-10 h-10 md:w-16 md:h-16 object-cover mix-blend-screen -ml-2" />
+            <div className="flex items-center whitespace-nowrap">
+              <span className="text-sm md:text-xl font-bold text-white uppercase tracking-tighter">DAKH</span>
+              <span className="text-sm md:text-xl font-medium text-[#69daff] uppercase tracking-tighter ml-1 md:ml-2">EDU</span>
+              <span className="hidden xs:inline text-sm md:text-xl font-medium text-[#69daff] uppercase tracking-tighter ml-1">SOLUTIONS</span>
             </div>
           </Link>
 

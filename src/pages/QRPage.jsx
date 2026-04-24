@@ -9,6 +9,10 @@ export default function QRPage() {
   const handleDownload = () => {
      if (!text) return;
      const svg = qrRef.current.querySelector('svg');
+     // Ensure xmlns is present for standalone SVG processing
+     if (!svg.getAttribute('xmlns')) {
+         svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+     }
      const svgData = new XMLSerializer().serializeToString(svg);
      const canvas = document.createElement("canvas");
      const ctx = canvas.getContext("2d");
@@ -22,10 +26,10 @@ export default function QRPage() {
          const pngFile = canvas.toDataURL("image/png");
          const downloadLink = document.createElement("a");
          downloadLink.download = "qrcode.png";
-         downloadLink.href = `${pngFile}`;
+         downloadLink.href = pngFile;
          downloadLink.click();
      };
-     img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgData);
+     img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)));
   };
 
   return (
@@ -39,9 +43,11 @@ export default function QRPage() {
              className="w-full bg-black/40 border border-white/10 focus:border-primary rounded-xl px-6 py-4 text-white placeholder-slate-500 outline-none transition-colors mb-8"
           />
           
-          <div className="bg-white p-6 rounded-2xl mb-8 flex items-center justify-center min-h-[240px] min-w-[240px]" ref={qrRef}>
+          <div className="bg-white p-4 sm:p-6 rounded-2xl mb-8 flex items-center justify-center min-h-[180px] sm:min-h-[240px] w-full max-w-[240px]" ref={qrRef}>
               {text ? (
-                 <QRCodeSVG value={text} size={200} level="H" />
+                 <div className="w-full aspect-square max-w-[200px]">
+                    <QRCodeSVG value={text} size={null} level="H" style={{ width: '100%', height: '100%' }} />
+                 </div>
               ) : (
                  <span className="text-slate-400 font-bold opacity-50">Preview</span>
               )}
