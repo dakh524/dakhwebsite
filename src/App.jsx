@@ -31,6 +31,7 @@ import AdminOpportunities from './pages/AdminOpportunities';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Opportunities from './pages/Opportunities';
 import FunZone from './pages/FunZone';
+import PlacementZone from './pages/PlacementZone';
 
 // Tool Pages
 import ResumePage from './pages/ResumePage';
@@ -57,6 +58,7 @@ function App() {
              <Route path="/useful-tools" element={<UsefulTools />} />
             <Route path="/opportunities" element={<Opportunities />} />
             <Route path="/funzone" element={<FunZone />} />
+            <Route path="/placement-zone" element={<PlacementZone />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             
             {/* Embedded Tools */}
