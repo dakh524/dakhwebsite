@@ -66,7 +66,7 @@ export default function Navbar() {
       name: 'Services',
       dropdown: [
         { name: 'All Services', path: '/services' },
-        { name: 'Access Library', action: handleAccessLibrary },
+        { name: 'Assets Library', action: handleAccessLibrary },
       ],
     },
     { name: 'About', path: '/about' },
@@ -306,7 +306,7 @@ export default function Navbar() {
               <Monitor size={32} className="text-[#69daff]" />
             </div>
 
-            <h2 className="text-white text-xl font-black tracking-tight mb-2">Access Library</h2>
+            <h2 className="text-white text-xl font-black tracking-tight mb-2">Assets Library</h2>
             <div className="w-10 h-0.5 bg-[#69daff]/40 mx-auto mb-4 rounded-full"></div>
             <p className="text-slate-300 text-sm leading-relaxed">
               📱 For the best experience, please use our website in{' '}
